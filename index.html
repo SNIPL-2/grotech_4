@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GROTECH — Sri Neelkanth Impex Pvt. Ltd.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+<style>
+/* ============ DESIGN TOKENS ============
+   Colour:  --navy #0B2A45 (deep steel-navy, primary)
+            --navy-2 #123A5E (panel navy)
+            --steel #5A7184 (steel-blue-grey, structure/borders)
+            --steel-100 #E7ECF0 (light steel panel)
+            --paper #F3F5F7 (cool workshop-paper background, NOT warm cream)
+            --amber #D98F1E (brass/hazard-tag amber accent — used sparingly)
+            --ink #16232E (near-black text)
+   Type:    Barlow Condensed (headlines, engineering-plate feel)
+            Inter (body/UI)
+            IBM Plex Mono (codes, prices, HSN/GST data — parts-catalogue feel)
+   Layout:  left-aligned, structured grid, spec-sheet cards (1px steel border,
+            4px radius, no soft SaaS shadow), dense data tables.
+=========================================== */
+:root{
+  --navy:#0B2A45; --navy-2:#123A5E; --steel:#5A7184; --steel-100:#E7ECF0;
+  --paper:#F3F5F7; --amber:#D98F1E; --amber-dark:#B7740F; --ink:#16232E;
+  --line:#D7DEE4; --ok:#1F7A4D; --danger:#B23A2E;
+}
+*{box-sizing:border-box}
+body{font-family:'Inter',Arial,sans-serif;margin:0;background:var(--paper);color:var(--ink);line-height:1.5}
+h1,h2,h3,h4{font-family:'Barlow Condensed',Arial,sans-serif;font-weight:600;letter-spacing:.2px;color:var(--navy);margin:0 0 8px}
+h2{font-size:2rem;border-bottom:3px solid var(--amber);display:inline-block;padding-bottom:4px}
+code,.mono,.price,.code-val{font-family:'IBM Plex Mono',monospace}
+a{color:var(--navy-2)}
+p{max-width:72ch}
+button{font-family:'Inter',Arial,sans-serif;font-weight:600;cursor:pointer;border-radius:4px;border:1px solid transparent}
+.btn{background:var(--navy);color:#fff;padding:10px 18px;border-radius:4px;border:none;font-weight:600}
+.btn:hover{background:var(--navy-2)}
+.btn-amber{background:var(--amber);color:var(--navy)}
+.btn-amber:hover{background:var(--amber-dark);color:#fff}
+.btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--steel)}
+.btn-ghost:hover{background:var(--steel-100)}
+.btn-danger{background:#fff;color:var(--danger);border:1px solid var(--danger)}
+.btn-sm{padding:6px 12px;font-size:.85rem;border-radius:4px}
+
+/* header */
+header.header{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--navy);color:#fff;padding:10px 20px;flex-wrap:wrap;border-bottom:3px solid var(--amber)}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{max-height:56px}
+.company-info h1{color:#fff;font-size:1.9rem;margin:0;line-height:1}
+.company-info p{margin:0;font-size:.78rem;letter-spacing:1px;color:#B9C6D3}
+.role-zone{display:flex;align-items:center;gap:10px;font-size:.85rem}
+.role-badge{background:var(--amber);color:var(--navy);padding:4px 10px;border-radius:3px;font-weight:700;font-size:.75rem;letter-spacing:.5px}
+.admin-link{background:transparent;color:#DCE7EF;border:1px solid #35506A;padding:6px 12px;border-radius:4px;font-size:.85rem}
+.admin-link:hover{background:#173F63}
+
+/* nav */
+nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.nav-inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-wrap:wrap}
+.nav-links{display:flex;gap:2px;flex-wrap:wrap}
+.nav-links button{background:none;border:none;padding:14px 14px;font-weight:600;color:var(--navy);border-bottom:3px solid transparent}
+.nav-links button:hover{background:var(--steel-100)}
+.nav-links button.admin-only{color:var(--amber-dark)}
+.cart-btn{background:var(--amber) !important;color:var(--navy) !important;border-radius:4px;padding:9px 16px !important;margin:8px 0}
+
+main{max-width:1200px;margin:0 auto;padding:0 16px 40px}
+
+/* hero */
+.hero-section{padding:64px 8px 48px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.hero-eyebrow{font-family:'IBM Plex Mono';font-size:.78rem;color:var(--amber-dark);letter-spacing:1px}
+.hero-section h1{font-size:3rem;max-width:16ch;margin:6px 0 14px}
+.hero-section p{color:#3C4C58;font-size:1.05rem}
+.spec-strip{display:flex;gap:0;margin-top:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.spec-strip div{flex:1;padding:14px 18px;border-right:1px solid var(--line)}
+.spec-strip div:last-child{border-right:none}
+.spec-strip .num{font-family:'Barlow Condensed';font-size:1.8rem;color:var(--navy);font-weight:700}
+.spec-strip .lbl{font-size:.78rem;color:var(--steel)}
+
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+section:last-child{border-bottom:none}
+
+/* about / contact cards */
+.card-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:20px}
+.info-card{flex:1 1 240px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:18px}
+.info-card h3{font-size:1.3rem}
+
+/* search */
+.search-bar{display:flex;gap:10px;margin:16px 0}
+.search-bar input{flex:1;padding:10px 12px;border-radius:4px;border:1px solid var(--line);font-family:inherit}
+.search-bar button{background:var(--navy);color:#fff;padding:10px 16px;border:none;border-radius:4px}
+
+/* grid / catalogue */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-top:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:4px;text-align:center;padding:14px 10px;cursor:pointer;transition:border-color .15s, box-shadow .15s}
+.card:hover{border-color:var(--amber);box-shadow:2px 2px 0 var(--amber)}
+.card-image{max-width:140px;max-height:120px;height:auto;margin:6px auto;object-fit:contain}
+.category-card img{width:100%;height:140px;object-fit:cover;border-radius:3px}
+.card-title{font-weight:700;color:var(--navy);margin-top:6px}
+.card-code{font-size:.8rem;color:var(--steel);font-family:'IBM Plex Mono'}
+#breadcrumb{margin-top:8px}
+.back-btn{background:transparent !important;color:var(--navy) !important;border:1px solid var(--steel) !important;padding:8px 14px !important;border-radius:4px !important}
+
+/* item detail */
+.detail-image{max-width:300px;height:auto;margin:12px 0;border:1px solid var(--line);border-radius:4px}
+.meta{color:var(--steel);font-family:'IBM Plex Mono';font-size:.85rem}
+table.data-table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff}
+.data-table th,.data-table td{border:1px solid var(--line);padding:9px 8px;text-align:left;font-size:.88rem}
+.data-table th{background:var(--steel-100);color:var(--navy);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px}
+.data-table td.num{font-family:'IBM Plex Mono';text-align:right}
+.wa-link{color:var(--ok);text-decoration:none;font-weight:600}
+
+footer.footer{background:var(--navy);color:#B9C6D3;text-align:center;padding:16px;font-size:.85rem}
+
+/* forms */
+.form-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:22px;max-width:640px}
+.form-card.wide{max-width:none}
+.form-row{display:flex;gap:12px;margin-bottom:10px}
+.form-row .col{flex:1;display:flex;flex-direction:column;gap:3px}
+.form-row .col label{font-size:.78rem;color:var(--steel);font-weight:600}
+input,textarea,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:4px;font-family:inherit;font-size:.92rem}
+textarea{min-height:100px}
+.note{background:#FFF6E4;border-left:4px solid var(--amber);padding:10px 14px;margin-bottom:14px;border-radius:3px;font-size:.9rem}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+/* cart */
+.cart-table img{max-width:60px;height:auto;border-radius:3px}
+.price-input{width:110px;font-family:'IBM Plex Mono'}
+.qty-input{width:70px}
+.remove-x{background:none;border:none;color:var(--danger);font-weight:700;cursor:pointer;font-size:1rem}
+
+/* admin login modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,42,69,.55);align-items:center;justify-content:center;z-index:100}
+.modal-box{background:#fff;padding:24px;border-radius:6px;max-width:380px;width:92%;border-top:4px solid var(--amber)}
+.modal-box h3{margin-bottom:4px}
+.modal-box .err{color:var(--danger);font-size:.85rem;min-height:18px}
+.modal-box.modal-wide{max-width:640px}
+
+/* proforma */
+fieldset{border:1px solid var(--line);border-radius:4px;padding:14px 16px 16px;margin-bottom:16px}
+legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:0 6px;font-size:1.1rem}
+.pf-table th,.pf-table td{font-size:.82rem;padding:6px}
+.pf-totals{margin-top:14px;max-width:420px;margin-left:auto}
+.pf-totals table{width:100%;border-collapse:collapse}
+.pf-totals td{padding:6px 10px;border:1px solid var(--line)}
+.pf-totals td:first-child{background:var(--steel-100);font-weight:600}
+.pf-totals td:last-child{text-align:right;font-family:'IBM Plex Mono'}
+.pf-grand td{background:var(--navy) !important;color:#fff !important;font-weight:700 !important}
+.pf-words{margin-top:8px;font-style:italic;color:var(--steel)}
+.add-product-panel{background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px;margin-bottom:14px}
+.add-product-panel .search-bar{margin:0 0 10px}
+
+@media(max-width:760px){
+  .hero-section h1{font-size:2.1rem}
+  .form-row{flex-direction:column}
+  .spec-strip{flex-wrap:wrap}
+  .spec-strip div{flex:1 1 45%;border-bottom:1px solid var(--line)}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand">
+    <img src="https://lh3.googleusercontent.com/d/1DCPikRxxh7cMLpToo21NHF65kCQNNK2y" alt="SNI Logo" class="logo"/>
+    <div class="company-info">
+      <h1>GROTECH</h1>
+      <p>SRI NEELKANTH IMPEX PVT. LTD. — EXPORTERS OF PRECISION TOOLS</p>
+    </div>
+  </div>
+  <div class="role-zone" id="role-zone">
+    <button class="admin-link" onclick="openAdminLogin()">Admin</button>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-links" id="nav-links">
+      <button onclick="showSection('home')">Home</button>
+      <button onclick="showSection('about')">About</button>
+      <button onclick="showSection('products')">Products</button>
+      <button onclick="showSection('enquiry')">Enquiry</button>
+      <button onclick="showSection('contact')">Contact</button>
+      <button class="admin-only" id="nav-proforma" style="display:none" onclick="showSection('proforma')">Proforma</button>
+      <button id="cart-btn" class="cart-btn" onclick="showSection('cart')">🛒 Cart (<span id="cart-count">0</span>)</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="hero-section">
+      <div class="hero-eyebrow">EST. 2012 · LUDHIANA, PUNJAB, INDIA</div>
+      <h1>Precision hand, garden &amp; automotive tools, built for export.</h1>
+      <p>Hand Tools · Garden Tools · Automotive Tools · Mason Tools · Scaffolding Accessories. Quality tools for professionals worldwide, trusted by industries across the globe since 2012.</p>
+      <div class="actions">
+        <button class="btn" onclick="showSection('products')">Explore Products</button>
+        <button class="btn btn-ghost" onclick="showSection('enquiry')">Get a Quote</button>
+      </div>
+      <div class="spec-strip">
+        <div><div class="num">13+</div><div class="lbl">Years exporting</div></div>
+        <div><div class="num">5</div><div class="lbl">Core tool categories</div></div>
+        <div><div class="num">100%</div><div class="lbl">Quality-tested output</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" style="display:none">
+    <h2>About Us</h2>
+    <div style="max-width:820px;margin-top:14px">
+      <p>Established in 2012 and headquartered in Ludhiana, Punjab, India, Sri Neelkanth Impex Private Limited has emerged as a distinguished manufacturer and exporter of premium-quality tools. Over the years, we've built a reputation for excellence in delivering Hand Tools, Garden Tools, Automotive Tools, Plumbing Tools, and Machine Tools.</p>
+      <p>Our products are meticulously designed with accurate dimensions, exceptional strength, durable finishes, and corrosion resistance — making them ideal for diverse industrial applications. We pride ourselves on adhering to universally recognized quality standards.</p>
+      <p>Our state-of-the-art infrastructure, equipped with cutting-edge technology and managed by a team of seasoned professionals, enables us to efficiently meet both standard and customized requirements.</p>
+      <p>Under the visionary leadership of our Managing Director, <strong>Mr. Shiv Jindal</strong>, and General Manager, <strong>Mr. Keshav Jindal</strong>, we continue to grow exponentially, serving clients across the nation and beyond with ethical business practices and transparent dealings.</p>
+    </div>
+    <div class="card-row">
+      <div class="info-card"><h3>Vision</h3><p>To become a global leader in tool manufacturing and exports, recognized for innovation, quality, and customer satisfaction.</p></div>
+      <div class="info-card"><h3>Mission</h3><p>To deliver world-class tools that empower professionals worldwide, with continuous improvement and sustainable practices.</p></div>
+      <div class="info-card"><h3>Quality</h3><p>Rigorous quality control from raw material inspection to final product testing, at every stage of manufacturing.</p></div>
+      <div class="info-card"><h3>Global Reach</h3><p>A strong export network and satisfied clients across multiple countries, with a commitment to timely delivery.</p></div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products" style="display:none">
+    <h2>Products</h2>
+    <div class="search-bar">
+      <input id="searchInput" placeholder="Search by item code, name or category..." oninput="performSearch()" onkeydown="if(event.key==='Enter')performSearch()"/>
+      <button onclick="performSearch()">Search</button>
+    </div>
+    <div id="breadcrumb"></div>
+    <div id="catalogue"></div>
+  </section>
+
+  <!-- ENQUIRY -->
+  <section id="enquiry" style="display:none">
+    <h2>Send an Enquiry</h2>
+    <p>Enter your details and requirement — we'll receive this as a WhatsApp message.</p>
+    <div class="form-card">
+      <div class="form-row">
+        <div class="col"><label>Name *</label><input id="enq-name"/></div>
+        <div class="col"><label>Email (optional)</label><input id="enq-email"/></div>
+      </div>
+      <div class="form-row">
+        <div class="col"><label>Mobile *</label><input id="enq-mobile"/></div>
+        <div class="col"><label>City *</label><input id="enq-city"/></div>
+      </div>
+      <div class="col" style="margin-bottom:10px"><label>Requirement *</label><textarea id="enq-requirements" placeholder="List of items / your requirement..."></textarea></div>
+      <div class="actions">
+        <button class="btn" onclick="sendEnquiry()">Send via WhatsApp</button>
+      </div>
+      <p style="font-size:.82rem;color:var(--steel);margin-top:10px">If a Sheet webhook is configured, this is also saved automatically.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="display:none">
+    <h2>Contact Us</h2>
+    <div class="card-row">
+      <div class="info-card"><h3>Address</h3><p>SCO 15, Sia Homes,<br>Lalton Chowk, Pakhowal Road,<br>Ludhiana - 142022, Punjab, India</p></div>
+      <div class="info-card"><h3>Reach Us</h3><p><strong>Phone:</strong> <a href="tel:+917986297302">+91-7986297302</a><br><strong>Email:</strong> <a href="mailto:export@srineelkanth.com">export@srineelkanth.com</a></p></div>
+      <div class="info-card"><h3>Follow</h3><p><a href="https://www.instagram.com/grotech_tools/" target="_blank">Instagram</a><br><a href="https://www.facebook.com/profile.php?id=61571301311078" target="_blank">Facebook</a></p></div>
+    </div>
+  </section>
+
+  <!-- CART -->
+  <section id="cart" style="display:none">
+    <h2>Cart</h2>
+    <div class="note" id="cart-note">Get a special quote for the products below.</div>
+    <div id="cart-add-product-panel" class="add-product-panel" style="display:none">
+      <div class="search-bar">
+        <input id="cartSearchInput" placeholder="Search by item code, name or category..." oninput="performCartSearch()" onkeydown="if(event.key==='Enter')performCartSearch()"/>
+        <button onclick="performCartSearch()">Search</button>
+      </div>
+      <div id="cart-search-results"></div>
+      <p style="font-size:.82rem;color:var(--steel);margin:10px 0 0">Can't find it in our catalogue? <a href="#" onclick="event.preventDefault();openCustomItemModal()">Add an item that's not listed</a>.</p>
+    </div>
+    <div id="cart-contents"></div>
+    <div class="actions" id="cart-actions"></div>
+  </section>
+
+  <!-- PROFORMA (admin only) -->
+  <section id="proforma" style="display:none">
+    <h2>Proforma Invoice Builder</h2>
+    <p style="font-size:.88rem;color:var(--steel)">All fields below are optional except the line items. CGST/SGST vs IGST is auto-detected from the buyer's state and destination country.</p>
+
+    <div class="form-card wide">
+      <fieldset>
+        <legend>Invoice Details</legend>
+        <div class="form-row">
+          <div class="col"><label>Proforma Invoice No.</label><input id="pf-no"/></div>
+          <div class="col"><label>Date</label><input id="pf-date" type="date"/></div>
+          <div class="col"><label>IEC</label><input id="pf-iec"/></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>Buyer's Order No.</label><input id="pf-order-no"/></div>
+          <div class="col"><label>Buyer's Order Date</label><input id="pf-order-date" type="date"/></div>
+          <div class="col"><label>Notify Party</label><input id="pf-notify"/></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Consignee (Buyer)</legend>
+        <div class="form-row">
+          <div class="col"><label>Name</label><input id="pf-buyer-name"/></div>
+          <div class="col"><label>GST No.</label><input id="pf-buyer-gst"/></div>
+        </div>
+        <div class="form-row">
+          <div class="col" style="flex:2"><label>Address</label><input id="pf-buyer-address"/></div>
+          <div class="col"><label>State</label>
+            <select id="pf-buyer-state"><option value="">Select state...</option></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>PAN</label><input id="pf-buyer-pan"/></div>
+          <div class="col"><label>EXIM</label><input id="pf-buyer-exim"/></div>
+          <div class="col"><label>Phone</label><input id="pf-buyer-phone"/></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Shipment Details</legend>
+        <div class="form-row">
+          <div class="col"><label>Country of Dispatch</label><input id="pf-country-dispatch" value="INDIA"/></div>
+          <div class="col"><label>Country of Final Destination</label><input id="pf-country-dest" value="INDIA"/></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>FOB / C&amp;F / CIF / CFR</label><input id="pf-incoterm"/></div>
+          <div class="col"><label>SEA / AIR / ROAD</label>
+            <select id="pf-mode"><option>ROAD</option><option>SEA</option><option>AIR</option></select>
+          </div>
+          <div class="col"><label>Currency of Invoice</label><input id="pf-currency" value="INR"/></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>Payment Terms</label><input id="pf-payment-terms"/></div>
+          <div class="col"><label>Shipment of Goods</label><input id="pf-shipment-goods"/></div>
+          <div class="col"><label>Brand Name</label><input id="pf-brand"/></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>Pre Carriage by</label><input id="pf-pre-carriage"/></div>
+          <div class="col"><label>Place of Receipt by Pre Carrier</label><input id="pf-place-receipt"/></div>
+          <div class="col"><label>Vessel / Flight No.</label><input id="pf-vessel"/></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>Port of Loading</label><input id="pf-port-loading"/></div>
+          <div class="col"><label>Port of Discharge</label><input id="pf-port-discharge"/></div>
+          <div class="col"><label>Destination</label><input id="pf-destination"/></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Transport</legend>
+        <div class="form-row">
+          <div class="col"><label>Transport</label><input id="pf-transport"/></div>
+          <div class="col"><label>Transporter's ID (GSTIN)</label><input id="pf-transport-id"/></div>
+          <div class="col"><label>Total Package</label><input id="pf-package"/></div>
+          <div class="col"><label>Gross Weight</label><input id="pf-weight"/></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Line Items</legend>
+        <div class="actions" style="margin-top:0;margin-bottom:10px">
+          <button class="btn-sm btn-ghost" onclick="syncProformaFromCart()">↺ Replace with Admin Cart</button>
+          <button class="btn-sm btn-ghost" onclick="mergeProformaFromCart()">+ Merge from Admin Cart</button>
+          <button class="btn-sm btn-ghost" onclick="toggleProformaAddPanel()">+ Add Product</button>
+          <button class="btn-sm btn-ghost" onclick="addBlankProformaRow()">+ Add Blank Row</button>
+        </div>
+        <div id="pf-add-product-panel" class="add-product-panel" style="display:none">
+          <div class="search-bar">
+            <input id="pfSearchInput" placeholder="Search by item code, name or category..." oninput="performProformaSearch()" onkeydown="if(event.key==='Enter')performProformaSearch()"/>
+            <button onclick="performProformaSearch()">Search</button>
+          </div>
+          <div id="pf-search-results"></div>
+        </div>
+        <div id="pf-items-wrap"></div>
+        <div class="pf-totals" id="pf-totals"></div>
+      </fieldset>
+
+      <div class="actions">
+        <button class="btn btn-amber" onclick="generateProformaPDF()">Generate Proforma PDF</button>
+        <button class="btn-ghost" onclick="resetProformaForm()">Reset Form</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>© 2026 GROTECH | Sri Neelkanth Impex Pvt. Ltd.</p>
+</footer>
+
+<!-- Admin login modal -->
+<div id="admin-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>Admin Login</h3>
+    <p style="font-size:.85rem;color:var(--steel);margin-top:0">Staff access only.</p>
+    <div class="col" style="margin-bottom:8px"><label>Username</label><input id="admin-user"/></div>
+    <div class="col" style="margin-bottom:4px"><label>Password</label><input id="admin-pass" type="password" onkeydown="if(event.key==='Enter')submitAdminLogin()"/></div>
+    <div class="err" id="admin-err"></div>
+    <p style="margin:8px 0 0"><a href="#" style="font-size:.82rem" onclick="event.preventDefault();closeAdminLogin();openForgotPassword();">Forgot password?</a></p>
+    <div class="actions" style="justify-content:flex-end">
+      <button class="btn-ghost btn-sm" onclick="closeAdminLogin()">Cancel</button>
+      <button class="btn btn-sm" id="admin-login-btn" onclick="submitAdminLogin()">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- Change password modal -->
+<div id="change-pass-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>Change Password</h3>
+    <div class="col" style="margin-bottom:8px"><label>Current Password</label><input id="cp-old" type="password"/></div>
+    <div class="col" style="margin-bottom:8px"><label>New Password</label><input id="cp-new" type="password"/></div>
+    <div class="col" style="margin-bottom:4px"><label>Confirm New Password</label><input id="cp-confirm" type="password" onkeydown="if(event.key==='Enter')submitChangePassword()"/></div>
+    <div class="err" id="cp-err"></div>
+    <div class="actions" style="justify-content:flex-end">
+      <button class="btn-ghost btn-sm" onclick="closeChangePassword()">Cancel</button>
+      <button class="btn btn-sm" onclick="submitChangePassword()">Update Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- Forgot password modal (2-step) -->
+<div id="forgot-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>Reset Admin Password</h3>
+    <div id="forgot-step1">
+      <p style="font-size:.85rem;color:var(--steel);margin-top:0">Enter your admin username — a reset code will be emailed to the registered recovery address.</p>
+      <div class="col" style="margin-bottom:4px"><label>Username</label><input id="fp-user" onkeydown="if(event.key==='Enter')submitForgotRequest()"/></div>
+      <div class="err" id="fp-err1"></div>
+      <div class="actions" style="justify-content:flex-end">
+        <button class="btn-ghost btn-sm" onclick="closeForgotPassword()">Cancel</button>
+        <button class="btn btn-sm" onclick="submitForgotRequest()">Send Reset Code</button>
+      </div>
+    </div>
+    <div id="forgot-step2" style="display:none">
+      <p style="font-size:.85rem;color:var(--steel);margin-top:0">Enter the code that was emailed, plus your new password.</p>
+      <div class="col" style="margin-bottom:8px"><label>Reset Code</label><input id="fp-code"/></div>
+      <div class="col" style="margin-bottom:8px"><label>New Password</label><input id="fp-new" type="password"/></div>
+      <div class="col" style="margin-bottom:4px"><label>Confirm New Password</label><input id="fp-confirm" type="password" onkeydown="if(event.key==='Enter')submitForgotReset()"/></div>
+      <div class="err" id="fp-err2"></div>
+      <div class="actions" style="justify-content:flex-end">
+        <button class="btn-ghost btn-sm" onclick="closeForgotPassword()">Cancel</button>
+        <button class="btn btn-sm" onclick="submitForgotReset()">Reset Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add to cart modal -->
+<div id="addtocart-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>Add to Cart</h3>
+    <p style="font-size:.85rem;color:var(--steel);margin-top:0">Variant: <strong id="atc-variant"></strong></p>
+    <div class="col" style="margin-bottom:4px"><label>Quantity</label><input id="atc-qty" type="number" min="1" value="1" onkeydown="if(event.key==='Enter')confirmAddToCart()"/></div>
+    <div class="err" id="atc-err"></div>
+    <div class="actions" style="justify-content:flex-end">
+      <button class="btn-ghost btn-sm" onclick="closeAddToCartModal()">Cancel</button>
+      <button class="btn btn-sm" onclick="confirmAddToCart()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- Custom (not in catalogue) item modal -->
+<div id="custom-item-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>Add an Item Not in Our Catalogue</h3>
+    <p style="font-size:.85rem;color:var(--steel);margin-top:0">Describe what you need — we'll quote it for you.</p>
+    <div class="col" style="margin-bottom:8px"><label>Item Name *</label><input id="ci-name"/></div>
+    <div class="col" style="margin-bottom:8px"><label>Description</label><textarea id="ci-desc" placeholder="Size, material, specification, etc."></textarea></div>
+    <div class="form-row">
+      <div class="col"><label>Quantity *</label><input id="ci-qty" type="number" min="1" value="1"/></div>
+      <div class="col"><label>Unit</label><input id="ci-unit" value="Pcs" placeholder="Pcs / Dozen / Set..."/></div>
+    </div>
+    <div class="form-row">
+      <div class="col"><label>Variant Code (optional)</label><input id="ci-variant" placeholder="e.g. V1"/></div>
+      <div class="col"><label>HSN Code (optional)</label><input id="ci-hsn"/></div>
+      <div class="col"><label>GST % (optional)</label><input id="ci-gst" type="number" min="0" step="0.01"/></div>
+    </div>
+    <div class="err" id="ci-err"></div>
+    <div class="actions" style="justify-content:flex-end">
+      <button class="btn-ghost btn-sm" onclick="closeCustomItemModal()">Cancel</button>
+      <button class="btn btn-sm" onclick="confirmCustomItem()">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+<!-- Customer cart enquiry modal -->
+<div id="cart-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>Enter your details</h3>
+    <div class="form-row">
+      <div class="col"><label>Name *</label><input id="cart-cust-name"/></div>
+      <div class="col"><label>Email (optional)</label><input id="cart-cust-email"/></div>
+    </div>
+    <div class="form-row">
+      <div class="col"><label>Mobile *</label><input id="cart-cust-mobile"/></div>
+      <div class="col"><label>City *</label><input id="cart-cust-city"/></div>
+    </div>
+    <div class="actions" style="justify-content:flex-end">
+      <button class="btn-ghost btn-sm" onclick="closeCartModal()">Cancel</button>
+      <button class="btn btn-sm" onclick="sendCartEnquiry()">Send</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= CONFIGURATION ================= */
+const DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6NvfwkfCNg4TC0jrlrfiqdXA4UyOGhDdm9cJs2tkJxKpqoDa2OjHulev5O6avSKhMGWAP6utFs-MD/pub?gid=0&single=true&output=csv";
+const IMAGE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6NvfwkfCNg4TC0jrlrfiqdXA4UyOGhDdm9cJs2tkJxKpqoDa2OjHulev5O6avSKhMGWAP6utFs-MD/pub?gid=676833393&single=true&output=csv";
+const CATEGORY_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6NvfwkfCNg4TC0jrlrfiqdXA4UyOGhDdm9cJs2tkJxKpqoDa2OjHulev5O6avSKhMGWAP6utFs-MD/pub?gid=2136776722&single=true&output=csv";
+const SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbwaPVWC09sCKQmeUCYfVUNUo12TUbCX1fH-xZ4iivB13cpWZZ-VO5-QqQ3KZG8Ittk/exec";
+const WHATSAPP_NUMBER = "917986297302"; // without +
+
+// Admin login, password changes and password resets are now verified by your
+// Google Apps Script backend (SHEET_WEBHOOK above) instead of a hardcoded
+// password in this file — see the accompanying apps-script.gs for setup.
+
+// Fixed letterhead / bank details used on the Proforma Invoice (from your PI example).
+// Edit these constants if your registered details change.
+const INVOICE_CO = {
+  name:"SRI NEELKANTH IMPEX PRIVATE LIMITED",
+  addr1:"SCO 14-15, Saphire City, Sia Homes",
+  addr2:"Lalton Chowk, Pakhowal Road",
+  addr3:"Ludhiana - 141013",
+  mobile:"+91 98145 75723",
+  website:"www.srineelkanth.com",
+  email:"export@srineelkanth.com",
+  gst:"03AASCS1653A1ZN",
+  iec:"3007011795",
+  state:"Punjab"
+};
+const BANK = {
+  bank:"INDUSIND BANK",
+  holder:"SRI NEELKANTH IMPEX PRIVATE LIMITED",
+  account:"656000044249",
+  branch:"PAKHOWAL ROAD, LUDHIANA",
+  ifsc:"INDB0000020",
+  swift:""
+};
+const INDIAN_STATES = ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi","Jammu and Kashmir","Ladakh","Chandigarh","Puducherry","Andaman and Nicobar Islands","Dadra and Nagar Haveli and Daman and Diu","Lakshadweep"];
+
+/* ================= STATE ================= */
+let allData = [], imageMap = {}, categoryImageMap = {};
+let currentCategory = null, currentItemCode = null, currentSearchResults = null;
+let role = sessionStorage.getItem('sni_role') || 'customer';
+let adminUsername = sessionStorage.getItem('sni_admin_user') || '';
+let proformaItems = []; // working line items for the proforma builder
+let pendingCartItem = null; // item awaiting quantity confirmation in the Add to Cart modal
+let pfSearchMatches = []; // last set of catalogue search results shown in the Proforma "Add Product" panel
+
+/* ================= DATA LOAD ================= */
+function cleanPrice(raw){ if(!raw) return 0; const n = parseFloat(String(raw).replace(/[^0-9.]/g,'')); return isNaN(n)?0:n; }
+function cleanGST(raw){ if(!raw) return 0; const n = parseFloat(String(raw).replace(/[^0-9.]/g,'')); return isNaN(n)?0:n; }
+function formatINR(n){ return '₹'+(Number(n)||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+// jsPDF's built-in fonts don't have the ₹ glyph (it prints as a broken character), so PDFs use "Rs." instead.
+function formatINRPdf(n){ return 'Rs. '+(Number(n)||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+// applicable=false means this tax type doesn't apply to this shipment at all (e.g. IGST on an
+// intra-state sale, or any GST on an export) so we show "-"; applicable=true means the tax type
+// DOES apply, so we always show the rate even when it happens to be a genuine 0% product.
+function formatPct(n, applicable){ if(applicable===false) return '-'; n = Math.round((Number(n)||0)*100)/100; return n+'%'; }
+function showToast(msg,isError){
+  const el = document.createElement('div');
+  el.textContent = msg;
+  el.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:'+(isError?'#B23A2E':'#123A5E')+';color:#fff;padding:10px 20px;border-radius:4px;font-size:.9rem;z-index:9999;box-shadow:0 2px 10px rgba(0,0,0,.2)';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 2600);
+}
+
+Promise.all([
+  fetch(DATA_URL).then(r=>r.text()),
+  fetch(IMAGE_URL).then(r=>r.text()),
+  fetch(CATEGORY_URL).then(r=>r.text())
+]).then(([dataText,imageText,categoryText])=>{
+  allData = Papa.parse(dataText,{header:true}).data.filter(r=>r["Item Code"] && r["Category"]);
+  allData.forEach(r=>{
+    if(r["Category"]) r["Category"] = r["Category"].trim();
+    r["_price"] = cleanPrice(r["Price/Unit"]);
+    r["_gst"] = cleanGST(r["GST"]);
+  });
+  Papa.parse(imageText,{header:true}).data.forEach(r=>{ if(r["Item Code"] && r["Image URL"]) imageMap[r["Item Code"].trim()] = r["Image URL"]; });
+  Papa.parse(categoryText,{header:true}).data.forEach(r=>{ if(r["Category"] && r["Image URL"]) categoryImageMap[r["Category"].trim()] = r["Image URL"]; });
+  renderCategories();
+}).catch(e=>{
+  document.getElementById('catalogue').innerHTML =
+    '<p style="color:#B23A2E">\u274c Failed to load product data.<br><small>'+(e&&e.message?e.message:e)+'</small><br><small>If you opened this file by double-clicking it (a file:// address in the browser bar), that is almost always the cause \u2014 browsers block this kind of request from local files. Host it on a real web server (even a free one like GitHub Pages, or your existing site\u2019s hosting) and it should load.</small></p>';
+  console.error(e);
+});
+window.addEventListener('error', function(e){
+  const b=document.createElement('div');
+  b.style.cssText='position:fixed;top:0;left:0;right:0;background:#B23A2E;color:#fff;padding:8px 14px;font-family:monospace;font-size:12px;z-index:9999;white-space:pre-wrap';
+  b.textContent='Script error: '+e.message+' ('+(e.filename||'')+':'+e.lineno+')';
+  document.body.prepend(b);
+});
+
+/* ================= NAVIGATION ================= */
+function showSection(id){
+  document.querySelectorAll('main > section').forEach(s=>s.style.display='none');
+  document.getElementById(id).style.display = 'block';
+  if(id==='products') renderCategories();
+  if(id==='cart') renderCart();
+  if(id==='proforma'){ if(role!=='admin'){ showSection('home'); return; } renderProformaItems(); }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function navigateTo(id){ showSection(id); }
+
+/* ================= ROLE / ADMIN AUTH =================
+   Login, password-change and password-reset are all verified server-side by
+   your Google Apps Script (SHEET_WEBHOOK). See apps-script.gs for the backend
+   code — nothing secret lives in this HTML file any more. */
+async function callAuthAPI(payload){
+  const res = await fetch(SHEET_WEBHOOK, {
+    method:'POST',
+    headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // avoids a CORS preflight against Apps Script
+    body: JSON.stringify(payload)
+  });
+  return res.json();
+}
+function applyRoleUI(){
+  const zone = document.getElementById('role-zone');
+  const pfNav = document.getElementById('nav-proforma');
+  if(role==='admin'){
+    zone.innerHTML = `<span class="role-badge">ADMIN</span><button class="admin-link" onclick="openChangePassword()">Change Password</button><button class="admin-link" onclick="logoutAdmin()">Logout</button>`;
+    pfNav.style.display = 'inline-block';
+  } else {
+    zone.innerHTML = `<button class="admin-link" onclick="openAdminLogin()">Admin</button>`;
+    pfNav.style.display = 'none';
+  }
+  if(document.getElementById('products').style.display==='block'){
+    if(currentItemCode) renderItemDetail(currentItemCode);
+    else if(currentCategory) renderItems(currentCategory);
+  }
+  if(document.getElementById('cart').style.display==='block') renderCart();
+}
+function openAdminLogin(){
+  if(role==='admin') return;
+  document.getElementById('admin-user').value='';
+  document.getElementById('admin-pass').value='';
+  document.getElementById('admin-err').innerText='';
+  document.getElementById('admin-modal').style.display='flex';
+}
+function closeAdminLogin(){ document.getElementById('admin-modal').style.display='none'; }
+async function submitAdminLogin(){
+  const u = document.getElementById('admin-user').value.trim();
+  const p = document.getElementById('admin-pass').value;
+  const errEl = document.getElementById('admin-err');
+  const btn = document.getElementById('admin-login-btn');
+  if(!u || !p){ errEl.innerText='Enter your username and password.'; return; }
+  errEl.style.color=''; errEl.innerText='Checking…'; btn.disabled=true;
+  try{
+    const data = await callAuthAPI({ action:'admin_login', username:u, password:p });
+    if(data && data.success){
+      role='admin'; adminUsername=u;
+      sessionStorage.setItem('sni_role','admin'); sessionStorage.setItem('sni_admin_user',u);
+      closeAdminLogin(); applyRoleUI(); showToast('Logged in as admin');
+    } else {
+      errEl.innerText = (data && data.message) || 'Incorrect username or password.';
+    }
+  } catch(e){
+    errEl.innerText = 'Could not reach the login service — check your connection and that the Apps Script backend is deployed.';
+    console.error(e);
+  } finally { btn.disabled=false; }
+}
+function logoutAdmin(){
+  role='customer'; adminUsername='';
+  sessionStorage.setItem('sni_role','customer'); sessionStorage.removeItem('sni_admin_user');
+  applyRoleUI(); showSection('home');
+}
+applyRoleUI();
+
+/* ---- Change password (while logged in) ---- */
+function openChangePassword(){
+  ['cp-old','cp-new','cp-confirm'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('cp-err').innerText='';
+  document.getElementById('change-pass-modal').style.display='flex';
+}
+function closeChangePassword(){ document.getElementById('change-pass-modal').style.display='none'; }
+async function submitChangePassword(){
+  const oldPassword = document.getElementById('cp-old').value;
+  const newPassword = document.getElementById('cp-new').value;
+  const confirm = document.getElementById('cp-confirm').value;
+  const errEl = document.getElementById('cp-err');
+  if(!oldPassword || !newPassword){ errEl.innerText='Fill in both password fields.'; return; }
+  if(newPassword.length<8){ errEl.innerText='New password should be at least 8 characters.'; return; }
+  if(newPassword!==confirm){ errEl.innerText='New password and confirmation do not match.'; return; }
+  errEl.style.color=''; errEl.innerText='Updating…';
+  try{
+    const data = await callAuthAPI({ action:'admin_change_password', username:adminUsername, oldPassword, newPassword });
+    if(data && data.success){ closeChangePassword(); showToast('Password updated'); }
+    else { errEl.innerText = (data && data.message) || 'Could not update password.'; }
+  } catch(e){ errEl.innerText='Could not reach the login service.'; console.error(e); }
+}
+
+/* ---- Forgot password (2-step: request code by email, then reset) ---- */
+function openForgotPassword(){
+  document.getElementById('forgot-step1').style.display='block';
+  document.getElementById('forgot-step2').style.display='none';
+  document.getElementById('fp-user').value='';
+  document.getElementById('fp-err1').innerText=''; document.getElementById('fp-err2').innerText='';
+  document.getElementById('forgot-modal').style.display='flex';
+}
+function closeForgotPassword(){ document.getElementById('forgot-modal').style.display='none'; }
+async function submitForgotRequest(){
+  const username = document.getElementById('fp-user').value.trim();
+  const errEl = document.getElementById('fp-err1');
+  if(!username){ errEl.innerText='Enter your admin username.'; return; }
+  errEl.style.color=''; errEl.innerText='Sending…';
+  try{
+    const data = await callAuthAPI({ action:'admin_forgot_password', username });
+    if(data && data.success){
+      document.getElementById('forgot-step1').style.display='none';
+      document.getElementById('forgot-step2').style.display='block';
+      showToast('Reset code sent, if that username exists');
+    } else { errEl.innerText = (data && data.message) || 'Could not send reset code.'; }
+  } catch(e){ errEl.innerText='Could not reach the login service.'; console.error(e); }
+}
+async function submitForgotReset(){
+  const username = document.getElementById('fp-user').value.trim();
+  const code = document.getElementById('fp-code').value.trim();
+  const newPassword = document.getElementById('fp-new').value;
+  const confirm = document.getElementById('fp-confirm').value;
+  const errEl = document.getElementById('fp-err2');
+  if(!code || !newPassword){ errEl.innerText='Fill in the code and a new password.'; return; }
+  if(newPassword.length<8){ errEl.innerText='New password should be at least 8 characters.'; return; }
+  if(newPassword!==confirm){ errEl.innerText='New password and confirmation do not match.'; return; }
+  errEl.style.color=''; errEl.innerText='Resetting…';
+  try{
+    const data = await callAuthAPI({ action:'admin_reset_password', username, code, newPassword });
+    if(data && data.success){ closeForgotPassword(); showToast('Password reset — you can log in now'); }
+    else { errEl.innerText = (data && data.message) || 'Invalid or expired code.'; }
+  } catch(e){ errEl.innerText='Could not reach the login service.'; console.error(e); }
+}
+
+/* ================= BREADCRUMB ================= */
+function renderBreadcrumb(level){
+  const breadcrumb = document.getElementById('breadcrumb');
+  let html = '';
+  if(level==='category') html = `<button class="back-btn" onclick="renderCategories()">⬅ Back to Categories</button>`;
+  else if(level==='item'){
+    // Guard against currentCategory being null (e.g. item opened from search
+    // results, or from a code shared with multiple categories) — calling
+    // .replace() on null was throwing a TypeError and breaking this click.
+    if(currentSearchResults) html = `<button class="back-btn" onclick="reopenSearchResults()">⬅ Back to Search Results</button>`;
+    else if(currentCategory) html = `<button class="back-btn" onclick="renderItems('${currentCategory.replace(/'/g,"\\'")}')">⬅ Back to ${currentCategory}</button>`;
+    else html = `<button class="back-btn" onclick="renderCategories()">⬅ Back to Categories</button>`;
+  }
+  else if(level==='search') html = `<button class="back-btn" onclick="clearSearch()">⬅ Back to Home</button>`;
+  breadcrumb.innerHTML = html;
+}
+
+/* ================= CATALOGUE ================= */
+function renderCategories(){
+  currentCategory=null; currentItemCode=null; currentSearchResults=null; renderBreadcrumb('');
+  const container = document.getElementById('catalogue');
+  container.innerHTML = `<h2 style="margin-top:14px">Product Categories</h2><div class="grid"></div>`;
+  const grid = container.querySelector('.grid');
+  const categories = [...new Set(allData.map(i=>i['Category']))].filter(Boolean).sort();
+  categories.forEach(cat=>{
+    const div = document.createElement('div'); div.className='card category-card';
+    const catImg = categoryImageMap[cat] || 'https://via.placeholder.com/300x180?text='+encodeURIComponent(cat);
+    div.innerHTML = `<img src="${catImg}" alt="${cat}" class="card-image"/><div class="card-title">${cat}</div>`;
+    div.onclick = ()=> renderItems(cat);
+    grid.appendChild(div);
+  });
+}
+function renderItems(category){
+  currentCategory=category; currentItemCode=null; currentSearchResults=null; renderBreadcrumb('category');
+  const container = document.getElementById('catalogue');
+  container.innerHTML = `<h2 style="margin-top:14px">${category}</h2><div class="grid"></div>`;
+  const grid = container.querySelector('.grid');
+  const items = [...new Set(allData.filter(r=>r['Category']===category).map(r=>r['Item Code']))];
+  items.forEach(code=>{
+    const div = document.createElement('div'); div.className='card';
+    const img = imageMap[code] || 'https://via.placeholder.com/150?text='+encodeURIComponent(code);
+    const item = allData.find(r=>r['Item Code']===code) || {};
+    div.innerHTML = `<img src="${img}" alt="${code}" class="card-image"/><div class="card-title">${item['Item Name']||''}</div><div class="card-code">${code}</div>`;
+    div.onclick = ()=> renderItemDetail(code);
+    grid.appendChild(div);
+  });
+}
+function renderItemDetail(itemCode){
+  currentItemCode = itemCode; renderBreadcrumb('item');
+  const entries = allData.filter(r=>r['Item Code']===itemCode && (!currentCategory || r['Category']===currentCategory));
+  if(entries.length===0){ document.getElementById('catalogue').innerHTML='<p>No item found.</p>'; return; }
+  const first = entries[0];
+  const img = imageMap[itemCode] || 'https://via.placeholder.com/320x240?text='+encodeURIComponent(itemCode);
+  const isAdmin = role==='admin';
+  const container = document.getElementById('catalogue');
+  const unique = entries.reduce((u,e)=>{ if(!u.some(x=>x['Variant Code']===e['Variant Code'])) u.push(e); return u; },[]);
+  container.innerHTML = `
+    <h2 style="margin-top:14px">${first['Item Name']||''}</h2>
+    <p class="meta">Item Code: ${first['Item Code']||''} · HSN: ${first['HSN Code']||''}</p>
+    <img src="${img}" alt="${itemCode}" class="detail-image"/>
+    <p><em>${first['Specs']||''}</em></p>
+    <table class="data-table">
+      <tr>
+        <th>Variant</th><th>Description</th>${isAdmin?'<th>Price/Unit</th><th>GST</th>':''}<th>Unit</th><th>MOQ</th><th>Add To Cart</th><th>WhatsApp</th>
+      </tr>
+      ${unique.map(entry=>{
+        const priceNum = entry['_price'];
+        const priceDisp = entry['Price/Unit']||'';
+        return `<tr>
+          <td>${entry['Variant Code']||''}</td>
+          <td>${entry['Description']||''}</td>
+          ${isAdmin?`<td class="num price">${priceDisp}</td><td class="num">${entry['GST']||''}</td>`:''}
+          <td>${entry['Unit']||''}</td>
+          <td>${entry['MOQ']||''}</td>
+          <td><button class="btn-sm btn" onclick="addToCartPrompt('${encodeURIComponent(itemCode)}','${encodeURIComponent(entry['Variant Code']||'')}','${encodeURIComponent(entry['Description']||'')}','${encodeURIComponent(String(priceNum))}','${encodeURIComponent(entry['HSN Code']||'')}','${encodeURIComponent(String(entry['_gst']))}')">Add</button></td>
+          <td><a class="wa-link" target="_blank" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi, I\'m interested in this tool:\nItem: '+(first['Item Name']||'')+'\nVariant Code: '+(entry['Variant Code']||'')+'\nDescription: '+(entry['Description']||'')+(isAdmin?'\nPrice: '+priceDisp:''))}"><i class="fab fa-whatsapp"></i> Chat</a></td>
+        </tr>`;
+      }).join('')}
+    </table>
+  `;
+}
+function addToCartPrompt(itemCodeEnc,variantEnc,descEnc,priceEnc,hsnEnc,gstEnc){
+  pendingCartItem = {
+    itemCode:decodeURIComponent(itemCodeEnc), variantCode:decodeURIComponent(variantEnc),
+    description:decodeURIComponent(descEnc), price:Number(decodeURIComponent(priceEnc))||0,
+    hsn:decodeURIComponent(hsnEnc), gst:Number(decodeURIComponent(gstEnc))||0
+  };
+  document.getElementById('atc-variant').innerText = pendingCartItem.variantCode || pendingCartItem.itemCode;
+  document.getElementById('atc-qty').value = 1;
+  document.getElementById('atc-err').innerText = '';
+  document.getElementById('addtocart-modal').style.display = 'flex';
+  setTimeout(()=>document.getElementById('atc-qty').select(), 50);
+}
+function closeAddToCartModal(){ document.getElementById('addtocart-modal').style.display='none'; pendingCartItem=null; }
+function confirmAddToCart(){
+  const qty = Number(document.getElementById('atc-qty').value);
+  if(!qty || qty<=0 || !Number.isFinite(qty)){ document.getElementById('atc-err').innerText='Please enter a valid quantity.'; return; }
+  if(!pendingCartItem) { closeAddToCartModal(); return; }
+  addToCart({ ...pendingCartItem, qty });
+  closeAddToCartModal();
+  refreshCartIfVisible();
+}
+
+/* ================= CART (role-split) ================= */
+function cartKey(){ return role==='admin' ? 'sni_cart_admin' : 'sni_cart_customer'; }
+function getCart(){ try{ return JSON.parse(localStorage.getItem(cartKey())||'[]'); }catch(e){ return []; } }
+function saveCart(cart){ localStorage.setItem(cartKey(), JSON.stringify(cart)); updateCartCount(); }
+function updateCartCount(){ const n=getCart().reduce((s,i)=>s+Number(i.qty||0),0); document.getElementById('cart-count').innerText=n; }
+updateCartCount();
+
+// Re-renders the cart list in place when the Cart section is already the one
+// on screen (e.g. adding a product from the in-cart search panel), so newly
+// added items show up immediately instead of only after navigating away and back.
+function refreshCartIfVisible(){
+  if(document.getElementById('cart').style.display==='block') renderCart(true);
+}
+
+function addToCart(item){
+  const cart = getCart();
+  const existing = cart.find(c=>c.variantCode===item.variantCode);
+  if(existing){ existing.qty = Number(existing.qty)+Number(item.qty); }
+  else {
+    const first = allData.find(r=>r['Item Code']===item.itemCode)||{};
+    const img = imageMap[item.itemCode]||'';
+    cart.push({
+      itemCode:item.itemCode, itemName:first['Item Name']||'', variantCode:item.variantCode,
+      description:item.description, unit:first['Unit']||'', qty:item.qty, img,
+      originalPrice:item.price, manualPrice:item.price, hsn:item.hsn, gst:item.gst
+    });
+  }
+  saveCart(cart);
+  showToast('Added to cart');
+}
+
+/* ---- "Add Product" search panel inside the Cart section (customer & admin) ---- */
+function toggleCartAddPanel(){
+  const panel = document.getElementById('cart-add-product-panel');
+  const opening = panel.style.display==='none' || !panel.style.display;
+  panel.style.display = opening ? 'block' : 'none';
+  if(opening){
+    document.getElementById('cartSearchInput').value='';
+    document.getElementById('cart-search-results').innerHTML='';
+    document.getElementById('cartSearchInput').focus();
+  }
+}
+function performCartSearch(){
+  const query = document.getElementById('cartSearchInput').value.trim().toLowerCase();
+  const results = document.getElementById('cart-search-results');
+  if(!query){ results.innerHTML=''; return; }
+  const matches = allData.filter(r=>
+    (r['Item Code']||'').toLowerCase().includes(query) ||
+    (r['Item Name']||'').toLowerCase().includes(query) ||
+    (r['Category']||'').toLowerCase().includes(query) ||
+    (r['Variant Code']||'').toLowerCase().includes(query)
+  );
+  if(matches.length===0){ results.innerHTML='<p>No matching products found in our catalogue.</p>'; return; }
+  const isAdmin = role==='admin';
+  const shown = matches.slice(0,50);
+  let html = `<table class="data-table"><tr><th>Item</th><th>Variant</th><th>Description</th>${isAdmin?'<th>Price</th><th>GST</th>':''}<th>Unit</th><th></th></tr>`;
+  shown.forEach(entry=>{
+    const priceNum = entry['_price'];
+    html += `<tr>
+      <td>${entry['Item Name']||''}<div class="meta">${entry['Item Code']||''}</div></td>
+      <td>${entry['Variant Code']||''}</td>
+      <td>${entry['Description']||''}</td>
+      ${isAdmin?`<td class="num price">${entry['Price/Unit']||''}</td><td class="num">${entry['GST']||0}%</td>`:''}
+      <td>${entry['Unit']||''}</td>
+      <td><button class="btn-sm btn" onclick="addToCartPrompt('${encodeURIComponent(entry['Item Code'])}','${encodeURIComponent(entry['Variant Code']||'')}','${encodeURIComponent(entry['Description']||'')}','${encodeURIComponent(String(priceNum))}','${encodeURIComponent(entry['HSN Code']||'')}','${encodeURIComponent(String(entry['_gst']))}')">Add</button></td>
+    </tr>`;
+  });
+  html += '</table>';
+  if(matches.length>shown.length) html += `<p style="font-size:.8rem;color:var(--steel)">Showing first ${shown.length} of ${matches.length} matches — refine your search for more.</p>`;
+  results.innerHTML = html;
+}
+
+/* ---- "Add an item not in our catalogue" (custom line item) ---- */
+function openCustomItemModal(){
+  document.getElementById('ci-name').value='';
+  document.getElementById('ci-desc').value='';
+  document.getElementById('ci-qty').value=1;
+  document.getElementById('ci-unit').value='Pcs';
+  document.getElementById('ci-variant').value='';
+  document.getElementById('ci-hsn').value='';
+  document.getElementById('ci-gst').value='';
+  document.getElementById('ci-err').innerText='';
+  document.getElementById('custom-item-modal').style.display='flex';
+}
+function closeCustomItemModal(){ document.getElementById('custom-item-modal').style.display='none'; }
+function confirmCustomItem(){
+  const name = document.getElementById('ci-name').value.trim();
+  const desc = document.getElementById('ci-desc').value.trim();
+  const qty = Number(document.getElementById('ci-qty').value);
+  const unit = document.getElementById('ci-unit').value.trim() || 'Pcs';
+  const variantCode = document.getElementById('ci-variant').value.trim() || 'Custom';
+  const hsn = document.getElementById('ci-hsn').value.trim();
+  const gst = Number(document.getElementById('ci-gst').value) || 0;
+  const errEl = document.getElementById('ci-err');
+  if(!name){ errEl.innerText='Please enter an item name.'; return; }
+  if(!qty || qty<=0 || !Number.isFinite(qty)){ errEl.innerText='Please enter a valid quantity.'; return; }
+  const cart = getCart();
+  cart.push({
+    itemCode:'CUSTOM-'+Date.now(), itemName:name, variantCode, description:desc,
+    unit, qty, img:'', originalPrice:0, manualPrice:0, hsn, gst, isCustom:true
+  });
+  saveCart(cart);
+  closeCustomItemModal();
+  showToast('Custom item added to cart');
+  refreshCartIfVisible();
+}
+
+function renderCart(keepPanelOpen){
+  const container = document.getElementById('cart-contents');
+  const actions = document.getElementById('cart-actions');
+  const note = document.getElementById('cart-note');
+  const cart = getCart(); updateCartCount();
+  // collapse the search panel whenever the cart is freshly opened via navigation
+  // (but not when we're just refreshing in place right after adding an item —
+  // that would annoyingly close the panel a user has open to add more items).
+  if(!keepPanelOpen){
+    const addPanel = document.getElementById('cart-add-product-panel');
+    if(addPanel) addPanel.style.display = 'none';
+  }
+
+  if(role==='admin'){
+    note.innerText = 'Build a proforma from the items below — edit the "Your Price" column before creating the invoice.';
+    const addBtn = `<button class="btn-ghost" onclick="toggleCartAddPanel()">+ Add Product</button>`;
+    if(cart.length===0){ container.innerHTML='<p>Your admin cart is empty.</p>'; actions.innerHTML=addBtn; return; }
+    let html = `<table class="data-table cart-table"><tr><th>Image</th><th>Item</th><th>Variant</th><th>HSN</th><th>GST</th><th>Qty</th><th>Original Price</th><th>Your Price</th><th>Taxable Amt</th><th></th></tr>`;
+    cart.forEach((c,idx)=>{
+      const img = c.img || 'https://via.placeholder.com/60?text='+encodeURIComponent(c.itemCode);
+      const taxable = Number(c.qty)*Number(c.manualPrice||c.originalPrice||0);
+      html += `<tr>
+        <td><img src="${img}"/></td>
+        <td>${c.itemName||c.itemCode}<div class="meta">${c.description||''}</div></td>
+        <td>${c.variantCode}</td>
+        <td class="num">${c.hsn||''}</td>
+        <td class="num">${c.gst||0}%</td>
+        <td><input type="number" min="1" class="qty-input" value="${c.qty}" onchange="updateCartField(${idx},'qty',this.value)"/></td>
+        <td class="num price">${formatINR(c.originalPrice)}</td>
+        <td><input type="number" min="0" step="0.01" class="price-input" value="${Number(c.manualPrice).toFixed(2)}" onchange="updateCartField(${idx},'manualPrice',this.value)"/></td>
+        <td class="num price">${formatINR(taxable)}</td>
+        <td><button class="remove-x" onclick="removeCartItem(${idx})">✕</button></td>
+      </tr>`;
+    });
+    html += `</table>`;
+    container.innerHTML = html;
+    actions.innerHTML = `
+      ${addBtn}
+      <button class="btn btn-amber" onclick="createProformaFromCart()">Create Proforma Invoice →</button>
+      <button class="btn-ghost" onclick="clearCart()">Clear Cart</button>`;
+  } else {
+    note.innerText = 'Get a special quote for the products below.';
+    const addBtn = `<button class="btn-ghost" onclick="toggleCartAddPanel()">+ Add Product</button>`;
+    if(cart.length===0){ container.innerHTML='<p>Your cart is empty.</p>'; actions.innerHTML=addBtn; return; }
+    let html = `<table class="data-table cart-table"><tr><th>Image</th><th>Item Name</th><th>Variant Code</th><th>Description</th><th>Qty</th><th>Unit</th><th></th></tr>`;
+    cart.forEach((c,idx)=>{
+      const img = c.img || 'https://via.placeholder.com/60?text='+encodeURIComponent(c.itemCode);
+      html += `<tr>
+        <td><img src="${img}"/></td>
+        <td>${c.itemName||c.itemCode}</td>
+        <td>${c.variantCode}</td>
+        <td>${c.description||''}</td>
+        <td><input type="number" min="1" class="qty-input" value="${c.qty}" onchange="updateCartField(${idx},'qty',this.value)"/></td>
+        <td>${c.unit||''}</td>
+        <td><button class="remove-x" onclick="removeCartItem(${idx})">✕</button></td>
+      </tr>`;
+    });
+    html += `</table>`;
+    container.innerHTML = html;
+    actions.innerHTML = `
+      ${addBtn}
+      <button class="btn" onclick="downloadCartPDF()">Download as PDF</button>
+      <button class="btn btn-amber" onclick="openCartEnquiryModal()">Send Cart as Enquiry (WhatsApp)</button>
+      <button class="btn-ghost" onclick="clearCart()">Clear Cart</button>`;
+  }
+}
+function updateCartField(index,field,val){
+  const cart=getCart();
+  if(field==='qty'){ val=Number(val); if(isNaN(val)||val<=0) return; }
+  if(field==='manualPrice'){ val=Number(val); if(isNaN(val)||val<0) return; }
+  cart[index][field]=val; saveCart(cart); renderCart();
+}
+function removeCartItem(index){ const cart=getCart(); cart.splice(index,1); saveCart(cart); renderCart(); }
+function clearCart(){ if(!confirm('Clear cart?')) return; localStorage.removeItem(cartKey()); renderCart(); updateCartCount(); }
+
+/* ---- Image embedding helper (best-effort; used by cart & proforma PDFs) ----
+   Fetches an image and converts it to a data URL so jsPDF can embed it.
+   If the image host doesn't allow cross-origin reads (no CORS headers —
+   common with hotlinked Google Drive URLs), this silently returns null and
+   the PDF is generated without that picture rather than failing outright. */
+async function loadImageAsDataURL(url){
+  if(!url) return null;
+  try{
+    const res = await fetch(url, { mode:'cors' });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const blob = await res.blob();
+    if(!blob.type || !blob.type.startsWith('image/')) throw new Error('not an image');
+    return await new Promise((resolve,reject)=>{
+      const reader = new FileReader();
+      reader.onload = ()=>resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }catch(e){ console.warn('Could not embed image in PDF (likely a CORS restriction on the image host):', url, e); return null; }
+}
+function dataUrlFormat(dataUrl){
+  const m = /^data:image\/(\w+);/.exec(dataUrl||'');
+  if(!m) return 'JPEG';
+  const t = m[1].toUpperCase();
+  return t==='JPG' ? 'JPEG' : t;
+}
+
+/* ---- Customer: PDF export (no prices, includes item image) ---- */
+async function downloadCartPDF(){
+  const cart = getCart();
+  if(cart.length===0){ alert('Cart empty'); return; }
+  showToast('Preparing PDF…');
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(14);
+  doc.text('SRI NEELKANTH IMPEX PVT. LTD. - Cart Quote Request', 14, 15);
+
+  const images = await Promise.all(cart.map(c=>loadImageAsDataURL(c.img)));
+
+  const tableColumn = ['S.No.','Image','Item','Variant','Description','Qty','Unit'];
+  const tableRows = cart.map((c,idx)=>[idx+1, '', c.itemName||c.itemCode||'', c.variantCode||'', c.description||'', c.qty||'', c.unit||'']);
+  doc.autoTable({
+    startY:25, head:[tableColumn], body:tableRows, theme:'grid',
+    headStyles:{ fillColor:[11,42,69], textColor:255, halign:'center' },
+    styles:{ fontSize:10, cellPadding:3, minCellHeight:20 },
+    columnStyles:{ 0:{ cellWidth:14, halign:'center' }, 1:{ cellWidth:22 } },
+    didDrawCell: function(data){
+      if(data.section==='body' && data.column.index===1){
+        const dataUrl = images[data.row.index];
+        if(dataUrl){
+          try{
+            const pad=2, size=Math.min(data.cell.height-2*pad, data.cell.width-2*pad, 16);
+            doc.addImage(dataUrl, dataUrlFormat(dataUrl), data.cell.x+pad, data.cell.y+pad, size, size);
+          }catch(e){ console.warn('addImage failed for cart PDF row', data.row.index, e); }
+        }
+      }
+    }
+  });
+  doc.save('cart-quote.pdf');
+}
+
+/* ---- Customer: WhatsApp cart enquiry ---- */
+function openCartEnquiryModal(){ document.getElementById('cart-modal').style.display='flex'; }
+function closeCartModal(){ document.getElementById('cart-modal').style.display='none'; }
+function sendCartEnquiry(){
+  const name=document.getElementById('cart-cust-name').value.trim();
+  const mobile=document.getElementById('cart-cust-mobile').value.trim();
+  const email=document.getElementById('cart-cust-email').value.trim();
+  const city=document.getElementById('cart-cust-city').value.trim();
+  if(!name||!mobile||!city){ alert('Please enter Name, Mobile and City'); return; }
+  const cart=getCart(); if(cart.length===0){ alert('Cart is empty'); return; }
+  let msg = `Enquiry from ${name} (City: ${city||'N/A'})\nMobile: ${mobile}${email?('\nEmail: '+email):''}\n\nItems:`;
+  cart.forEach(c=>{ msg += `\n- ${c.itemName||c.itemCode} | Variant: ${c.variantCode} | Description: ${c.description} | Qty: ${c.qty} ${c.unit||''}`; });
+  const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  if(SHEET_WEBHOOK){ try{ fetch(SHEET_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'cart_enquiry',name,city,mobile,email,cart})}); }catch(e){ console.warn('sheet save failed',e); } }
+  window.open(wa,'_blank'); closeCartModal();
+}
+
+/* ================= ENQUIRY FORM ================= */
+function sendEnquiry(){
+  const name=document.getElementById('enq-name').value.trim();
+  const email=document.getElementById('enq-email').value.trim();
+  const mobile=document.getElementById('enq-mobile').value.trim();
+  const city=document.getElementById('enq-city').value.trim();
+  const req=document.getElementById('enq-requirements').value.trim();
+  if(!name||!mobile||!city||!req){ alert('Please enter Name, Mobile, City and Requirements'); return; }
+  const msg = `Enquiry from ${name} (City: ${city||'N/A'})\nMobile: ${mobile}${email?('\nEmail: '+email):''}\n\nRequirement:\n${req}`;
+  if(SHEET_WEBHOOK){ try{ fetch(SHEET_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'enquiry',name,email,mobile,city,req})}); }catch(e){ console.warn('sheet save failed',e); } }
+  const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(wa,'_blank'); alert('Opening WhatsApp to send your enquiry');
+}
+
+/* ================= GLOBAL SEARCH ================= */
+function performSearch(){
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  if(!query){ renderCategories(); return; }
+  currentSearchResults = allData.filter(r=> (r['Item Code']||'').toLowerCase().includes(query) || (r['Item Name']||'').toLowerCase().includes(query) || (r['Category']||'').toLowerCase().includes(query));
+  currentCategory = null; currentItemCode = null;
+  renderBreadcrumb('search');
+  const container = document.getElementById('catalogue');
+  container.innerHTML = `<h2 style="margin-top:14px">Search Results for "${query}"</h2><div class="grid"></div>`;
+  const grid = container.querySelector('.grid');
+  const uniqueItems = [...new Set(currentSearchResults.map(r=>r['Item Code']))];
+  if(uniqueItems.length===0){ grid.innerHTML='<p>No results found.</p>'; return; }
+  uniqueItems.forEach(code=>{
+    const div=document.createElement('div'); div.className='card';
+    const img=imageMap[code]||'https://via.placeholder.com/150?text='+encodeURIComponent(code);
+    const itemName = allData.find(r=>r['Item Code']===code)?.['Item Name']||'';
+    div.innerHTML = `<img src="${img}" alt="${code}" class="card-image"/><div class="card-title">${itemName||code}</div>`;
+    div.onclick = ()=> renderItemDetail(code);
+    grid.appendChild(div);
+  });
+}
+function clearSearch(){ document.getElementById('searchInput').value=''; currentSearchResults=null; renderCategories(); }
+function reopenSearchResults(){ performSearch(); }
+
+/* ================= PROFORMA BUILDER ================= */
+(function populateStateDropdown(){
+  const sel = document.getElementById('pf-buyer-state');
+  INDIAN_STATES.forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o); });
+  const outside = document.createElement('option'); outside.value='__OUTSIDE_INDIA__'; outside.textContent='Outside India'; sel.appendChild(outside);
+})();
+document.getElementById('pf-date').valueAsDate = new Date();
+document.getElementById('pf-iec').value = INVOICE_CO.iec;
+
+function createProformaFromCart(){
+  if(role!=='admin') return;
+  syncProformaFromCart();
+  showSection('proforma');
+}
+// Builds the merged "Item / Variant / Description" text used in the proforma line item.
+function buildProformaDesc(itemName, variantCode, description){
+  let parts = [];
+  if(itemName) parts.push(itemName);
+  if(variantCode) parts.push(variantCode);
+  let text = parts.join(' - ');
+  if(description) text = text ? (text+' - '+description) : description;
+  return text;
+}
+// Fully REPLACES the current line items with a fresh copy of the admin cart.
+function syncProformaFromCart(){
+  const cart = getCart();
+  if(role!=='admin'){ return; }
+  proformaItems = cart.map(c=>({
+    hsn: c.hsn||'', desc: buildProformaDesc(c.itemName, c.variantCode, c.description),
+    qty: Number(c.qty)||0, unit: c.unit||'Pcs', unitPrice: Number(c.manualPrice ?? c.originalPrice ?? 0),
+    gst: Number(c.gst)||0
+  }));
+  renderProformaItems();
+  showToast('Line items replaced with admin cart');
+}
+// ADDS the admin cart's items on top of whatever is already in the proforma,
+// so existing manually-entered or edited rows are never wiped out.
+function mergeProformaFromCart(){
+  if(role!=='admin') return;
+  const cart = getCart();
+  if(cart.length===0){ showToast('Admin cart is empty',true); return; }
+  cart.forEach(c=>{
+    proformaItems.push({
+      hsn: c.hsn||'', desc: buildProformaDesc(c.itemName, c.variantCode, c.description),
+      qty: Number(c.qty)||0, unit: c.unit||'Pcs', unitPrice: Number(c.manualPrice ?? c.originalPrice ?? 0),
+      gst: Number(c.gst)||0
+    });
+  });
+  renderProformaItems();
+  showToast('Cart items merged into proforma');
+}
+function addBlankProformaRow(){
+  proformaItems.push({ hsn:'', desc:'', qty:1, unit:'Pcs', unitPrice:0, gst:18 });
+  renderProformaItems();
+}
+function removeProformaRow(i){ proformaItems.splice(i,1); renderProformaItems(); }
+function updateProformaField(i,field,val){
+  if(['qty','unitPrice','gst'].includes(field)){ val=Number(val); if(isNaN(val)||val<0) val=0; }
+  proformaItems[i][field]=val; renderProformaItems();
+}
+
+/* ---- "Add Product" search panel inside the Proforma builder ---- */
+function toggleProformaAddPanel(){
+  const panel = document.getElementById('pf-add-product-panel');
+  const opening = panel.style.display==='none' || !panel.style.display;
+  panel.style.display = opening ? 'block' : 'none';
+  if(opening){
+    document.getElementById('pfSearchInput').value='';
+    document.getElementById('pf-search-results').innerHTML='';
+    document.getElementById('pfSearchInput').focus();
+  }
+}
+function performProformaSearch(){
+  const query = document.getElementById('pfSearchInput').value.trim().toLowerCase();
+  const results = document.getElementById('pf-search-results');
+  if(!query){ results.innerHTML=''; pfSearchMatches=[]; return; }
+  const matches = allData.filter(r=>
+    (r['Item Code']||'').toLowerCase().includes(query) ||
+    (r['Item Name']||'').toLowerCase().includes(query) ||
+    (r['Category']||'').toLowerCase().includes(query) ||
+    (r['Variant Code']||'').toLowerCase().includes(query)
+  );
+  pfSearchMatches = matches.slice(0,50);
+  if(pfSearchMatches.length===0){ results.innerHTML='<p>No matching products found.</p>'; return; }
+  let html = `<table class="data-table"><tr><th>Item</th><th>Variant</th><th>Description</th><th>Price</th><th>GST</th><th>Unit</th><th></th></tr>`;
+  pfSearchMatches.forEach((entry,i)=>{
+    html += `<tr>
+      <td>${entry['Item Name']||''}<div class="meta">${entry['Item Code']||''}</div></td>
+      <td>${entry['Variant Code']||''}</td>
+      <td>${entry['Description']||''}</td>
+      <td class="num price">${entry['Price/Unit']||''}</td>
+      <td class="num">${entry['GST']||0}%</td>
+      <td>${entry['Unit']||''}</td>
+      <td><button class="btn-sm btn" onclick="addProformaItemFromSearch(${i})">Add</button></td>
+    </tr>`;
+  });
+  html += '</table>';
+  if(matches.length>pfSearchMatches.length) html += `<p style="font-size:.8rem;color:var(--steel)">Showing first ${pfSearchMatches.length} of ${matches.length} matches — refine your search for more.</p>`;
+  results.innerHTML = html;
+}
+function addProformaItemFromSearch(i){
+  const entry = pfSearchMatches[i];
+  if(!entry) return;
+  proformaItems.push({
+    hsn: entry['HSN Code']||'', desc: buildProformaDesc(entry['Item Name'], entry['Variant Code'], entry['Description']),
+    qty: 1, unit: entry['Unit']||'Pcs', unitPrice: entry['_price']||0, gst: entry['_gst']||0
+  });
+  renderProformaItems();
+  showToast('Item added to proforma');
+}
+
+function isExportShipment(){
+  const dest = (document.getElementById('pf-country-dest').value||'').trim().toLowerCase();
+  return dest!=='' && dest!=='india';
+}
+function isSameStateAsHome(){
+  const st = document.getElementById('pf-buyer-state').value;
+  return st && st!=='__OUTSIDE_INDIA__' && st.toLowerCase()===INVOICE_CO.state.toLowerCase();
+}
+function calcLine(item){
+  const taxable = (Number(item.qty)||0) * (Number(item.unitPrice)||0);
+  let cgst=0, sgst=0, igst=0, cgstPct=0, sgstPct=0, igstPct=0;
+  let cgstApplicable=false, sgstApplicable=false, igstApplicable=false;
+  if(!isExportShipment()){
+    if(isSameStateAsHome()){
+      cgstPct = (Number(item.gst)||0)/2; sgstPct = (Number(item.gst)||0)/2;
+      cgst = taxable*cgstPct/100; sgst = taxable*sgstPct/100;
+      cgstApplicable = true; sgstApplicable = true;
+    } else {
+      igstPct = Number(item.gst)||0;
+      igst = taxable*igstPct/100;
+      igstApplicable = true;
+    }
+  }
+  const total = taxable+cgst+sgst+igst;
+  return { taxable, cgst, sgst, igst, cgstPct, sgstPct, igstPct, total, cgstApplicable, sgstApplicable, igstApplicable };
+}
+
+function renderProformaItems(){
+  const wrap = document.getElementById('pf-items-wrap');
+  if(proformaItems.length===0){
+    wrap.innerHTML = '<p style="color:var(--steel)">No line items yet — sync from your admin cart, search &amp; add a product, or add a blank row.</p>';
+  } else {
+    let html = `<table class="data-table pf-table"><tr><th>HSN</th><th>Item, Variant &amp; Description</th><th>Qty</th><th>Unit</th><th>Unit Price</th><th>GST%</th><th>Taxable</th><th>CGST</th><th>SGST</th><th>IGST</th><th>Total</th><th></th></tr>`;
+    proformaItems.forEach((item,i)=>{
+      const c = calcLine(item);
+      html += `<tr>
+        <td><input value="${item.hsn}" style="width:80px" onchange="updateProformaField(${i},'hsn',this.value)"/></td>
+        <td><input value="${item.desc}" style="min-width:200px" onchange="updateProformaField(${i},'desc',this.value)"/></td>
+        <td><input type="number" min="0" value="${item.qty}" style="width:65px" onchange="updateProformaField(${i},'qty',this.value)"/></td>
+        <td><input value="${item.unit}" style="width:55px" onchange="updateProformaField(${i},'unit',this.value)"/></td>
+        <td><input type="number" min="0" step="0.01" value="${item.unitPrice}" style="width:90px" onchange="updateProformaField(${i},'unitPrice',this.value)"/></td>
+        <td><input type="number" min="0" step="0.01" value="${item.gst}" style="width:60px" onchange="updateProformaField(${i},'gst',this.value)"/></td>
+        <td class="num price">${formatINR(c.taxable)}</td>
+        <td class="num price">${formatPct(c.cgstPct, c.cgstApplicable)}</td>
+        <td class="num price">${formatPct(c.sgstPct, c.sgstApplicable)}</td>
+        <td class="num price">${formatPct(c.igstPct, c.igstApplicable)}</td>
+        <td class="num price">${formatINR(c.total)}</td>
+        <td><button class="remove-x" onclick="removeProformaRow(${i})">✕</button></td>
+      </tr>`;
+    });
+    html += `</table>`;
+    wrap.innerHTML = html;
+  }
+  renderProformaTotals();
+}
+function proformaTotals(){
+  return proformaItems.reduce((acc,item)=>{
+    const c = calcLine(item);
+    acc.taxable+=c.taxable; acc.cgst+=c.cgst; acc.sgst+=c.sgst; acc.igst+=c.igst; acc.total+=c.total;
+    return acc;
+  },{taxable:0,cgst:0,sgst:0,igst:0,total:0});
+}
+function renderProformaTotals(){
+  const t = proformaTotals();
+  const rounded = Math.round(t.total);
+  document.getElementById('pf-totals').innerHTML = `
+    <table>
+      <tr><td>Total Taxable Amount</td><td>${formatINR(t.taxable)}</td></tr>
+      <tr><td>CGST Amount</td><td>${formatINR(t.cgst)}</td></tr>
+      <tr><td>SGST Amount</td><td>${formatINR(t.sgst)}</td></tr>
+      <tr><td>IGST Amount</td><td>${formatINR(t.igst)}</td></tr>
+      <tr class="pf-grand"><td>TOTAL AMOUNT (Round off)</td><td>${formatINR(rounded)}</td></tr>
+    </table>
+    <p class="pf-words">${document.getElementById('pf-currency').value||'INR'}: ${amountInWords(rounded)}</p>
+  `;
+}
+['pf-buyer-state','pf-country-dest','pf-currency'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', renderProformaItems);
+});
+
+function resetProformaForm(){
+  if(!confirm('Reset the proforma form?')) return;
+  document.querySelectorAll('#proforma input').forEach(i=>{ if(i.type!=='date') i.value=''; });
+  document.getElementById('pf-country-dispatch').value='INDIA';
+  document.getElementById('pf-country-dest').value='INDIA';
+  document.getElementById('pf-currency').value='INR';
+  document.getElementById('pf-mode').value='ROAD';
+  document.getElementById('pf-iec').value=INVOICE_CO.iec;
+  document.getElementById('pf-date').valueAsDate=new Date();
+  proformaItems=[];
+  renderProformaItems();
+}
+
+/* ---- Amount in words (Indian numbering) ---- */
+function amountInWords(num){
+  num = Math.round(Number(num)||0);
+  if(num===0) return 'Zero Only';
+  const ones=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
+  const tens=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+  function twoDigits(n){ if(n<20) return ones[n]; return tens[Math.floor(n/10)]+(n%10?' '+ones[n%10]:''); }
+  function threeDigits(n){ let s=''; if(n>=100){ s+=ones[Math.floor(n/100)]+' Hundred'; n%=100; if(n) s+=' '; } if(n) s+=twoDigits(n); return s; }
+  let crore = Math.floor(num/10000000); num%=10000000;
+  let lakh = Math.floor(num/100000); num%=100000;
+  let thousand = Math.floor(num/1000); num%=1000;
+  let rest = num;
+  let parts=[];
+  if(crore) parts.push(threeDigits(crore)+' Crore');
+  if(lakh) parts.push(threeDigits(lakh)+' Lakh');
+  if(thousand) parts.push(threeDigits(thousand)+' Thousand');
+  if(rest) parts.push(threeDigits(rest));
+  return 'Rupees '+parts.join(' ')+' Only';
+}
+
+/* ---- Page-break helper for the manually-drawn parts of the Proforma PDF ----
+   jspdf-autotable paginates the line-items table by itself, but everything
+   drawn with doc.rect()/doc.text() after it (totals bar, amount-in-words,
+   transport row, signatures) is placed at fixed coordinates and was
+   previously able to run off the bottom of the page. This checks the
+   remaining space first and starts a fresh page when there isn't enough.
+   PDF_TOP_GAP reserves room at the top of any newly-created page so that the
+   "PAGE n of N" header stamped in later never overlaps the first line of
+   content on that page. */
+const PDF_TOP_GAP = 16;
+function ensureSpace(doc, y, neededHeight, margin){
+  margin = margin==null ? 8 : margin;
+  const pageHeight = doc.internal.pageSize.getHeight();
+  if(y + neededHeight > pageHeight - margin){
+    doc.addPage();
+    return PDF_TOP_GAP;
+  }
+  return y;
+}
+
+/* ---- PDF generation matching the supplied PI layout ---- */
+function generateProformaPDF(){
+  if(proformaItems.length===0){ alert('Add at least one line item before generating the invoice.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const M=8, PW=210, CW=PW-2*M;
+  let y=M;
+
+  doc.setDrawColor(90,113,132); doc.setLineWidth(0.15);
+
+  // Title bar
+  doc.setFontSize(13); doc.setFont(undefined,'bold');
+  doc.text('PROFORMA INVOICE', PW/2, y+5, {align:'center'});
+  doc.setFontSize(8); doc.setFont(undefined,'normal');
+  doc.text('PAGE 1 of 1', PW-M, y+4, {align:'right'});
+  y+=8; doc.line(M,y,PW-M,y); y+=2;
+
+  const leftW = 95, rightX = M+leftW+2, rightW = CW-leftW-2;
+
+  function box(x,w,h){ doc.rect(x,y,w,h); }
+  function field(x,w,label,value,fs=8){
+    doc.setFontSize(6.5); doc.setTextColor(90,113,132);
+    doc.text(label,x+1.5,y+3);
+    doc.setFontSize(fs); doc.setTextColor(22,35,46); doc.setFont(undefined,'bold');
+    doc.text(String(value||''),x+1.5,y+7,{maxWidth:w-3});
+    doc.setFont(undefined,'normal');
+  }
+
+  // ---- Row: Consignor | Invoice info ----
+  const topH=42;
+  box(M,leftW,topH);
+  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('CONSIGNOR',M+1.5,y+4);
+  doc.setFontSize(9); doc.setTextColor(22,35,46); doc.setFont(undefined,'bold');
+  doc.text(INVOICE_CO.name, M+1.5, y+9, {maxWidth:leftW-3});
+  doc.setFont(undefined,'normal'); doc.setFontSize(7.8);
+  doc.text([INVOICE_CO.addr1, INVOICE_CO.addr2, INVOICE_CO.addr3, 'Mobile: '+INVOICE_CO.mobile, INVOICE_CO.website, INVOICE_CO.email, 'GST NO - '+INVOICE_CO.gst], M+1.5, y+14, {lineHeightFactor:1.35});
+
+  box(rightX,rightW,topH);
+  const c1=rightX, c1w=rightW*0.42, c2=rightX+c1w, c2w=rightW*0.28, c3=rightX+c1w+c2w, c3w=rightW-c1w-c2w;
+  doc.line(c2,y,c2,y+16); doc.line(c3,y,c3,y+16);
+  field(c1,c1w,'PROFORMA INVOICE NO.', document.getElementById('pf-no').value);
+  field(c2,c2w,'DATE', fmtDate(document.getElementById('pf-date').value));
+  field(c3,c3w,'IEC', document.getElementById('pf-iec').value);
+  doc.line(rightX,y+16,rightX+rightW,y+16);
+  const orderVal = [document.getElementById('pf-order-no').value, document.getElementById('pf-order-date').value?('DT. '+fmtDate(document.getElementById('pf-order-date').value)):''].filter(Boolean).join(' ');
+  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text("BUYER'S ORDER NO. & DATE",rightX+1.5,y+19.5);
+  doc.setFontSize(8); doc.setTextColor(22,35,46); doc.text(orderVal, rightX+1.5, y+23,{maxWidth:rightW-3});
+  doc.line(rightX,y+25,rightX+rightW,y+25);
+  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('BANK DETAIL',rightX+1.5,y+28.5);
+  doc.setFontSize(7); doc.setTextColor(22,35,46);
+  doc.text('Name of Bank: '+BANK.bank+'      Branch: '+BANK.branch, rightX+1.5, y+32);
+  doc.text('A/c Holder: '+BANK.holder, rightX+1.5, y+35.5,{maxWidth:rightW-3});
+  doc.text('A/c No: '+BANK.account+'   IFSC: '+BANK.ifsc+(BANK.swift?'   SWIFT: '+BANK.swift:''), rightX+1.5, y+39);
+  y+=topH;
+
+  // ---- Row: Consignee | Country of Dispatch/Destination ----
+  const cH=30;
+  box(M,leftW,cH);
+  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('CONSIGNEE',M+1.5,y+4);
+  doc.setFontSize(9); doc.setTextColor(22,35,46); doc.setFont(undefined,'bold');
+  doc.text(document.getElementById('pf-buyer-name').value||'', M+1.5, y+9,{maxWidth:leftW-3});
+  doc.setFont(undefined,'normal'); doc.setFontSize(7.8);
+  const stSel = document.getElementById('pf-buyer-state');
+  const stName = stSel.value==='__OUTSIDE_INDIA__' ? 'Outside India' : stSel.value;
+  doc.text([
+    document.getElementById('pf-buyer-address').value||'',
+    stName||'',
+    'PAN: '+(document.getElementById('pf-buyer-pan').value||'')+'   EXIM: '+(document.getElementById('pf-buyer-exim').value||''),
+    'Phone: '+(document.getElementById('pf-buyer-phone').value||''),
+    'GST No: '+(document.getElementById('pf-buyer-gst').value||'')
+  ], M+1.5, y+13,{lineHeightFactor:1.3});
+
+  box(rightX,rightW,cH);
+  const halfW=rightW/2;
+  doc.line(rightX+halfW,y,rightX+halfW,y+10);
+  field(rightX,halfW,'COUNTRY OF DISPATCH', document.getElementById('pf-country-dispatch').value);
+  field(rightX+halfW,halfW,'COUNTRY OF FINAL DESTINATION', document.getElementById('pf-country-dest').value);
+  y+=cH;
+
+  // ---- Row: Pre Carriage / Place of Receipt / Incoterm ----
+  y = fieldRow3(doc,M,CW,y,10,
+    ['PRE CARRIAGE BY','PLACE OF RECEIPT BY PRE CARRIER','FOB / C&F / CIF / CFR'],
+    [document.getElementById('pf-pre-carriage').value, document.getElementById('pf-place-receipt').value, document.getElementById('pf-incoterm').value]);
+
+  // ---- Row: Vessel / Port of Loading / Currency / Payment terms ----
+  y = fieldRow(doc,M,CW,y,10,
+    [['VESSEL / FLIGHT NO.',document.getElementById('pf-vessel').value],
+     ['PORT OF LOADING',document.getElementById('pf-port-loading').value],
+     ['CURRENCY OF INVOICE',document.getElementById('pf-currency').value],
+     ['PAYMENT TERMS',document.getElementById('pf-payment-terms').value]]);
+
+  // ---- Row: Port of Discharge / Destination / Shipment of Goods / Brand ----
+  y = fieldRow(doc,M,CW,y,10,
+    [['PORT OF DISCHARGE',document.getElementById('pf-port-discharge').value],
+     ['DESTINATION',document.getElementById('pf-destination').value],
+     ['SHIPMENT OF GOODS',document.getElementById('pf-shipment-goods').value],
+     ['BRAND NAME',document.getElementById('pf-brand').value]]);
+
+  y+=3;
+
+  // ---- Line items table ----
+  const t = proformaTotals();
+  const body = proformaItems.map((item,i)=>{
+    const c = calcLine(item);
+    return [i+1, item.hsn, item.desc, `${item.qty} ${item.unit}`, formatINRPdf(item.unitPrice),
+      formatINRPdf(c.taxable), formatPct(c.cgstPct, c.cgstApplicable), formatPct(c.sgstPct, c.sgstApplicable), formatPct(c.igstPct, c.igstApplicable), formatINRPdf(c.total)];
+  });
+  const totalsRowCount = 4; // Taxable / CGST / SGST / IGST subtotal rows drawn in the foot
+  doc.autoTable({
+    startY:y, margin:{left:M,right:M,top:PDF_TOP_GAP,bottom:16},
+    head:[['Sr.','HSN','Item, Variant & Description','Total Units','Unit Price','Taxable Amt','CGST','SGST','IGST','Total Amount']],
+    body,
+    theme:'grid',
+    styles:{ fontSize:7, cellPadding:2, lineColor:[90,113,132], lineWidth:0.1, overflow:'linebreak' },
+    headStyles:{ fillColor:[231,236,240], textColor:[11,42,69], fontStyle:'bold', fontSize:7 },
+    columnStyles:{0:{cellWidth:7,halign:'center'},1:{cellWidth:15},2:{cellWidth:'auto'},3:{cellWidth:16,halign:'center'},4:{cellWidth:22,halign:'right'},5:{cellWidth:26,halign:'right'},6:{cellWidth:12,halign:'center'},7:{cellWidth:12,halign:'center'},8:{cellWidth:12,halign:'center'},9:{cellWidth:26,halign:'right'}},
+    foot:[
+      ['','','','','Total Taxable Amount','','','','',formatINRPdf(t.taxable)],
+      ['','','','','CGST Amount','','','','',formatINRPdf(t.cgst)],
+      ['','','','','SGST Amount','','','','',formatINRPdf(t.sgst)],
+      ['','','','','IGST Amount','','','','',formatINRPdf(t.igst)],
+    ],
+    // Make the subtotal rows visually distinct from the item rows (matches the
+    // steel-100 shaded totals block used on the Proforma section on screen)
+    // instead of blending into the item table above them.
+    footStyles:{ fontStyle:'bold', textColor:[11,42,69], fillColor:[231,236,240], fontSize:7.5, lineWidth:0.15 },
+    didParseCell: function(data){
+      if(data.section==='foot'){
+        data.cell.styles.fillColor = [231,236,240];
+        if(data.column.index===4){ data.cell.styles.halign='right'; }
+        if(data.column.index===9){ data.cell.styles.halign='right'; data.cell.styles.textColor=[11,42,69]; data.cell.styles.fontStyle='bold'; }
+      }
+    }
+  });
+  y = doc.lastAutoTable.finalY+2;
+
+  // Everything below here is drawn manually (not by autoTable) so it needs its
+  // own page-break checks — otherwise a long item list pushes this content
+  // past the bottom edge of the page and it gets cut off.
+  const rounded = Math.round(t.total);
+  y = ensureSpace(doc, y, 10);
+  doc.setFillColor(217,143,30); doc.rect(M,y,CW,7,'F');
+  doc.setTextColor(255,255,255); doc.setFontSize(9); doc.setFont(undefined,'bold');
+  doc.text('TOTAL AMOUNT ('+(document.getElementById('pf-currency').value||'INR')+', Round off)', M+2, y+4.8);
+  doc.text(formatINRPdf(rounded), PW-M-2, y+4.8, {align:'right'});
+  doc.setFont(undefined,'normal'); doc.setTextColor(22,35,46);
+  y+=10;
+
+  y = ensureSpace(doc, y, 12);
+  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('AMOUNT CHARGEABLE IN WORDS',M+1,y);
+  doc.setFontSize(8); doc.setTextColor(22,35,46);
+  doc.text(amountInWords(rounded), M+1, y+4.5,{maxWidth:CW-2});
+  y+=10;
+
+  y = ensureSpace(doc, y, 8);
+  doc.setFontSize(7); doc.setTextColor(90,113,132);
+  doc.text('We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.', M+1, y);
+  y+=5;
+
+  // ---- Transport row ----
+  y = ensureSpace(doc, y, 10);
+  y = fieldRow(doc,M,CW,y,10,
+    [['TRANSPORT',document.getElementById('pf-transport').value],
+     ["TRANSPORTER'S ID",document.getElementById('pf-transport-id').value],
+     ['TOTAL PACKAGE',document.getElementById('pf-package').value],
+     ['GROSS WEIGHT',document.getElementById('pf-weight').value]]);
+
+  y+=6;
+  y = ensureSpace(doc, y, 26);
+  const sigW=CW/2;
+  doc.setFontSize(8); doc.setTextColor(22,35,46);
+  doc.text('For Customer', M+1, y);
+  doc.text('FOR '+INVOICE_CO.name, M+sigW+1, y);
+  doc.line(M,y+18,M+sigW-5,y+18);
+  doc.line(M+sigW+1,y+18,PW-M,y+18);
+  doc.setFontSize(7); doc.setTextColor(90,113,132);
+  doc.text('Signature with Date and Stamp', M+1, y+22);
+  doc.text('Authorised Signatory', M+sigW+1, y+22);
+
+  // Stamp the correct "PAGE n of N" on every page now that final count is known.
+  const pageCount = doc.internal.getNumberOfPages();
+  for(let p=1; p<=pageCount; p++){
+    doc.setPage(p);
+    doc.setFontSize(8); doc.setFont(undefined,'normal'); doc.setTextColor(22,35,46);
+    doc.text('PAGE '+p+' of '+pageCount, PW-M, M+4, {align:'right'});
+  }
+
+  const fname = 'Proforma_Invoice_'+(document.getElementById('pf-no').value||'draft')+'.pdf';
+  doc.save(fname);
+}
+function fmtDate(iso){ if(!iso) return ''; const [yr,mo,da]=iso.split('-'); return da+'/'+mo+'/'+yr; }
+function fieldRow(doc,x0,w,y,h,fields){
+  const n=fields.length, cw=w/n;
+  doc.rect(x0,y,w,h);
+  for(let i=1;i<n;i++) doc.line(x0+cw*i,y,x0+cw*i,y+h);
+  fields.forEach((f,i)=>{
+    doc.setFontSize(6.5); doc.setTextColor(90,113,132);
+    doc.text(f[0], x0+cw*i+1.5, y+3.5);
+    doc.setFontSize(8); doc.setTextColor(22,35,46); doc.setFont(undefined,'bold');
+    doc.text(String(f[1]||''), x0+cw*i+1.5, y+7.5,{maxWidth:cw-3});
+    doc.setFont(undefined,'normal');
+  });
+  return y+h;
+}
+function fieldRow3(doc,x0,w,y,h,labels,values){
+  return fieldRow(doc,x0,w,y,h, labels.map((l,i)=>[l,values[i]]));
+}
+</script>
+</body>
+</html>
