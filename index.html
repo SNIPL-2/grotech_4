@@ -12,20 +12,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <style>
-/* ============ DESIGN TOKENS ============
-   Colour:  --navy #0B2A45 (deep steel-navy, primary)
-            --navy-2 #123A5E (panel navy)
-            --steel #5A7184 (steel-blue-grey, structure/borders)
-            --steel-100 #E7ECF0 (light steel panel)
-            --paper #F3F5F7 (cool workshop-paper background, NOT warm cream)
-            --amber #D98F1E (brass/hazard-tag amber accent — used sparingly)
-            --ink #16232E (near-black text)
-   Type:    Barlow Condensed (headlines, engineering-plate feel)
-            Inter (body/UI)
-            IBM Plex Mono (codes, prices, HSN/GST data — parts-catalogue feel)
-   Layout:  left-aligned, structured grid, spec-sheet cards (1px steel border,
-            4px radius, no soft SaaS shadow), dense data tables.
-=========================================== */
 :root{
   --navy:#0B2A45; --navy-2:#123A5E; --steel:#5A7184; --steel-100:#E7ECF0;
   --paper:#F3F5F7; --amber:#D98F1E; --amber-dark:#B7740F; --ink:#16232E;
@@ -47,8 +33,6 @@ button{font-family:'Inter',Arial,sans-serif;font-weight:600;cursor:pointer;borde
 .btn-ghost:hover{background:var(--steel-100)}
 .btn-danger{background:#fff;color:var(--danger);border:1px solid var(--danger)}
 .btn-sm{padding:6px 12px;font-size:.85rem;border-radius:4px}
-
-/* header */
 header.header{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--navy);color:#fff;padding:10px 20px;flex-wrap:wrap;border-bottom:3px solid var(--amber)}
 .brand{display:flex;align-items:center;gap:12px}
 .logo{max-height:56px}
@@ -58,8 +42,6 @@ header.header{display:flex;align-items:center;justify-content:space-between;gap:
 .role-badge{background:var(--amber);color:var(--navy);padding:4px 10px;border-radius:3px;font-weight:700;font-size:.75rem;letter-spacing:.5px}
 .admin-link{background:transparent;color:#DCE7EF;border:1px solid #35506A;padding:6px 12px;border-radius:4px;font-size:.85rem}
 .admin-link:hover{background:#173F63}
-
-/* nav */
 nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
 .nav-inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-wrap:wrap}
 .nav-links{display:flex;gap:2px;flex-wrap:wrap}
@@ -67,10 +49,7 @@ nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-
 .nav-links button:hover{background:var(--steel-100)}
 .nav-links button.admin-only{color:var(--amber-dark)}
 .cart-btn{background:var(--amber) !important;color:var(--navy) !important;border-radius:4px;padding:9px 16px !important;margin:8px 0}
-
 main{max-width:1200px;margin:0 auto;padding:0 16px 40px}
-
-/* hero */
 .hero-section{padding:64px 8px 48px;border-bottom:1px solid var(--line);margin-bottom:8px}
 .hero-eyebrow{font-family:'IBM Plex Mono';font-size:.78rem;color:var(--amber-dark);letter-spacing:1px}
 .hero-section h1{font-size:3rem;max-width:16ch;margin:6px 0 14px}
@@ -80,21 +59,14 @@ main{max-width:1200px;margin:0 auto;padding:0 16px 40px}
 .spec-strip div:last-child{border-right:none}
 .spec-strip .num{font-family:'Barlow Condensed';font-size:1.8rem;color:var(--navy);font-weight:700}
 .spec-strip .lbl{font-size:.78rem;color:var(--steel)}
-
 section{padding:40px 0;border-bottom:1px solid var(--line)}
 section:last-child{border-bottom:none}
-
-/* about / contact cards */
 .card-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:20px}
 .info-card{flex:1 1 240px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:18px}
 .info-card h3{font-size:1.3rem}
-
-/* search */
 .search-bar{display:flex;gap:10px;margin:16px 0}
 .search-bar input{flex:1;padding:10px 12px;border-radius:4px;border:1px solid var(--line);font-family:inherit}
 .search-bar button{background:var(--navy);color:#fff;padding:10px 16px;border:none;border-radius:4px}
-
-/* grid / catalogue */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-top:14px}
 .card{background:#fff;border:1px solid var(--line);border-radius:4px;text-align:center;padding:14px 10px;cursor:pointer;transition:border-color .15s, box-shadow .15s}
 .card:hover{border-color:var(--amber);box-shadow:2px 2px 0 var(--amber)}
@@ -104,8 +76,6 @@ section:last-child{border-bottom:none}
 .card-code{font-size:.8rem;color:var(--steel);font-family:'IBM Plex Mono'}
 #breadcrumb{margin-top:8px}
 .back-btn{background:transparent !important;color:var(--navy) !important;border:1px solid var(--steel) !important;padding:8px 14px !important;border-radius:4px !important}
-
-/* item detail */
 .detail-image{max-width:300px;height:auto;margin:12px 0;border:1px solid var(--line);border-radius:4px}
 .meta{color:var(--steel);font-family:'IBM Plex Mono';font-size:.85rem}
 table.data-table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff}
@@ -113,10 +83,7 @@ table.data-table{width:100%;border-collapse:collapse;margin-top:14px;background:
 .data-table th{background:var(--steel-100);color:var(--navy);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px}
 .data-table td.num{font-family:'IBM Plex Mono';text-align:right}
 .wa-link{color:var(--ok);text-decoration:none;font-weight:600}
-
 footer.footer{background:var(--navy);color:#B9C6D3;text-align:center;padding:16px;font-size:.85rem}
-
-/* forms */
 .form-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:22px;max-width:640px}
 .form-card.wide{max-width:none}
 .form-row{display:flex;gap:12px;margin-bottom:10px}
@@ -126,21 +93,15 @@ input,textarea,select{width:100%;padding:9px 10px;border:1px solid var(--line);b
 textarea{min-height:100px}
 .note{background:#FFF6E4;border-left:4px solid var(--amber);padding:10px 14px;margin-bottom:14px;border-radius:3px;font-size:.9rem}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-
-/* cart */
 .cart-table img{max-width:60px;height:auto;border-radius:3px}
 .price-input{width:110px;font-family:'IBM Plex Mono'}
 .qty-input{width:70px}
 .remove-x{background:none;border:none;color:var(--danger);font-weight:700;cursor:pointer;font-size:1rem}
-
-/* admin login modal */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,42,69,.55);align-items:center;justify-content:center;z-index:100}
 .modal-box{background:#fff;padding:24px;border-radius:6px;max-width:380px;width:92%;border-top:4px solid var(--amber)}
 .modal-box h3{margin-bottom:4px}
 .modal-box .err{color:var(--danger);font-size:.85rem;min-height:18px}
 .modal-box.modal-wide{max-width:640px}
-
-/* proforma */
 fieldset{border:1px solid var(--line);border-radius:4px;padding:14px 16px 16px;margin-bottom:16px}
 legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:0 6px;font-size:1.1rem}
 .pf-table th,.pf-table td{font-size:.82rem;padding:6px}
@@ -153,7 +114,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
 .pf-words{margin-top:8px;font-style:italic;color:var(--steel)}
 .add-product-panel{background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px;margin-bottom:14px}
 .add-product-panel .search-bar{margin:0 0 10px}
-
 @media(max-width:760px){
   .hero-section h1{font-size:2.1rem}
   .form-row{flex-direction:column}
@@ -193,7 +153,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
 
 <main>
 
-  <!-- HOME -->
   <section id="home">
     <div class="hero-section">
       <div class="hero-eyebrow">EST. 2012 · LUDHIANA, PUNJAB, INDIA</div>
@@ -211,7 +170,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about" style="display:none">
     <h2>About Us</h2>
     <div style="max-width:820px;margin-top:14px">
@@ -228,7 +186,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
     </div>
   </section>
 
-  <!-- PRODUCTS -->
   <section id="products" style="display:none">
     <h2>Products</h2>
     <div class="search-bar">
@@ -239,7 +196,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
     <div id="catalogue"></div>
   </section>
 
-  <!-- ENQUIRY -->
   <section id="enquiry" style="display:none">
     <h2>Send an Enquiry</h2>
     <p>Enter your details and requirement — we'll receive this as a WhatsApp message.</p>
@@ -260,7 +216,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact" style="display:none">
     <h2>Contact Us</h2>
     <div class="card-row">
@@ -270,7 +225,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
     </div>
   </section>
 
-  <!-- CART -->
   <section id="cart" style="display:none">
     <h2>Cart</h2>
     <div class="note" id="cart-note">Get a special quote for the products below.</div>
@@ -286,7 +240,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
     <div class="actions" id="cart-actions"></div>
   </section>
 
-  <!-- PROFORMA (admin only) -->
   <section id="proforma" style="display:none">
     <h2>Proforma Invoice Builder</h2>
     <p style="font-size:.88rem;color:var(--steel)">All fields below are optional except the line items. CGST/SGST vs IGST is auto-detected from the buyer's state and destination country.</p>
@@ -397,7 +350,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
   <p>© 2026 GROTECH | Sri Neelkanth Impex Pvt. Ltd.</p>
 </footer>
 
-<!-- Admin login modal -->
 <div id="admin-modal" class="modal-overlay">
   <div class="modal-box">
     <h3>Admin Login</h3>
@@ -413,7 +365,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
   </div>
 </div>
 
-<!-- Change password modal -->
 <div id="change-pass-modal" class="modal-overlay">
   <div class="modal-box">
     <h3>Change Password</h3>
@@ -428,7 +379,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
   </div>
 </div>
 
-<!-- Forgot password modal (2-step) -->
 <div id="forgot-modal" class="modal-overlay">
   <div class="modal-box">
     <h3>Reset Admin Password</h3>
@@ -455,7 +405,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
   </div>
 </div>
 
-<!-- Add to cart modal -->
 <div id="addtocart-modal" class="modal-overlay">
   <div class="modal-box">
     <h3>Add to Cart</h3>
@@ -469,7 +418,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
   </div>
 </div>
 
-<!-- Custom (not in catalogue) item modal -->
 <div id="custom-item-modal" class="modal-overlay">
   <div class="modal-box">
     <h3>Add an Item Not in Our Catalogue</h3>
@@ -493,7 +441,6 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
   </div>
 </div>
 
-<!-- Customer cart enquiry modal -->
 <div id="cart-modal" class="modal-overlay">
   <div class="modal-box">
     <h3>Enter your details</h3>
@@ -513,19 +460,12 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
 </div>
 
 <script>
-/* ================= CONFIGURATION ================= */
 const DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6NvfwkfCNg4TC0jrlrfiqdXA4UyOGhDdm9cJs2tkJxKpqoDa2OjHulev5O6avSKhMGWAP6utFs-MD/pub?gid=0&single=true&output=csv";
 const IMAGE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6NvfwkfCNg4TC0jrlrfiqdXA4UyOGhDdm9cJs2tkJxKpqoDa2OjHulev5O6avSKhMGWAP6utFs-MD/pub?gid=676833393&single=true&output=csv";
 const CATEGORY_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6NvfwkfCNg4TC0jrlrfiqdXA4UyOGhDdm9cJs2tkJxKpqoDa2OjHulev5O6avSKhMGWAP6utFs-MD/pub?gid=2136776722&single=true&output=csv";
 const SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbwaPVWC09sCKQmeUCYfVUNUo12TUbCX1fH-xZ4iivB13cpWZZ-VO5-QqQ3KZG8Ittk/exec";
-const WHATSAPP_NUMBER = "917986297302"; // without +
+const WHATSAPP_NUMBER = "917986297302";
 
-// Admin login, password changes and password resets are now verified by your
-// Google Apps Script backend (SHEET_WEBHOOK above) instead of a hardcoded
-// password in this file — see the accompanying apps-script.gs for setup.
-
-// Fixed letterhead / bank details used on the Proforma Invoice (from your PI example).
-// Edit these constants if your registered details change.
 const INVOICE_CO = {
   name:"SRI NEELKANTH IMPEX PRIVATE LIMITED",
   addr1:"SCO 14-15, Saphire City, Sia Homes",
@@ -548,24 +488,18 @@ const BANK = {
 };
 const INDIAN_STATES = ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi","Jammu and Kashmir","Ladakh","Chandigarh","Puducherry","Andaman and Nicobar Islands","Dadra and Nagar Haveli and Daman and Diu","Lakshadweep"];
 
-/* ================= STATE ================= */
 let allData = [], imageMap = {}, categoryImageMap = {};
 let currentCategory = null, currentItemCode = null, currentSearchResults = null;
 let role = sessionStorage.getItem('sni_role') || 'customer';
 let adminUsername = sessionStorage.getItem('sni_admin_user') || '';
-let proformaItems = []; // working line items for the proforma builder
-let pendingCartItem = null; // item awaiting quantity confirmation in the Add to Cart modal
-let pfSearchMatches = []; // last set of catalogue search results shown in the Proforma "Add Product" panel
+let proformaItems = [];
+let pendingCartItem = null;
+let pfSearchMatches = [];
 
-/* ================= DATA LOAD ================= */
 function cleanPrice(raw){ if(!raw) return 0; const n = parseFloat(String(raw).replace(/[^0-9.]/g,'')); return isNaN(n)?0:n; }
 function cleanGST(raw){ if(!raw) return 0; const n = parseFloat(String(raw).replace(/[^0-9.]/g,'')); return isNaN(n)?0:n; }
 function formatINR(n){ return '₹'+(Number(n)||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-// jsPDF's built-in fonts don't have the ₹ glyph (it prints as a broken character), so PDFs use "Rs." instead.
 function formatINRPdf(n){ return 'Rs. '+(Number(n)||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-// applicable=false means this tax type doesn't apply to this shipment at all (e.g. IGST on an
-// intra-state sale, or any GST on an export) so we show "-"; applicable=true means the tax type
-// DOES apply, so we always show the rate even when it happens to be a genuine 0% product.
 function formatPct(n, applicable){ if(applicable===false) return '-'; n = Math.round((Number(n)||0)*100)/100; return n+'%'; }
 function showToast(msg,isError){
   const el = document.createElement('div');
@@ -601,7 +535,6 @@ window.addEventListener('error', function(e){
   document.body.prepend(b);
 });
 
-/* ================= NAVIGATION ================= */
 function showSection(id){
   document.querySelectorAll('main > section').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display = 'block';
@@ -612,14 +545,10 @@ function showSection(id){
 }
 function navigateTo(id){ showSection(id); }
 
-/* ================= ROLE / ADMIN AUTH =================
-   Login, password-change and password-reset are all verified server-side by
-   your Google Apps Script (SHEET_WEBHOOK). See apps-script.gs for the backend
-   code — nothing secret lives in this HTML file any more. */
 async function callAuthAPI(payload){
   const res = await fetch(SHEET_WEBHOOK, {
     method:'POST',
-    headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // avoids a CORS preflight against Apps Script
+    headers:{ 'Content-Type':'text/plain;charset=utf-8' },
     body: JSON.stringify(payload)
   });
   return res.json();
@@ -676,7 +605,6 @@ function logoutAdmin(){
 }
 applyRoleUI();
 
-/* ---- Change password (while logged in) ---- */
 function openChangePassword(){
   ['cp-old','cp-new','cp-confirm'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('cp-err').innerText='';
@@ -699,7 +627,6 @@ async function submitChangePassword(){
   } catch(e){ errEl.innerText='Could not reach the login service.'; console.error(e); }
 }
 
-/* ---- Forgot password (2-step: request code by email, then reset) ---- */
 function openForgotPassword(){
   document.getElementById('forgot-step1').style.display='block';
   document.getElementById('forgot-step2').style.display='none';
@@ -739,15 +666,11 @@ async function submitForgotReset(){
   } catch(e){ errEl.innerText='Could not reach the login service.'; console.error(e); }
 }
 
-/* ================= BREADCRUMB ================= */
 function renderBreadcrumb(level){
   const breadcrumb = document.getElementById('breadcrumb');
   let html = '';
   if(level==='category') html = `<button class="back-btn" onclick="renderCategories()">⬅ Back to Categories</button>`;
   else if(level==='item'){
-    // Guard against currentCategory being null (e.g. item opened from search
-    // results, or from a code shared with multiple categories) — calling
-    // .replace() on null was throwing a TypeError and breaking this click.
     if(currentSearchResults) html = `<button class="back-btn" onclick="reopenSearchResults()">⬅ Back to Search Results</button>`;
     else if(currentCategory) html = `<button class="back-btn" onclick="renderItems('${currentCategory.replace(/'/g,"\\'")}')">⬅ Back to ${currentCategory}</button>`;
     else html = `<button class="back-btn" onclick="renderCategories()">⬅ Back to Categories</button>`;
@@ -756,7 +679,6 @@ function renderBreadcrumb(level){
   breadcrumb.innerHTML = html;
 }
 
-/* ================= CATALOGUE ================= */
 function renderCategories(){
   currentCategory=null; currentItemCode=null; currentSearchResults=null; renderBreadcrumb('');
   const container = document.getElementById('catalogue');
@@ -842,16 +764,12 @@ function confirmAddToCart(){
   refreshCartIfVisible();
 }
 
-/* ================= CART (role-split) ================= */
 function cartKey(){ return role==='admin' ? 'sni_cart_admin' : 'sni_cart_customer'; }
 function getCart(){ try{ return JSON.parse(localStorage.getItem(cartKey())||'[]'); }catch(e){ return []; } }
 function saveCart(cart){ localStorage.setItem(cartKey(), JSON.stringify(cart)); updateCartCount(); }
 function updateCartCount(){ const n=getCart().reduce((s,i)=>s+Number(i.qty||0),0); document.getElementById('cart-count').innerText=n; }
 updateCartCount();
 
-// Re-renders the cart list in place when the Cart section is already the one
-// on screen (e.g. adding a product from the in-cart search panel), so newly
-// added items show up immediately instead of only after navigating away and back.
 function refreshCartIfVisible(){
   if(document.getElementById('cart').style.display==='block') renderCart(true);
 }
@@ -873,7 +791,6 @@ function addToCart(item){
   showToast('Added to cart');
 }
 
-/* ---- "Add Product" search panel inside the Cart section (customer & admin) ---- */
 function toggleCartAddPanel(){
   const panel = document.getElementById('cart-add-product-panel');
   const opening = panel.style.display==='none' || !panel.style.display;
@@ -914,7 +831,6 @@ function performCartSearch(){
   results.innerHTML = html;
 }
 
-/* ---- "Add an item not in our catalogue" (custom line item) ---- */
 function openCustomItemModal(){
   document.getElementById('ci-name').value='';
   document.getElementById('ci-desc').value='';
@@ -954,9 +870,6 @@ function renderCart(keepPanelOpen){
   const actions = document.getElementById('cart-actions');
   const note = document.getElementById('cart-note');
   const cart = getCart(); updateCartCount();
-  // collapse the search panel whenever the cart is freshly opened via navigation
-  // (but not when we're just refreshing in place right after adding an item —
-  // that would annoyingly close the panel a user has open to add more items).
   if(!keepPanelOpen){
     const addPanel = document.getElementById('cart-add-product-panel');
     if(addPanel) addPanel.style.display = 'none';
@@ -966,14 +879,14 @@ function renderCart(keepPanelOpen){
     note.innerText = 'Build a proforma from the items below — edit the "Your Price" column before creating the invoice.';
     const addBtn = `<button class="btn-ghost" onclick="toggleCartAddPanel()">+ Add Product</button>`;
     if(cart.length===0){ container.innerHTML='<p>Your admin cart is empty.</p>'; actions.innerHTML=addBtn; return; }
-    let html = `<table class="data-table cart-table"><tr><th>Image</th><th>Item</th><th>Variant</th><th>HSN</th><th>GST</th><th>Qty</th><th>Original Price</th><th>Your Price</th><th>Taxable Amt</th><th></th></tr>`;
+    let html = `<table class="data-table cart-table"><tr><th>Image</th><th>Variant</th><th>Item</th><th>HSN</th><th>GST</th><th>Qty</th><th>Original Price</th><th>Your Price</th><th>Taxable Amt</th><th></th></tr>`;
     cart.forEach((c,idx)=>{
       const img = c.img || 'https://via.placeholder.com/60?text='+encodeURIComponent(c.itemCode);
       const taxable = Number(c.qty)*Number(c.manualPrice||c.originalPrice||0);
       html += `<tr>
         <td><img src="${img}"/></td>
-        <td>${c.itemName||c.itemCode}<div class="meta">${c.description||''}</div></td>
         <td>${c.variantCode}</td>
+        <td>${c.itemName||c.itemCode}<div class="meta">${c.description||''}</div></td>
         <td class="num">${c.hsn||''}</td>
         <td class="num">${c.gst||0}%</td>
         <td><input type="number" min="1" class="qty-input" value="${c.qty}" onchange="updateCartField(${idx},'qty',this.value)"/></td>
@@ -993,13 +906,13 @@ function renderCart(keepPanelOpen){
     note.innerText = 'Get a special quote for the products below.';
     const addBtn = `<button class="btn-ghost" onclick="toggleCartAddPanel()">+ Add Product</button>`;
     if(cart.length===0){ container.innerHTML='<p>Your cart is empty.</p>'; actions.innerHTML=addBtn; return; }
-    let html = `<table class="data-table cart-table"><tr><th>Image</th><th>Item Name</th><th>Variant Code</th><th>Description</th><th>Qty</th><th>Unit</th><th></th></tr>`;
+    let html = `<table class="data-table cart-table"><tr><th>Image</th><th>Variant Code</th><th>Item Name</th><th>Description</th><th>Qty</th><th>Unit</th><th></th></tr>`;
     cart.forEach((c,idx)=>{
       const img = c.img || 'https://via.placeholder.com/60?text='+encodeURIComponent(c.itemCode);
       html += `<tr>
         <td><img src="${img}"/></td>
-        <td>${c.itemName||c.itemCode}</td>
         <td>${c.variantCode}</td>
+        <td>${c.itemName||c.itemCode}</td>
         <td>${c.description||''}</td>
         <td><input type="number" min="1" class="qty-input" value="${c.qty}" onchange="updateCartField(${idx},'qty',this.value)"/></td>
         <td>${c.unit||''}</td>
@@ -1024,11 +937,6 @@ function updateCartField(index,field,val){
 function removeCartItem(index){ const cart=getCart(); cart.splice(index,1); saveCart(cart); renderCart(); }
 function clearCart(){ if(!confirm('Clear cart?')) return; localStorage.removeItem(cartKey()); renderCart(); updateCartCount(); }
 
-/* ---- Image embedding helper (best-effort; used by cart & proforma PDFs) ----
-   Fetches an image and converts it to a data URL so jsPDF can embed it.
-   If the image host doesn't allow cross-origin reads (no CORS headers —
-   common with hotlinked Google Drive URLs), this silently returns null and
-   the PDF is generated without that picture rather than failing outright. */
 async function loadImageAsDataURL(url){
   if(!url) return null;
   try{
@@ -1051,7 +959,6 @@ function dataUrlFormat(dataUrl){
   return t==='JPG' ? 'JPEG' : t;
 }
 
-/* ---- Customer: PDF export (no prices, includes item image) ---- */
 async function downloadCartPDF(){
   const cart = getCart();
   if(cart.length===0){ alert('Cart empty'); return; }
@@ -1085,7 +992,6 @@ async function downloadCartPDF(){
   doc.save('cart-quote.pdf');
 }
 
-/* ---- Customer: WhatsApp cart enquiry ---- */
 function openCartEnquiryModal(){ document.getElementById('cart-modal').style.display='flex'; }
 function closeCartModal(){ document.getElementById('cart-modal').style.display='none'; }
 function sendCartEnquiry(){
@@ -1102,7 +1008,6 @@ function sendCartEnquiry(){
   window.open(wa,'_blank'); closeCartModal();
 }
 
-/* ================= ENQUIRY FORM ================= */
 function sendEnquiry(){
   const name=document.getElementById('enq-name').value.trim();
   const email=document.getElementById('enq-email').value.trim();
@@ -1116,7 +1021,6 @@ function sendEnquiry(){
   window.open(wa,'_blank'); alert('Opening WhatsApp to send your enquiry');
 }
 
-/* ================= GLOBAL SEARCH ================= */
 function performSearch(){
   const query = document.getElementById('searchInput').value.trim().toLowerCase();
   if(!query){ renderCategories(); return; }
@@ -1140,7 +1044,6 @@ function performSearch(){
 function clearSearch(){ document.getElementById('searchInput').value=''; currentSearchResults=null; renderCategories(); }
 function reopenSearchResults(){ performSearch(); }
 
-/* ================= PROFORMA BUILDER ================= */
 (function populateStateDropdown(){
   const sel = document.getElementById('pf-buyer-state');
   INDIAN_STATES.forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o); });
@@ -1154,16 +1057,14 @@ function createProformaFromCart(){
   syncProformaFromCart();
   showSection('proforma');
 }
-// Builds the merged "Item / Variant / Description" text used in the proforma line item.
 function buildProformaDesc(itemName, variantCode, description){
   let parts = [];
-  if(itemName) parts.push(itemName);
   if(variantCode) parts.push(variantCode);
+  if(itemName) parts.push(itemName);
   let text = parts.join(' - ');
   if(description) text = text ? (text+' - '+description) : description;
   return text;
 }
-// Fully REPLACES the current line items with a fresh copy of the admin cart.
 function syncProformaFromCart(){
   const cart = getCart();
   if(role!=='admin'){ return; }
@@ -1175,8 +1076,6 @@ function syncProformaFromCart(){
   renderProformaItems();
   showToast('Line items replaced with admin cart');
 }
-// ADDS the admin cart's items on top of whatever is already in the proforma,
-// so existing manually-entered or edited rows are never wiped out.
 function mergeProformaFromCart(){
   if(role!=='admin') return;
   const cart = getCart();
@@ -1201,7 +1100,6 @@ function updateProformaField(i,field,val){
   proformaItems[i][field]=val; renderProformaItems();
 }
 
-/* ---- "Add Product" search panel inside the Proforma builder ---- */
 function toggleProformaAddPanel(){
   const panel = document.getElementById('pf-add-product-panel');
   const opening = panel.style.display==='none' || !panel.style.display;
@@ -1283,7 +1181,7 @@ function renderProformaItems(){
   if(proformaItems.length===0){
     wrap.innerHTML = '<p style="color:var(--steel)">No line items yet — sync from your admin cart, search &amp; add a product, or add a blank row.</p>';
   } else {
-    let html = `<table class="data-table pf-table"><tr><th>HSN</th><th>Item, Variant &amp; Description</th><th>Qty</th><th>Unit</th><th>Unit Price</th><th>GST%</th><th>Taxable</th><th>CGST</th><th>SGST</th><th>IGST</th><th>Total</th><th></th></tr>`;
+    let html = `<table class="data-table pf-table"><tr><th>HSN</th><th>Variant, Item &amp; Description</th><th>Qty</th><th>Unit</th><th>Unit Price</th><th>GST%</th><th>Taxable</th><th>CGST</th><th>SGST</th><th>IGST</th><th>Total</th><th></th></tr>`;
     proformaItems.forEach((item,i)=>{
       const c = calcLine(item);
       html += `<tr>
@@ -1344,7 +1242,6 @@ function resetProformaForm(){
   renderProformaItems();
 }
 
-/* ---- Amount in words (Indian numbering) ---- */
 function amountInWords(num){
   num = Math.round(Number(num)||0);
   if(num===0) return 'Zero Only';
@@ -1364,15 +1261,6 @@ function amountInWords(num){
   return 'Rupees '+parts.join(' ')+' Only';
 }
 
-/* ---- Page-break helper for the manually-drawn parts of the Proforma PDF ----
-   jspdf-autotable paginates the line-items table by itself, but everything
-   drawn with doc.rect()/doc.text() after it (totals bar, amount-in-words,
-   transport row, signatures) is placed at fixed coordinates and was
-   previously able to run off the bottom of the page. This checks the
-   remaining space first and starts a fresh page when there isn't enough.
-   PDF_TOP_GAP reserves room at the top of any newly-created page so that the
-   "PAGE n of N" header stamped in later never overlaps the first line of
-   content on that page. */
 const PDF_TOP_GAP = 16;
 function ensureSpace(doc, y, neededHeight, margin){
   margin = margin==null ? 8 : margin;
@@ -1384,7 +1272,6 @@ function ensureSpace(doc, y, neededHeight, margin){
   return y;
 }
 
-/* ---- PDF generation matching the supplied PI layout ---- */
 function generateProformaPDF(){
   if(proformaItems.length===0){ alert('Add at least one line item before generating the invoice.'); return; }
   const { jsPDF } = window.jspdf;
@@ -1394,11 +1281,8 @@ function generateProformaPDF(){
 
   doc.setDrawColor(90,113,132); doc.setLineWidth(0.15);
 
-  // Title bar
   doc.setFontSize(13); doc.setFont(undefined,'bold');
   doc.text('PROFORMA INVOICE', PW/2, y+5, {align:'center'});
-  doc.setFontSize(8); doc.setFont(undefined,'normal');
-  doc.text('PAGE 1 of 1', PW-M, y+4, {align:'right'});
   y+=8; doc.line(M,y,PW-M,y); y+=2;
 
   const leftW = 95, rightX = M+leftW+2, rightW = CW-leftW-2;
@@ -1412,7 +1296,6 @@ function generateProformaPDF(){
     doc.setFont(undefined,'normal');
   }
 
-  // ---- Row: Consignor | Invoice info ----
   const topH=42;
   box(M,leftW,topH);
   doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('CONSIGNOR',M+1.5,y+4);
@@ -1439,7 +1322,6 @@ function generateProformaPDF(){
   doc.text('A/c No: '+BANK.account+'   IFSC: '+BANK.ifsc+(BANK.swift?'   SWIFT: '+BANK.swift:''), rightX+1.5, y+39);
   y+=topH;
 
-  // ---- Row: Consignee | Country of Dispatch/Destination ----
   const cH=30;
   box(M,leftW,cH);
   doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('CONSIGNEE',M+1.5,y+4);
@@ -1463,19 +1345,19 @@ function generateProformaPDF(){
   field(rightX+halfW,halfW,'COUNTRY OF FINAL DESTINATION', document.getElementById('pf-country-dest').value);
   y+=cH;
 
-  // ---- Row: Pre Carriage / Place of Receipt / Incoterm ----
+  // ---- Row: Notify Party ----
+  y = fieldRow(doc,M,CW,y,10,[['NOTIFY PARTY', document.getElementById('pf-notify').value]]);
+
   y = fieldRow3(doc,M,CW,y,10,
     ['PRE CARRIAGE BY','PLACE OF RECEIPT BY PRE CARRIER','FOB / C&F / CIF / CFR'],
     [document.getElementById('pf-pre-carriage').value, document.getElementById('pf-place-receipt').value, document.getElementById('pf-incoterm').value]);
 
-  // ---- Row: Vessel / Port of Loading / Currency / Payment terms ----
   y = fieldRow(doc,M,CW,y,10,
     [['VESSEL / FLIGHT NO.',document.getElementById('pf-vessel').value],
      ['PORT OF LOADING',document.getElementById('pf-port-loading').value],
      ['CURRENCY OF INVOICE',document.getElementById('pf-currency').value],
      ['PAYMENT TERMS',document.getElementById('pf-payment-terms').value]]);
 
-  // ---- Row: Port of Discharge / Destination / Shipment of Goods / Brand ----
   y = fieldRow(doc,M,CW,y,10,
     [['PORT OF DISCHARGE',document.getElementById('pf-port-discharge').value],
      ['DESTINATION',document.getElementById('pf-destination').value],
@@ -1484,45 +1366,54 @@ function generateProformaPDF(){
 
   y+=3;
 
-  // ---- Line items table ----
   const t = proformaTotals();
   const body = proformaItems.map((item,i)=>{
     const c = calcLine(item);
     return [i+1, item.hsn, item.desc, `${item.qty} ${item.unit}`, formatINRPdf(item.unitPrice),
       formatINRPdf(c.taxable), formatPct(c.cgstPct, c.cgstApplicable), formatPct(c.sgstPct, c.sgstApplicable), formatPct(c.igstPct, c.igstApplicable), formatINRPdf(c.total)];
   });
-  const totalsRowCount = 4; // Taxable / CGST / SGST / IGST subtotal rows drawn in the foot
+  const PF_COL_STYLES = {0:{cellWidth:9,halign:'center'},1:{cellWidth:17},2:{cellWidth:'auto'},3:{cellWidth:14,halign:'center'},4:{cellWidth:19,halign:'right'},5:{cellWidth:22,halign:'right'},6:{cellWidth:11,halign:'center'},7:{cellWidth:11,halign:'center'},8:{cellWidth:11,halign:'center'},9:{cellWidth:24,halign:'right'}};
+  const itemTableStartPage = doc.internal.getNumberOfPages();
   doc.autoTable({
     startY:y, margin:{left:M,right:M,top:PDF_TOP_GAP,bottom:16},
-    head:[['Sr.','HSN','Item, Variant & Description','Total Units','Unit Price','Taxable Amt','CGST','SGST','IGST','Total Amount']],
+    head:[['Sr.','HSN','Variant, Item & Description','Total Units','Unit Price','Taxable Amt','CGST','SGST','IGST','Total Amount']],
     body,
     theme:'grid',
     styles:{ fontSize:7, cellPadding:2, lineColor:[90,113,132], lineWidth:0.1, overflow:'linebreak' },
     headStyles:{ fillColor:[231,236,240], textColor:[11,42,69], fontStyle:'bold', fontSize:7 },
-    columnStyles:{0:{cellWidth:7,halign:'center'},1:{cellWidth:15},2:{cellWidth:'auto'},3:{cellWidth:16,halign:'center'},4:{cellWidth:22,halign:'right'},5:{cellWidth:26,halign:'right'},6:{cellWidth:12,halign:'center'},7:{cellWidth:12,halign:'center'},8:{cellWidth:12,halign:'center'},9:{cellWidth:26,halign:'right'}},
-    foot:[
-      ['','','','','Total Taxable Amount','','','','',formatINRPdf(t.taxable)],
-      ['','','','','CGST Amount','','','','',formatINRPdf(t.cgst)],
-      ['','','','','SGST Amount','','','','',formatINRPdf(t.sgst)],
-      ['','','','','IGST Amount','','','','',formatINRPdf(t.igst)],
+    columnStyles: PF_COL_STYLES
+  });
+  y = doc.lastAutoTable.finalY+2;
+
+  const itemTableEndPage = doc.internal.getNumberOfPages();
+  for(let p=itemTableStartPage; p<itemTableEndPage; p++){
+    doc.setPage(p);
+    const pageHeight = doc.internal.pageSize.getHeight();
+    doc.setFontSize(7.5); doc.setFont(undefined,'italic'); doc.setTextColor(90,113,132);
+    doc.text('Continued on next page...', PW-M, pageHeight-6, {align:'right'});
+    doc.setFont(undefined,'normal');
+  }
+  doc.setPage(itemTableEndPage);
+
+  y = ensureSpace(doc, y, 26);
+  doc.autoTable({
+    startY:y, margin:{left:M,right:M,top:PDF_TOP_GAP,bottom:16},
+    body:[
+      [{content:'Total Taxable Amount', colSpan:9, styles:{halign:'right'}}, formatINRPdf(t.taxable)],
+      [{content:'CGST Amount', colSpan:9, styles:{halign:'right'}}, formatINRPdf(t.cgst)],
+      [{content:'SGST Amount', colSpan:9, styles:{halign:'right'}}, formatINRPdf(t.sgst)],
+      [{content:'IGST Amount', colSpan:9, styles:{halign:'right'}}, formatINRPdf(t.igst)],
     ],
-    // Make the subtotal rows visually distinct from the item rows (matches the
-    // steel-100 shaded totals block used on the Proforma section on screen)
-    // instead of blending into the item table above them.
-    footStyles:{ fontStyle:'bold', textColor:[11,42,69], fillColor:[231,236,240], fontSize:7.5, lineWidth:0.15 },
-    didParseCell: function(data){
-      if(data.section==='foot'){
-        data.cell.styles.fillColor = [231,236,240];
-        if(data.column.index===4){ data.cell.styles.halign='right'; }
-        if(data.column.index===9){ data.cell.styles.halign='right'; data.cell.styles.textColor=[11,42,69]; data.cell.styles.fontStyle='bold'; }
-      }
+    theme:'grid',
+    styles:{ fontSize:7, cellPadding:{top:0.8,right:2,bottom:0.8,left:2}, lineColor:[90,113,132], lineWidth:0.15, fontStyle:'bold', textColor:[11,42,69] },
+    columnStyles: PF_COL_STYLES,
+    didParseCell:function(data){
+      data.cell.styles.fillColor = [231,236,240];
+      if(data.column.index===9){ data.cell.styles.textColor=[11,42,69]; data.cell.styles.fontStyle='bold'; }
     }
   });
   y = doc.lastAutoTable.finalY+2;
 
-  // Everything below here is drawn manually (not by autoTable) so it needs its
-  // own page-break checks — otherwise a long item list pushes this content
-  // past the bottom edge of the page and it gets cut off.
   const rounded = Math.round(t.total);
   y = ensureSpace(doc, y, 10);
   doc.setFillColor(217,143,30); doc.rect(M,y,CW,7,'F');
@@ -1543,7 +1434,6 @@ function generateProformaPDF(){
   doc.text('We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.', M+1, y);
   y+=5;
 
-  // ---- Transport row ----
   y = ensureSpace(doc, y, 10);
   y = fieldRow(doc,M,CW,y,10,
     [['TRANSPORT',document.getElementById('pf-transport').value],
@@ -1563,7 +1453,6 @@ function generateProformaPDF(){
   doc.text('Signature with Date and Stamp', M+1, y+22);
   doc.text('Authorised Signatory', M+sigW+1, y+22);
 
-  // Stamp the correct "PAGE n of N" on every page now that final count is known.
   const pageCount = doc.internal.getNumberOfPages();
   for(let p=1; p<=pageCount; p++){
     doc.setPage(p);
