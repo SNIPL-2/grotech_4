@@ -383,7 +383,7 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
 
       <div class="actions">
         <button class="btn" id="doc-save-btn" onclick="saveDocumentToSheet()">💾 Save to Records</button>
-        <button class="btn btn-amber" onclick="generateProformaPDF()">Generate PDF</button>
+        <button class="btn btn-amber" id="doc-generate-pdf-btn" onclick="generateProformaPDF()">Generate PDF</button>
         <button class="btn-ghost" onclick="resetProformaForm()">Reset Form</button>
       </div>
     </div>
@@ -599,6 +599,8 @@ const PERMISSION_LABELS = {
   canMakeInvoice: "Create tax invoices",
   canEditInvoice: "Edit existing invoices",
   canDownloadCart: "Download admin cart as PDF",
+  canGenerateProformaPDF: "Generate Proforma PDF",   // ← replaces canGeneratePDF
+  canGenerateInvoicePDF: "Generate Invoice PDF",
   canManageProfiles: "Manage admin profiles (powerful)"
 };
 
@@ -1266,6 +1268,8 @@ function updateDocTypeUI(){
   const canSaveNew = currentDocType==='invoice' ? hasPerm('canMakeInvoice') : hasPerm('canMakeProforma');
   const canSaveEdit = currentDocType==='invoice' ? hasPerm('canEditInvoice') : hasPerm('canEditProforma');
   document.getElementById('doc-save-btn').disabled = loadedDocNo ? !canSaveEdit : !canSaveNew;
+  const canGeneratePDF = currentDocType==='invoice' ? hasPerm('canGenerateInvoicePDF') : hasPerm('canGenerateProformaPDF');
+  document.getElementById('doc-generate-pdf-btn').disabled = !canGeneratePDF;   // ← updated
   document.getElementById('doc-editing-banner').style.display = loadedDocNo ? 'flex' : 'none';
   document.getElementById('doc-editing-no').innerText = loadedDocNo || '';
 }
@@ -1596,8 +1600,11 @@ function ensureSpace(doc, y, neededHeight, margin){
 
 /* ---- PDF generation (shared layout for Proforma and Invoice) ---- */
 function generateProformaPDF(){
-  if(proformaItems.length===0){ alert('Add at least one line item before generating the document.'); return; }
   const isInvoice = currentDocType==='invoice';
+  const permKey = isInvoice ? 'canGenerateInvoicePDF' : 'canGenerateProformaPDF';
+  if(!hasPerm(permKey)){ showToast('You do not have permission to generate this PDF', true); return; }
+  if(proformaItems.length===0){ alert('Add at least one line item before generating the document.'); return; }
+  //const isInvoice = currentDocType==='invoice';
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const M=8, PW=210, CW=PW-2*M;
