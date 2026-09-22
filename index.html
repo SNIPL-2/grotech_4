@@ -299,7 +299,7 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
         <div class="form-row">
           <div class="col"><label>Buyer's Order No.</label><input id="pf-order-no"/></div>
           <div class="col"><label>Buyer's Order Date</label><input id="pf-order-date" type="date"/></div>
-          <div class="col"><label>Notify Party</label><textarea id="pf-notify" style="min-height:70px"></textarea></div>
+          <div class="col"><label>SHIP TO</label><textarea id="pf-notify" style="min-height:70px"></textarea></div>
         </div>
       </fieldset>
 
@@ -1702,7 +1702,7 @@ function generateProformaPDF(){
   doc.text(consigneeLines, M+1.5, y+13,{lineHeightFactor:1.35});
 
   doc.rect(rightX,rowTopY,rightW,rightBoxH);
-  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('NOTIFY PARTY', rightX+1.5, rowTopY+4);
+  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('SHIP TO', rightX+1.5, rowTopY+4);
   doc.setFontSize(7.8); doc.setTextColor(22,35,46); doc.setFont(undefined,'bold');
   doc.text(notifyLines, rightX+1.5, rowTopY+7, {lineHeightFactor:1.15});
   doc.setFont(undefined,'normal');
