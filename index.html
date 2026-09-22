@@ -12,20 +12,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <style>
-/* ============ DESIGN TOKENS ============
-   Colour:  --navy #0B2A45 (deep steel-navy, primary)
-            --navy-2 #123A5E (panel navy)
-            --steel #5A7184 (steel-blue-grey, structure/borders)
-            --steel-100 #E7ECF0 (light steel panel)
-            --paper #F3F5F7 (cool workshop-paper background, NOT warm cream)
-            --amber #D98F1E (brass/hazard-tag amber accent — used sparingly)
-            --ink #16232E (near-black text)
-   Type:    Barlow Condensed (headlines, engineering-plate feel)
-            Inter (body/UI)
-            IBM Plex Mono (codes, prices, HSN/GST data — parts-catalogue feel)
-   Layout:  left-aligned, structured grid, spec-sheet cards (1px steel border,
-            4px radius, no soft SaaS shadow), dense data tables.
-=========================================== */
 :root{
   --navy:#0B2A45; --navy-2:#123A5E; --steel:#5A7184; --steel-100:#E7ECF0;
   --paper:#F3F5F7; --amber:#D98F1E; --amber-dark:#B7740F; --ink:#16232E;
@@ -47,19 +33,18 @@ button{font-family:'Inter',Arial,sans-serif;font-weight:600;cursor:pointer;borde
 .btn-ghost:hover{background:var(--steel-100)}
 .btn-danger{background:#fff;color:var(--danger);border:1px solid var(--danger)}
 .btn-sm{padding:6px 12px;font-size:.85rem;border-radius:4px}
+.btn:disabled,.btn-ghost:disabled,.btn-amber:disabled{opacity:.5;cursor:not-allowed}
 
-/* header */
 header.header{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--navy);color:#fff;padding:10px 20px;flex-wrap:wrap;border-bottom:3px solid var(--amber)}
 .brand{display:flex;align-items:center;gap:12px}
 .logo{max-height:56px}
 .company-info h1{color:#fff;font-size:1.9rem;margin:0;line-height:1}
 .company-info p{margin:0;font-size:.78rem;letter-spacing:1px;color:#B9C6D3}
-.role-zone{display:flex;align-items:center;gap:10px;font-size:.85rem}
+.role-zone{display:flex;align-items:center;gap:10px;font-size:.85rem;flex-wrap:wrap}
 .role-badge{background:var(--amber);color:var(--navy);padding:4px 10px;border-radius:3px;font-weight:700;font-size:.75rem;letter-spacing:.5px}
 .admin-link{background:transparent;color:#DCE7EF;border:1px solid #35506A;padding:6px 12px;border-radius:4px;font-size:.85rem}
 .admin-link:hover{background:#173F63}
 
-/* nav */
 nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
 .nav-inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-wrap:wrap}
 .nav-links{display:flex;gap:2px;flex-wrap:wrap}
@@ -70,7 +55,6 @@ nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-
 
 main{max-width:1200px;margin:0 auto;padding:0 16px 40px}
 
-/* hero */
 .hero-section{padding:64px 8px 48px;border-bottom:1px solid var(--line);margin-bottom:8px}
 .hero-eyebrow{font-family:'IBM Plex Mono';font-size:.78rem;color:var(--amber-dark);letter-spacing:1px}
 .hero-section h1{font-size:3rem;max-width:16ch;margin:6px 0 14px}
@@ -84,17 +68,14 @@ main{max-width:1200px;margin:0 auto;padding:0 16px 40px}
 section{padding:40px 0;border-bottom:1px solid var(--line)}
 section:last-child{border-bottom:none}
 
-/* about / contact cards */
 .card-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:20px}
 .info-card{flex:1 1 240px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:18px}
 .info-card h3{font-size:1.3rem}
 
-/* search */
-.search-bar{display:flex;gap:10px;margin:16px 0}
-.search-bar input{flex:1;padding:10px 12px;border-radius:4px;border:1px solid var(--line);font-family:inherit}
+.search-bar{display:flex;gap:10px;margin:16px 0;flex-wrap:wrap}
+.search-bar input{flex:1;min-width:160px;padding:10px 12px;border-radius:4px;border:1px solid var(--line);font-family:inherit}
 .search-bar button{background:var(--navy);color:#fff;padding:10px 16px;border:none;border-radius:4px}
 
-/* grid / catalogue */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-top:14px}
 .card{background:#fff;border:1px solid var(--line);border-radius:4px;text-align:center;padding:14px 10px;cursor:pointer;transition:border-color .15s, box-shadow .15s}
 .card:hover{border-color:var(--amber);box-shadow:2px 2px 0 var(--amber)}
@@ -105,7 +86,6 @@ section:last-child{border-bottom:none}
 #breadcrumb{margin-top:8px}
 .back-btn{background:transparent !important;color:var(--navy) !important;border:1px solid var(--steel) !important;padding:8px 14px !important;border-radius:4px !important}
 
-/* item detail */
 .detail-image{max-width:300px;height:auto;margin:12px 0;border:1px solid var(--line);border-radius:4px}
 .meta{color:var(--steel);font-family:'IBM Plex Mono';font-size:.85rem}
 table.data-table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff}
@@ -116,31 +96,27 @@ table.data-table{width:100%;border-collapse:collapse;margin-top:14px;background:
 
 footer.footer{background:var(--navy);color:#B9C6D3;text-align:center;padding:16px;font-size:.85rem}
 
-/* forms */
 .form-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:22px;max-width:640px}
 .form-card.wide{max-width:none}
-.form-row{display:flex;gap:12px;margin-bottom:10px}
-.form-row .col{flex:1;display:flex;flex-direction:column;gap:3px}
+.form-row{display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.form-row .col{flex:1;min-width:140px;display:flex;flex-direction:column;gap:3px}
 .form-row .col label{font-size:.78rem;color:var(--steel);font-weight:600}
 input,textarea,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:4px;font-family:inherit;font-size:.92rem}
 textarea{min-height:100px}
 .note{background:#FFF6E4;border-left:4px solid var(--amber);padding:10px 14px;margin-bottom:14px;border-radius:3px;font-size:.9rem}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 
-/* cart */
 .cart-table img{max-width:60px;height:auto;border-radius:3px}
 .price-input{width:110px;font-family:'IBM Plex Mono'}
 .qty-input{width:70px}
 .remove-x{background:none;border:none;color:var(--danger);font-weight:700;cursor:pointer;font-size:1rem}
 
-/* admin login modal */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,42,69,.55);align-items:center;justify-content:center;z-index:100}
-.modal-box{background:#fff;padding:24px;border-radius:6px;max-width:380px;width:92%;border-top:4px solid var(--amber)}
+.modal-box{background:#fff;padding:24px;border-radius:6px;max-width:380px;width:92%;border-top:4px solid var(--amber);max-height:90vh;overflow:auto}
 .modal-box h3{margin-bottom:4px}
 .modal-box .err{color:var(--danger);font-size:.85rem;min-height:18px}
 .modal-box.modal-wide{max-width:640px}
 
-/* proforma */
 fieldset{border:1px solid var(--line);border-radius:4px;padding:14px 16px 16px;margin-bottom:16px}
 legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:0 6px;font-size:1.1rem}
 .pf-table th,.pf-table td{font-size:.82rem;padding:6px}
@@ -153,6 +129,17 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
 .pf-words{margin-top:8px;font-style:italic;color:var(--steel)}
 .add-product-panel{background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px;margin-bottom:14px}
 .add-product-panel .search-bar{margin:0 0 10px}
+
+.type-toggle{display:flex;gap:0;border:1px solid var(--steel);border-radius:4px;overflow:hidden;width:fit-content;margin-bottom:16px}
+.type-toggle button{border:none;background:#fff;color:var(--navy);padding:9px 20px;font-weight:700}
+.type-toggle button.active{background:var(--navy);color:#fff}
+.editing-banner{background:#EAF3EC;border-left:4px solid var(--ok);padding:10px 14px;margin-bottom:14px;border-radius:3px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.perm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px 14px;margin:10px 0}
+.perm-grid label{display:flex;align-items:center;gap:6px;font-size:.85rem;font-weight:500;color:var(--ink)}
+.perm-grid input[type=checkbox]{width:auto}
+.status-pill{padding:2px 8px;border-radius:10px;font-size:.72rem;font-weight:700}
+.status-active{background:#EAF3EC;color:var(--ok)}
+.status-inactive{background:#F7E7E5;color:var(--danger)}
 
 @media(max-width:760px){
   .hero-section h1{font-size:2.1rem}
@@ -185,7 +172,9 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
       <button onclick="showSection('products')">Products</button>
       <button onclick="showSection('enquiry')">Enquiry</button>
       <button onclick="showSection('contact')">Contact</button>
-      <button class="admin-only" id="nav-proforma" style="display:none" onclick="showSection('proforma')">Proforma</button>
+      <button class="admin-only" id="nav-documents" style="display:none" onclick="showSection('documents')">Documents</button>
+      <button class="admin-only" id="nav-docsearch" style="display:none" onclick="showSection('docsearch')">Search Records</button>
+      <button class="admin-only" id="nav-profiles" style="display:none" onclick="showSection('profiles')">Profiles</button>
       <button id="cart-btn" class="cart-btn" onclick="showSection('cart')">🛒 Cart (<span id="cart-count">0</span>)</button>
     </div>
   </div>
@@ -286,16 +275,24 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
     <div class="actions" id="cart-actions"></div>
   </section>
 
-  <!-- PROFORMA (admin only) -->
-  <section id="proforma" style="display:none">
-    <h2>Proforma Invoice Builder</h2>
+  <!-- DOCUMENTS (Proforma + Invoice, admin only) -->
+  <section id="documents" style="display:none">
+    <h2 id="doc-heading">Documents</h2>
+    <div class="type-toggle" id="doc-type-toggle">
+      <button id="doc-type-btn-proforma" onclick="setDocType('proforma')">Proforma Invoice</button>
+      <button id="doc-type-btn-invoice" onclick="setDocType('invoice')">Tax Invoice</button>
+    </div>
+    <div id="doc-editing-banner" class="editing-banner" style="display:none">
+      <span>Editing record <strong id="doc-editing-no"></strong> — Save will ask whether to update this row or create a new one.</span>
+      <button class="btn-sm btn-ghost" onclick="startNewDocument()">+ Start New Instead</button>
+    </div>
     <p style="font-size:.88rem;color:var(--steel)">All fields below are optional except the line items. CGST/SGST vs IGST is auto-detected from the buyer's state and destination country.</p>
 
     <div class="form-card wide">
       <fieldset>
         <legend>Invoice Details</legend>
         <div class="form-row">
-          <div class="col"><label>Proforma Invoice No.</label><input id="pf-no"/></div>
+          <div class="col"><label id="pf-no-label">Proforma Invoice No.</label><input id="pf-no"/></div>
           <div class="col"><label>Date</label><input id="pf-date" type="date"/></div>
           <div class="col"><label>IEC</label><input id="pf-iec"/></div>
         </div>
@@ -385,10 +382,53 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
       </fieldset>
 
       <div class="actions">
-        <button class="btn btn-amber" onclick="generateProformaPDF()">Generate Proforma PDF</button>
+        <button class="btn" id="doc-save-btn" onclick="saveDocumentToSheet()">💾 Save to Records</button>
+        <button class="btn btn-amber" onclick="generateProformaPDF()">Generate PDF</button>
         <button class="btn-ghost" onclick="resetProformaForm()">Reset Form</button>
       </div>
     </div>
+  </section>
+
+  <!-- SEARCH RECORDS (admin only) -->
+  <section id="docsearch" style="display:none">
+    <h2>Search Records</h2>
+    <div class="type-toggle" id="search-type-toggle">
+      <button id="search-type-btn-proforma" onclick="setSearchType('proforma')">Proforma</button>
+      <button id="search-type-btn-invoice" onclick="setSearchType('invoice')">Invoice</button>
+    </div>
+    <div class="form-card wide">
+      <div class="form-row">
+        <div class="col"><label>Document No.</label><input id="ds-docno"/></div>
+        <div class="col"><label>Customer Name</label><input id="ds-name"/></div>
+        <div class="col"><label>Date From</label><input id="ds-from" type="date"/></div>
+        <div class="col"><label>Date To</label><input id="ds-to" type="date"/></div>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <button class="btn" onclick="runDocSearch()">Search</button>
+        <button class="btn-ghost" onclick="clearDocSearch()">Clear</button>
+      </div>
+      <div id="ds-results" style="margin-top:16px"></div>
+    </div>
+  </section>
+
+  <!-- PROFILES (canManageProfiles only) -->
+  <section id="profiles" style="display:none">
+    <h2>Admin Profiles</h2>
+    <div class="form-card wide">
+      <fieldset>
+        <legend>Create New Profile</legend>
+        <div class="form-row">
+          <div class="col"><label>Username *</label><input id="np-username"/></div>
+        </div>
+        <p style="font-size:.82rem;color:var(--steel);margin:0 0 6px">A random first-time password is generated and emailed to export@srineelkanth.com — never shown here.</p>
+        <div class="perm-grid" id="np-perm-grid"></div>
+        <div class="err" id="np-err" style="color:var(--danger);font-size:.85rem;min-height:18px"></div>
+        <div class="actions" style="margin-top:0">
+          <button class="btn" onclick="createNewProfile()">Create Profile</button>
+        </div>
+      </fieldset>
+    </div>
+    <div id="profiles-list" style="margin-top:20px"></div>
   </section>
 
 </main>
@@ -413,16 +453,17 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
   </div>
 </div>
 
-<!-- Change password modal -->
+<!-- Change password modal (also used to force a change after first login) -->
 <div id="change-pass-modal" class="modal-overlay">
   <div class="modal-box">
     <h3>Change Password</h3>
+    <p style="font-size:.85rem;color:var(--steel);margin-top:0" id="cp-forced-note"></p>
     <div class="col" style="margin-bottom:8px"><label>Current Password</label><input id="cp-old" type="password"/></div>
     <div class="col" style="margin-bottom:8px"><label>New Password</label><input id="cp-new" type="password"/></div>
     <div class="col" style="margin-bottom:4px"><label>Confirm New Password</label><input id="cp-confirm" type="password" onkeydown="if(event.key==='Enter')submitChangePassword()"/></div>
     <div class="err" id="cp-err"></div>
     <div class="actions" style="justify-content:flex-end">
-      <button class="btn-ghost btn-sm" onclick="closeChangePassword()">Cancel</button>
+      <button class="btn-ghost btn-sm" id="cp-cancel-btn" onclick="closeChangePassword()">Cancel</button>
       <button class="btn btn-sm" onclick="submitChangePassword()">Update Password</button>
     </div>
   </div>
@@ -514,18 +555,18 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
 
 <script>
 /* ================= CONFIGURATION ================= */
-const DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6NvfwkfCNg4TC0jrlrfiqdXA4UyOGhDdm9cJs2tkJxKpqoDa2OjHulev5O6avSKhMGWAP6utFs-MD/pub?gid=0&single=true&output=csv";
-const IMAGE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6NvfwkfCNg4TC0jrlrfiqdXA4UyOGhDdm9cJs2tkJxKpqoDa2OjHulev5O6avSKhMGWAP6utFs-MD/pub?gid=676833393&single=true&output=csv";
-const CATEGORY_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6NvfwkfCNg4TC0jrlrfiqdXA4UyOGhDdm9cJs2tkJxKpqoDa2OjHulev5O6avSKhMGWAP6utFs-MD/pub?gid=2136776722&single=true&output=csv";
-const SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbwaPVWC09sCKQmeUCYfVUNUo12TUbCX1fH-xZ4iivB13cpWZZ-VO5-QqQ3KZG8Ittk/exec";
+const DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkhyrKGMFdel2iXpBCcfAK1fOB1NBL8oSu_mshk21XT9TYMNgM9xWj_bfyiGGcVybKKsByMulE8xJc/pub?gid=0&single=true&output=csv";
+const IMAGE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkhyrKGMFdel2iXpBCcfAK1fOB1NBL8oSu_mshk21XT9TYMNgM9xWj_bfyiGGcVybKKsByMulE8xJc/pub?gid=676833393&single=true&output=csv";
+const CATEGORY_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkhyrKGMFdel2iXpBCcfAK1fOB1NBL8oSu_mshk21XT9TYMNgM9xWj_bfyiGGcVybKKsByMulE8xJc/pub?gid=2136776722&single=true&output=csv";
+const SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbw6VI4AB9cn401VxGvoWm891aCLUOXPReDSYNvsNFAGFC1gWaS-C4NqKFT5-IDH_fE/exec";
 const WHATSAPP_NUMBER = "917986297302"; // without +
 
-// Admin login, password changes and password resets are now verified by your
-// Google Apps Script backend (SHEET_WEBHOOK above) instead of a hardcoded
-// password in this file — see the accompanying apps-script.gs for setup.
+// All admin auth, profiles, permissions and Proforma/Invoice record storage
+// are handled server-side by your Apps Script backend (SHEET_WEBHOOK above)
+// — see the accompanying apps-script.gs. Nothing secret, and no password of
+// any kind, lives in this HTML file.
 
-// Fixed letterhead / bank details used on the Proforma Invoice (from your PI example).
-// Edit these constants if your registered details change.
+// Fixed letterhead / bank details used on generated invoices.
 const INVOICE_CO = {
   name:"SRI NEELKANTH IMPEX PRIVATE LIMITED",
   addr1:"SCO 14-15, Saphire City, Sia Homes",
@@ -548,24 +589,52 @@ const BANK = {
 };
 const INDIAN_STATES = ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi","Jammu and Kashmir","Ladakh","Chandigarh","Puducherry","Andaman and Nicobar Islands","Dadra and Nagar Haveli and Daman and Diu","Lakshadweep"];
 
+// The full set of grantable permissions, and the human label shown for each
+// in the Profiles screen. canManageProfiles is deliberately powerful (it
+// can create/edit/deactivate other profiles) and is called out separately.
+const PERMISSION_LABELS = {
+  canViewPrices: "View prices & GST",
+  canMakeProforma: "Create proforma invoices",
+  canEditProforma: "Edit existing proformas",
+  canMakeInvoice: "Create tax invoices",
+  canEditInvoice: "Edit existing invoices",
+  canDownloadCart: "Download admin cart as PDF",
+  canManageProfiles: "Manage admin profiles (powerful)"
+};
+
 /* ================= STATE ================= */
 let allData = [], imageMap = {}, categoryImageMap = {};
 let currentCategory = null, currentItemCode = null, currentSearchResults = null;
 let role = sessionStorage.getItem('sni_role') || 'customer';
 let adminUsername = sessionStorage.getItem('sni_admin_user') || '';
-let proformaItems = []; // working line items for the proforma builder
-let pendingCartItem = null; // item awaiting quantity confirmation in the Add to Cart modal
-let pfSearchMatches = []; // last set of catalogue search results shown in the Proforma "Add Product" panel
+let adminToken = sessionStorage.getItem('sni_admin_token') || '';
+let adminPermissions = {};
+try{ adminPermissions = JSON.parse(sessionStorage.getItem('sni_admin_perms')||'{}'); }catch(e){ adminPermissions = {}; }
+let forcePasswordChange = false;
+let proformaItems = []; // working line items for the current document (proforma or invoice)
+let pendingCartItem = null;
+let pfSearchMatches = [];
+let currentDocType = 'proforma'; // 'proforma' | 'invoice' — which record type the builder is editing
+let loadedDocNo = null; // set when a saved record has been loaded for editing; null = new document
+let searchDocType = 'proforma';
+
+function hasPerm(p){ return role==='admin' && !!adminPermissions[p]; }
+function anyPerm(list){ return list.some(p=>hasPerm(p)); }
 
 /* ================= DATA LOAD ================= */
 function cleanPrice(raw){ if(!raw) return 0; const n = parseFloat(String(raw).replace(/[^0-9.]/g,'')); return isNaN(n)?0:n; }
-function cleanGST(raw){ if(!raw) return 0; const n = parseFloat(String(raw).replace(/[^0-9.]/g,'')); return isNaN(n)?0:n; }
+function cleanGST(raw){
+  if(raw===null||raw===undefined||raw==='') return 0;
+  const hasPct = typeof raw==='string' && raw.indexOf('%')!==-1;
+  let n = parseFloat(String(raw).replace(/[^0-9.]/g,''));
+  if(isNaN(n)) return 0;
+  if(!hasPct && n>0 && n<1) n = n*100;
+  return Math.round(n*100)/100;
+}
 function formatINR(n){ return '₹'+(Number(n)||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-// jsPDF's built-in fonts don't have the ₹ glyph (it prints as a broken character), so PDFs use "Rs." instead.
+function priceDisplay(entry){ return entry['_priced'] ? formatINR(entry['_price']) : ''; }
+function gstDisplay(entry){ return entry['_priced'] ? formatPct(entry['_gst']) : ''; }
 function formatINRPdf(n){ return 'Rs. '+(Number(n)||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-// applicable=false means this tax type doesn't apply to this shipment at all (e.g. IGST on an
-// intra-state sale, or any GST on an export) so we show "-"; applicable=true means the tax type
-// DOES apply, so we always show the rate even when it happens to be a genuine 0% product.
 function formatPct(n, applicable){ if(applicable===false) return '-'; n = Math.round((Number(n)||0)*100)/100; return n+'%'; }
 function showToast(msg,isError){
   const el = document.createElement('div');
@@ -573,6 +642,10 @@ function showToast(msg,isError){
   el.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:'+(isError?'#B23A2E':'#123A5E')+';color:#fff;padding:10px 20px;border-radius:4px;font-size:.9rem;z-index:9999;box-shadow:0 2px 10px rgba(0,0,0,.2)';
   document.body.appendChild(el);
   setTimeout(()=>el.remove(), 2600);
+}
+function escapeHtml(str){
+  if(str===null||str===undefined) return '';
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
 Promise.all([
@@ -583,12 +656,13 @@ Promise.all([
   allData = Papa.parse(dataText,{header:true}).data.filter(r=>r["Item Code"] && r["Category"]);
   allData.forEach(r=>{
     if(r["Category"]) r["Category"] = r["Category"].trim();
-    r["_price"] = cleanPrice(r["Price/Unit"]);
-    r["_gst"] = cleanGST(r["GST"]);
+    r["_price"] = 0;
+    r["_gst"] = 0;
   });
   Papa.parse(imageText,{header:true}).data.forEach(r=>{ if(r["Item Code"] && r["Image URL"]) imageMap[r["Item Code"].trim()] = r["Image URL"]; });
   Papa.parse(categoryText,{header:true}).data.forEach(r=>{ if(r["Category"] && r["Image URL"]) categoryImageMap[r["Category"].trim()] = r["Image URL"]; });
   renderCategories();
+  if(role==='admin' && adminToken && hasPerm('canViewPrices')) fetchAdminPrices();
 }).catch(e=>{
   document.getElementById('catalogue').innerHTML =
     '<p style="color:#B23A2E">\u274c Failed to load product data.<br><small>'+(e&&e.message?e.message:e)+'</small><br><small>If you opened this file by double-clicking it (a file:// address in the browser bar), that is almost always the cause \u2014 browsers block this kind of request from local files. Host it on a real web server (even a free one like GitHub Pages, or your existing site\u2019s hosting) and it should load.</small></p>';
@@ -603,37 +677,67 @@ window.addEventListener('error', function(e){
 
 /* ================= NAVIGATION ================= */
 function showSection(id){
+  if(forcePasswordChange){ showToast('Please set a new password to continue', true); return; }
+  const guarded = {
+    documents: ()=>anyPerm(['canMakeProforma','canEditProforma','canMakeInvoice','canEditInvoice']),
+    docsearch: ()=>anyPerm(['canMakeProforma','canEditProforma','canMakeInvoice','canEditInvoice']),
+    profiles: ()=>hasPerm('canManageProfiles')
+  };
+  if(guarded[id] && !guarded[id]()){ showToast('You do not have access to that section', true); return; }
   document.querySelectorAll('main > section').forEach(s=>s.style.display='none');
   document.getElementById(id).style.display = 'block';
   if(id==='products') renderCategories();
   if(id==='cart') renderCart();
-  if(id==='proforma'){ if(role!=='admin'){ showSection('home'); return; } renderProformaItems(); }
+  if(id==='documents'){ updateDocTypeUI(); renderProformaItems(); }
+  if(id==='docsearch'){ updateSearchTypeUI(); }
+  if(id==='profiles') loadProfilesList();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function navigateTo(id){ showSection(id); }
 
-/* ================= ROLE / ADMIN AUTH =================
-   Login, password-change and password-reset are all verified server-side by
-   your Google Apps Script (SHEET_WEBHOOK). See apps-script.gs for the backend
-   code — nothing secret lives in this HTML file any more. */
+/* ================= ROLE / ADMIN AUTH ================= */
 async function callAuthAPI(payload){
   const res = await fetch(SHEET_WEBHOOK, {
     method:'POST',
-    headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // avoids a CORS preflight against Apps Script
+    headers:{ 'Content-Type':'text/plain;charset=utf-8' },
     body: JSON.stringify(payload)
   });
   return res.json();
 }
+async function fetchAdminPrices(){
+  if(!adminToken || !hasPerm('canViewPrices')) return;
+  try{
+    const data = await callAuthAPI({ action:'get_price_data', token:adminToken });
+    if(!data || !data.success){
+      if(data && /session/i.test(data.message||'')){ logoutAdmin(); showToast('Session expired — please log in again', true); }
+      return;
+    }
+    const byKey = {};
+    data.prices.forEach(p=>{ byKey[p.itemCode+'|'+(p.variantCode||'')] = p; });
+    allData.forEach(r=>{
+      const match = byKey[r['Item Code']+'|'+(r['Variant Code']||'')];
+      if(match){
+        r['_price'] = cleanPrice(match.price);
+        r['_gst'] = cleanGST(match.gst);
+        r['Price/Unit'] = match.price;
+        r['GST'] = match.gst;
+        r['_priced'] = true;
+      }
+    });
+    applyRoleUI();
+  }catch(e){ console.warn('Could not load admin price data', e); }
+}
 function applyRoleUI(){
   const zone = document.getElementById('role-zone');
-  const pfNav = document.getElementById('nav-proforma');
   if(role==='admin'){
-    zone.innerHTML = `<span class="role-badge">ADMIN</span><button class="admin-link" onclick="openChangePassword()">Change Password</button><button class="admin-link" onclick="logoutAdmin()">Logout</button>`;
-    pfNav.style.display = 'inline-block';
+    zone.innerHTML = `<span class="role-badge">${escapeHtml(adminUsername)}</span><button class="admin-link" onclick="openChangePassword()">Change Password</button><button class="admin-link" onclick="logoutAdmin()">Logout</button>`;
   } else {
     zone.innerHTML = `<button class="admin-link" onclick="openAdminLogin()">Admin</button>`;
-    pfNav.style.display = 'none';
   }
+  document.getElementById('nav-documents').style.display = anyPerm(['canMakeProforma','canEditProforma','canMakeInvoice','canEditInvoice']) ? 'inline-block':'none';
+  document.getElementById('nav-docsearch').style.display = anyPerm(['canMakeProforma','canEditProforma','canMakeInvoice','canEditInvoice']) ? 'inline-block':'none';
+  document.getElementById('nav-profiles').style.display = hasPerm('canManageProfiles') ? 'inline-block':'none';
+
   if(document.getElementById('products').style.display==='block'){
     if(currentItemCode) renderItemDetail(currentItemCode);
     else if(currentCategory) renderItems(currentCategory);
@@ -658,9 +762,16 @@ async function submitAdminLogin(){
   try{
     const data = await callAuthAPI({ action:'admin_login', username:u, password:p });
     if(data && data.success){
-      role='admin'; adminUsername=u;
+      role='admin'; adminUsername=u; adminToken=data.token||''; adminPermissions=data.permissions||{};
       sessionStorage.setItem('sni_role','admin'); sessionStorage.setItem('sni_admin_user',u);
-      closeAdminLogin(); applyRoleUI(); showToast('Logged in as admin');
+      sessionStorage.setItem('sni_admin_token', adminToken);
+      sessionStorage.setItem('sni_admin_perms', JSON.stringify(adminPermissions));
+      closeAdminLogin(); applyRoleUI(); showToast('Logged in as '+u);
+      if(hasPerm('canViewPrices')) fetchAdminPrices();
+      if(data.mustChangePassword){
+        forcePasswordChange = true;
+        openChangePassword(true);
+      }
     } else {
       errEl.innerText = (data && data.message) || 'Incorrect username or password.';
     }
@@ -670,31 +781,40 @@ async function submitAdminLogin(){
   } finally { btn.disabled=false; }
 }
 function logoutAdmin(){
-  role='customer'; adminUsername='';
+  if(adminToken){ try{ callAuthAPI({ action:'admin_logout', token:adminToken }); }catch(e){} }
+  role='customer'; adminUsername=''; adminToken=''; adminPermissions={}; forcePasswordChange=false;
+  allData.forEach(r=>{ r['_price']=0; r['_gst']=0; r['_priced']=false; delete r['Price/Unit']; delete r['GST']; });
   sessionStorage.setItem('sni_role','customer'); sessionStorage.removeItem('sni_admin_user');
+  sessionStorage.removeItem('sni_admin_token'); sessionStorage.removeItem('sni_admin_perms');
   applyRoleUI(); showSection('home');
 }
 applyRoleUI();
 
-/* ---- Change password (while logged in) ---- */
-function openChangePassword(){
+/* ---- Change password (also used to force a change right after first login) ---- */
+function openChangePassword(forced){
   ['cp-old','cp-new','cp-confirm'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('cp-err').innerText='';
+  document.getElementById('cp-forced-note').innerText = forced ? 'This is your first login — you must set a new password before continuing.' : '';
+  document.getElementById('cp-cancel-btn').style.display = forced ? 'none' : 'inline-block';
   document.getElementById('change-pass-modal').style.display='flex';
 }
-function closeChangePassword(){ document.getElementById('change-pass-modal').style.display='none'; }
+function closeChangePassword(){ if(forcePasswordChange) return; document.getElementById('change-pass-modal').style.display='none'; }
 async function submitChangePassword(){
   const oldPassword = document.getElementById('cp-old').value;
   const newPassword = document.getElementById('cp-new').value;
-  const confirm = document.getElementById('cp-confirm').value;
+  const confirm2 = document.getElementById('cp-confirm').value;
   const errEl = document.getElementById('cp-err');
   if(!oldPassword || !newPassword){ errEl.innerText='Fill in both password fields.'; return; }
   if(newPassword.length<8){ errEl.innerText='New password should be at least 8 characters.'; return; }
-  if(newPassword!==confirm){ errEl.innerText='New password and confirmation do not match.'; return; }
+  if(newPassword!==confirm2){ errEl.innerText='New password and confirmation do not match.'; return; }
   errEl.style.color=''; errEl.innerText='Updating…';
   try{
     const data = await callAuthAPI({ action:'admin_change_password', username:adminUsername, oldPassword, newPassword });
-    if(data && data.success){ closeChangePassword(); showToast('Password updated'); }
+    if(data && data.success){
+      forcePasswordChange=false;
+      document.getElementById('change-pass-modal').style.display='none';
+      showToast('Password updated');
+    }
     else { errEl.innerText = (data && data.message) || 'Could not update password.'; }
   } catch(e){ errEl.innerText='Could not reach the login service.'; console.error(e); }
 }
@@ -726,11 +846,11 @@ async function submitForgotReset(){
   const username = document.getElementById('fp-user').value.trim();
   const code = document.getElementById('fp-code').value.trim();
   const newPassword = document.getElementById('fp-new').value;
-  const confirm = document.getElementById('fp-confirm').value;
+  const confirm2 = document.getElementById('fp-confirm').value;
   const errEl = document.getElementById('fp-err2');
   if(!code || !newPassword){ errEl.innerText='Fill in the code and a new password.'; return; }
   if(newPassword.length<8){ errEl.innerText='New password should be at least 8 characters.'; return; }
-  if(newPassword!==confirm){ errEl.innerText='New password and confirmation do not match.'; return; }
+  if(newPassword!==confirm2){ errEl.innerText='New password and confirmation do not match.'; return; }
   errEl.style.color=''; errEl.innerText='Resetting…';
   try{
     const data = await callAuthAPI({ action:'admin_reset_password', username, code, newPassword });
@@ -745,11 +865,8 @@ function renderBreadcrumb(level){
   let html = '';
   if(level==='category') html = `<button class="back-btn" onclick="renderCategories()">⬅ Back to Categories</button>`;
   else if(level==='item'){
-    // Guard against currentCategory being null (e.g. item opened from search
-    // results, or from a code shared with multiple categories) — calling
-    // .replace() on null was throwing a TypeError and breaking this click.
     if(currentSearchResults) html = `<button class="back-btn" onclick="reopenSearchResults()">⬅ Back to Search Results</button>`;
-    else if(currentCategory) html = `<button class="back-btn" onclick="renderItems('${currentCategory.replace(/'/g,"\\'")}')">⬅ Back to ${currentCategory}</button>`;
+    else if(currentCategory) html = `<button class="back-btn" onclick="renderItems('${currentCategory.replace(/'/g,"\\'")}')">⬅ Back to ${escapeHtml(currentCategory)}</button>`;
     else html = `<button class="back-btn" onclick="renderCategories()">⬅ Back to Categories</button>`;
   }
   else if(level==='search') html = `<button class="back-btn" onclick="clearSearch()">⬅ Back to Home</button>`;
@@ -766,7 +883,7 @@ function renderCategories(){
   categories.forEach(cat=>{
     const div = document.createElement('div'); div.className='card category-card';
     const catImg = categoryImageMap[cat] || 'https://via.placeholder.com/300x180?text='+encodeURIComponent(cat);
-    div.innerHTML = `<img src="${catImg}" alt="${cat}" class="card-image"/><div class="card-title">${cat}</div>`;
+    div.innerHTML = `<img src="${catImg}" alt="${escapeHtml(cat)}" class="card-image"/><div class="card-title">${escapeHtml(cat)}</div>`;
     div.onclick = ()=> renderItems(cat);
     grid.appendChild(div);
   });
@@ -774,14 +891,14 @@ function renderCategories(){
 function renderItems(category){
   currentCategory=category; currentItemCode=null; currentSearchResults=null; renderBreadcrumb('category');
   const container = document.getElementById('catalogue');
-  container.innerHTML = `<h2 style="margin-top:14px">${category}</h2><div class="grid"></div>`;
+  container.innerHTML = `<h2 style="margin-top:14px">${escapeHtml(category)}</h2><div class="grid"></div>`;
   const grid = container.querySelector('.grid');
   const items = [...new Set(allData.filter(r=>r['Category']===category).map(r=>r['Item Code']))];
   items.forEach(code=>{
     const div = document.createElement('div'); div.className='card';
     const img = imageMap[code] || 'https://via.placeholder.com/150?text='+encodeURIComponent(code);
     const item = allData.find(r=>r['Item Code']===code) || {};
-    div.innerHTML = `<img src="${img}" alt="${code}" class="card-image"/><div class="card-title">${item['Item Name']||''}</div><div class="card-code">${code}</div>`;
+    div.innerHTML = `<img src="${img}" alt="${escapeHtml(code)}" class="card-image"/><div class="card-title">${escapeHtml(item['Item Name']||'')}</div><div class="card-code">${escapeHtml(code)}</div>`;
     div.onclick = ()=> renderItemDetail(code);
     grid.appendChild(div);
   });
@@ -792,27 +909,27 @@ function renderItemDetail(itemCode){
   if(entries.length===0){ document.getElementById('catalogue').innerHTML='<p>No item found.</p>'; return; }
   const first = entries[0];
   const img = imageMap[itemCode] || 'https://via.placeholder.com/320x240?text='+encodeURIComponent(itemCode);
-  const isAdmin = role==='admin';
+  const isAdmin = hasPerm('canViewPrices');
   const container = document.getElementById('catalogue');
   const unique = entries.reduce((u,e)=>{ if(!u.some(x=>x['Variant Code']===e['Variant Code'])) u.push(e); return u; },[]);
   container.innerHTML = `
-    <h2 style="margin-top:14px">${first['Item Name']||''}</h2>
-    <p class="meta">Item Code: ${first['Item Code']||''} · HSN: ${first['HSN Code']||''}</p>
-    <img src="${img}" alt="${itemCode}" class="detail-image"/>
-    <p><em>${first['Specs']||''}</em></p>
+    <h2 style="margin-top:14px">${escapeHtml(first['Item Name']||'')}</h2>
+    <p class="meta">Item Code: ${escapeHtml(first['Item Code']||'')} · HSN: ${escapeHtml(first['HSN Code']||'')}</p>
+    <img src="${img}" alt="${escapeHtml(itemCode)}" class="detail-image"/>
+    <p><em>${escapeHtml(first['Specs']||'')}</em></p>
     <table class="data-table">
       <tr>
         <th>Variant</th><th>Description</th>${isAdmin?'<th>Price/Unit</th><th>GST</th>':''}<th>Unit</th><th>MOQ</th><th>Add To Cart</th><th>WhatsApp</th>
       </tr>
       ${unique.map(entry=>{
         const priceNum = entry['_price'];
-        const priceDisp = entry['Price/Unit']||'';
+        const priceDisp = priceDisplay(entry);
         return `<tr>
-          <td>${entry['Variant Code']||''}</td>
-          <td>${entry['Description']||''}</td>
-          ${isAdmin?`<td class="num price">${priceDisp}</td><td class="num">${entry['GST']||''}</td>`:''}
-          <td>${entry['Unit']||''}</td>
-          <td>${entry['MOQ']||''}</td>
+          <td>${escapeHtml(entry['Variant Code']||'')}</td>
+          <td>${escapeHtml(entry['Description']||'')}</td>
+          ${isAdmin?`<td class="num price">${escapeHtml(priceDisp)}</td><td class="num">${escapeHtml(gstDisplay(entry))}</td>`:''}
+          <td>${escapeHtml(entry['Unit']||'')}</td>
+          <td>${escapeHtml(entry['MOQ']||'')}</td>
           <td><button class="btn-sm btn" onclick="addToCartPrompt('${encodeURIComponent(itemCode)}','${encodeURIComponent(entry['Variant Code']||'')}','${encodeURIComponent(entry['Description']||'')}','${encodeURIComponent(String(priceNum))}','${encodeURIComponent(entry['HSN Code']||'')}','${encodeURIComponent(String(entry['_gst']))}')">Add</button></td>
           <td><a class="wa-link" target="_blank" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi, I\'m interested in this tool:\nItem: '+(first['Item Name']||'')+'\nVariant Code: '+(entry['Variant Code']||'')+'\nDescription: '+(entry['Description']||'')+(isAdmin?'\nPrice: '+priceDisp:''))}"><i class="fab fa-whatsapp"></i> Chat</a></td>
         </tr>`;
@@ -849,9 +966,6 @@ function saveCart(cart){ localStorage.setItem(cartKey(), JSON.stringify(cart)); 
 function updateCartCount(){ const n=getCart().reduce((s,i)=>s+Number(i.qty||0),0); document.getElementById('cart-count').innerText=n; }
 updateCartCount();
 
-// Re-renders the cart list in place when the Cart section is already the one
-// on screen (e.g. adding a product from the in-cart search panel), so newly
-// added items show up immediately instead of only after navigating away and back.
 function refreshCartIfVisible(){
   if(document.getElementById('cart').style.display==='block') renderCart(true);
 }
@@ -873,7 +987,6 @@ function addToCart(item){
   showToast('Added to cart');
 }
 
-/* ---- "Add Product" search panel inside the Cart section (customer & admin) ---- */
 function toggleCartAddPanel(){
   const panel = document.getElementById('cart-add-product-panel');
   const opening = panel.style.display==='none' || !panel.style.display;
@@ -895,17 +1008,17 @@ function performCartSearch(){
     (r['Variant Code']||'').toLowerCase().includes(query)
   );
   if(matches.length===0){ results.innerHTML='<p>No matching products found in our catalogue.</p>'; return; }
-  const isAdmin = role==='admin';
+  const isAdmin = hasPerm('canViewPrices');
   const shown = matches.slice(0,50);
   let html = `<table class="data-table"><tr><th>Item</th><th>Variant</th><th>Description</th>${isAdmin?'<th>Price</th><th>GST</th>':''}<th>Unit</th><th></th></tr>`;
   shown.forEach(entry=>{
     const priceNum = entry['_price'];
     html += `<tr>
-      <td>${entry['Item Name']||''}<div class="meta">${entry['Item Code']||''}</div></td>
-      <td>${entry['Variant Code']||''}</td>
-      <td>${entry['Description']||''}</td>
-      ${isAdmin?`<td class="num price">${entry['Price/Unit']||''}</td><td class="num">${entry['GST']||0}%</td>`:''}
-      <td>${entry['Unit']||''}</td>
+      <td>${escapeHtml(entry['Item Name']||'')}<div class="meta">${escapeHtml(entry['Item Code']||'')}</div></td>
+      <td>${escapeHtml(entry['Variant Code']||'')}</td>
+      <td>${escapeHtml(entry['Description']||'')}</td>
+      ${isAdmin?`<td class="num price">${escapeHtml(priceDisplay(entry))}</td><td class="num">${escapeHtml(gstDisplay(entry))}</td>`:''}
+      <td>${escapeHtml(entry['Unit']||'')}</td>
       <td><button class="btn-sm btn" onclick="addToCartPrompt('${encodeURIComponent(entry['Item Code'])}','${encodeURIComponent(entry['Variant Code']||'')}','${encodeURIComponent(entry['Description']||'')}','${encodeURIComponent(String(priceNum))}','${encodeURIComponent(entry['HSN Code']||'')}','${encodeURIComponent(String(entry['_gst']))}')">Add</button></td>
     </tr>`;
   });
@@ -914,7 +1027,6 @@ function performCartSearch(){
   results.innerHTML = html;
 }
 
-/* ---- "Add an item not in our catalogue" (custom line item) ---- */
 function openCustomItemModal(){
   document.getElementById('ci-name').value='';
   document.getElementById('ci-desc').value='';
@@ -954,16 +1066,13 @@ function renderCart(keepPanelOpen){
   const actions = document.getElementById('cart-actions');
   const note = document.getElementById('cart-note');
   const cart = getCart(); updateCartCount();
-  // collapse the search panel whenever the cart is freshly opened via navigation
-  // (but not when we're just refreshing in place right after adding an item —
-  // that would annoyingly close the panel a user has open to add more items).
   if(!keepPanelOpen){
     const addPanel = document.getElementById('cart-add-product-panel');
     if(addPanel) addPanel.style.display = 'none';
   }
 
   if(role==='admin'){
-    note.innerText = 'Build a proforma from the items below — edit the "Your Price" column before creating the invoice.';
+    note.innerText = 'Build a proforma or invoice from the items below — edit the "Your Price" column before creating the document.';
     const addBtn = `<button class="btn-ghost" onclick="toggleCartAddPanel()">+ Add Product</button>`;
     if(cart.length===0){ container.innerHTML='<p>Your admin cart is empty.</p>'; actions.innerHTML=addBtn; return; }
     let html = `<table class="data-table cart-table"><tr><th>Image</th><th>Variant</th><th>Item</th><th>HSN</th><th>GST</th><th>Qty</th><th>Original Price</th><th>Your Price</th><th>Taxable Amt</th><th></th></tr>`;
@@ -972,10 +1081,10 @@ function renderCart(keepPanelOpen){
       const taxable = Number(c.qty)*Number(c.manualPrice||c.originalPrice||0);
       html += `<tr>
         <td><img src="${img}"/></td>
-        <td>${c.variantCode}</td>
-        <td>${c.itemName||c.itemCode}<div class="meta">${c.description||''}</div></td>
-        <td class="num">${c.hsn||''}</td>
-        <td class="num">${c.gst||0}%</td>
+        <td>${escapeHtml(c.variantCode)}</td>
+        <td>${escapeHtml(c.itemName||c.itemCode)}<div class="meta">${escapeHtml(c.description||'')}</div></td>
+        <td class="num">${escapeHtml(c.hsn||'')}</td>
+        <td class="num">${escapeHtml(c.gst||0)}%</td>
         <td><input type="number" min="1" class="qty-input" value="${c.qty}" onchange="updateCartField(${idx},'qty',this.value)"/></td>
         <td class="num price">${formatINR(c.originalPrice)}</td>
         <td><input type="number" min="0" step="0.01" class="price-input" value="${Number(c.manualPrice).toFixed(2)}" onchange="updateCartField(${idx},'manualPrice',this.value)"/></td>
@@ -985,9 +1094,11 @@ function renderCart(keepPanelOpen){
     });
     html += `</table>`;
     container.innerHTML = html;
+    const canDl = hasPerm('canDownloadCart');
     actions.innerHTML = `
       ${addBtn}
-      <button class="btn btn-amber" onclick="createProformaFromCart()">Create Proforma Invoice →</button>
+      ${anyPerm(['canMakeProforma','canMakeInvoice'])?'<button class="btn btn-amber" onclick="showSection(\'documents\')">Use in Documents →</button>':''}
+      ${canDl?'<button class="btn" onclick="downloadCartPDF()">Download as PDF</button>':''}
       <button class="btn-ghost" onclick="clearCart()">Clear Cart</button>`;
   } else {
     note.innerText = 'Get a special quote for the products below.';
@@ -998,11 +1109,11 @@ function renderCart(keepPanelOpen){
       const img = c.img || 'https://via.placeholder.com/60?text='+encodeURIComponent(c.itemCode);
       html += `<tr>
         <td><img src="${img}"/></td>
-        <td>${c.variantCode}</td>
-        <td>${c.itemName||c.itemCode}</td>
-        <td>${c.description||''}</td>
+        <td>${escapeHtml(c.variantCode)}</td>
+        <td>${escapeHtml(c.itemName||c.itemCode)}</td>
+        <td>${escapeHtml(c.description||'')}</td>
         <td><input type="number" min="1" class="qty-input" value="${c.qty}" onchange="updateCartField(${idx},'qty',this.value)"/></td>
-        <td>${c.unit||''}</td>
+        <td>${escapeHtml(c.unit||'')}</td>
         <td><button class="remove-x" onclick="removeCartItem(${idx})">✕</button></td>
       </tr>`;
     });
@@ -1024,11 +1135,6 @@ function updateCartField(index,field,val){
 function removeCartItem(index){ const cart=getCart(); cart.splice(index,1); saveCart(cart); renderCart(); }
 function clearCart(){ if(!confirm('Clear cart?')) return; localStorage.removeItem(cartKey()); renderCart(); updateCartCount(); }
 
-/* ---- Image embedding helper (best-effort; used by cart & proforma PDFs) ----
-   Fetches an image and converts it to a data URL so jsPDF can embed it.
-   If the image host doesn't allow cross-origin reads (no CORS headers —
-   common with hotlinked Google Drive URLs), this silently returns null and
-   the PDF is generated without that picture rather than failing outright. */
 async function loadImageAsDataURL(url){
   if(!url) return null;
   try{
@@ -1051,8 +1157,8 @@ function dataUrlFormat(dataUrl){
   return t==='JPG' ? 'JPEG' : t;
 }
 
-/* ---- Customer: PDF export (no prices, includes item image) ---- */
 async function downloadCartPDF(){
+  if(role==='admin' && !hasPerm('canDownloadCart')){ showToast('You do not have permission to download the cart', true); return; }
   const cart = getCart();
   if(cart.length===0){ alert('Cart empty'); return; }
   showToast('Preparing PDF…');
@@ -1085,7 +1191,6 @@ async function downloadCartPDF(){
   doc.save('cart-quote.pdf');
 }
 
-/* ---- Customer: WhatsApp cart enquiry ---- */
 function openCartEnquiryModal(){ document.getElementById('cart-modal').style.display='flex'; }
 function closeCartModal(){ document.getElementById('cart-modal').style.display='none'; }
 function sendCartEnquiry(){
@@ -1116,7 +1221,7 @@ function sendEnquiry(){
   window.open(wa,'_blank'); alert('Opening WhatsApp to send your enquiry');
 }
 
-/* ================= GLOBAL SEARCH ================= */
+/* ================= GLOBAL SEARCH (catalogue) ================= */
 function performSearch(){
   const query = document.getElementById('searchInput').value.trim().toLowerCase();
   if(!query){ renderCategories(); return; }
@@ -1124,7 +1229,7 @@ function performSearch(){
   currentCategory = null; currentItemCode = null;
   renderBreadcrumb('search');
   const container = document.getElementById('catalogue');
-  container.innerHTML = `<h2 style="margin-top:14px">Search Results for "${query}"</h2><div class="grid"></div>`;
+  container.innerHTML = `<h2 style="margin-top:14px">Search Results for "${escapeHtml(query)}"</h2><div class="grid"></div>`;
   const grid = container.querySelector('.grid');
   const uniqueItems = [...new Set(currentSearchResults.map(r=>r['Item Code']))];
   if(uniqueItems.length===0){ grid.innerHTML='<p>No results found.</p>'; return; }
@@ -1132,7 +1237,7 @@ function performSearch(){
     const div=document.createElement('div'); div.className='card';
     const img=imageMap[code]||'https://via.placeholder.com/150?text='+encodeURIComponent(code);
     const itemName = allData.find(r=>r['Item Code']===code)?.['Item Name']||'';
-    div.innerHTML = `<img src="${img}" alt="${code}" class="card-image"/><div class="card-title">${itemName||code}</div>`;
+    div.innerHTML = `<img src="${img}" alt="${escapeHtml(code)}" class="card-image"/><div class="card-title">${escapeHtml(itemName||code)}</div>`;
     div.onclick = ()=> renderItemDetail(code);
     grid.appendChild(div);
   });
@@ -1140,7 +1245,7 @@ function performSearch(){
 function clearSearch(){ document.getElementById('searchInput').value=''; currentSearchResults=null; renderCategories(); }
 function reopenSearchResults(){ performSearch(); }
 
-/* ================= PROFORMA BUILDER ================= */
+/* ================= DOCUMENT BUILDER (Proforma + Invoice share one form) ================= */
 (function populateStateDropdown(){
   const sel = document.getElementById('pf-buyer-state');
   INDIAN_STATES.forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o); });
@@ -1149,12 +1254,25 @@ function reopenSearchResults(){ performSearch(); }
 document.getElementById('pf-date').valueAsDate = new Date();
 document.getElementById('pf-iec').value = INVOICE_CO.iec;
 
-function createProformaFromCart(){
-  if(role!=='admin') return;
-  syncProformaFromCart();
-  showSection('proforma');
+function setDocType(type){
+  currentDocType = type;
+  updateDocTypeUI();
 }
-// Builds the merged "Item / Variant / Description" text used in the proforma line item.
+function updateDocTypeUI(){
+  document.getElementById('doc-type-btn-proforma').classList.toggle('active', currentDocType==='proforma');
+  document.getElementById('doc-type-btn-invoice').classList.toggle('active', currentDocType==='invoice');
+  document.getElementById('doc-heading').innerText = currentDocType==='invoice' ? 'Tax Invoice' : 'Proforma Invoice';
+  document.getElementById('pf-no-label').innerText = currentDocType==='invoice' ? 'Invoice No.' : 'Proforma Invoice No.';
+  const canSaveNew = currentDocType==='invoice' ? hasPerm('canMakeInvoice') : hasPerm('canMakeProforma');
+  const canSaveEdit = currentDocType==='invoice' ? hasPerm('canEditInvoice') : hasPerm('canEditProforma');
+  document.getElementById('doc-save-btn').disabled = loadedDocNo ? !canSaveEdit : !canSaveNew;
+  document.getElementById('doc-editing-banner').style.display = loadedDocNo ? 'flex' : 'none';
+  document.getElementById('doc-editing-no').innerText = loadedDocNo || '';
+}
+function startNewDocument(){
+  loadedDocNo = null;
+  resetProformaForm(true);
+}
 function buildProformaDesc(itemName, variantCode, description){
   let parts = [];
   if(variantCode) parts.push(variantCode);
@@ -1163,7 +1281,6 @@ function buildProformaDesc(itemName, variantCode, description){
   if(description) text = text ? (text+' - '+description) : description;
   return text;
 }
-// Fully REPLACES the current line items with a fresh copy of the admin cart.
 function syncProformaFromCart(){
   const cart = getCart();
   if(role!=='admin'){ return; }
@@ -1175,8 +1292,6 @@ function syncProformaFromCart(){
   renderProformaItems();
   showToast('Line items replaced with admin cart');
 }
-// ADDS the admin cart's items on top of whatever is already in the proforma,
-// so existing manually-entered or edited rows are never wiped out.
 function mergeProformaFromCart(){
   if(role!=='admin') return;
   const cart = getCart();
@@ -1189,7 +1304,7 @@ function mergeProformaFromCart(){
     });
   });
   renderProformaItems();
-  showToast('Cart items merged into proforma');
+  showToast('Cart items merged into document');
 }
 function addBlankProformaRow(){
   proformaItems.push({ hsn:'', desc:'', qty:1, unit:'Pcs', unitPrice:0, gst:18 });
@@ -1201,7 +1316,6 @@ function updateProformaField(i,field,val){
   proformaItems[i][field]=val; renderProformaItems();
 }
 
-/* ---- "Add Product" search panel inside the Proforma builder ---- */
 function toggleProformaAddPanel(){
   const panel = document.getElementById('pf-add-product-panel');
   const opening = panel.style.display==='none' || !panel.style.display;
@@ -1227,12 +1341,12 @@ function performProformaSearch(){
   let html = `<table class="data-table"><tr><th>Item</th><th>Variant</th><th>Description</th><th>Price</th><th>GST</th><th>Unit</th><th></th></tr>`;
   pfSearchMatches.forEach((entry,i)=>{
     html += `<tr>
-      <td>${entry['Item Name']||''}<div class="meta">${entry['Item Code']||''}</div></td>
-      <td>${entry['Variant Code']||''}</td>
-      <td>${entry['Description']||''}</td>
-      <td class="num price">${entry['Price/Unit']||''}</td>
-      <td class="num">${entry['GST']||0}%</td>
-      <td>${entry['Unit']||''}</td>
+      <td>${escapeHtml(entry['Item Name']||'')}<div class="meta">${escapeHtml(entry['Item Code']||'')}</div></td>
+      <td>${escapeHtml(entry['Variant Code']||'')}</td>
+      <td>${escapeHtml(entry['Description']||'')}</td>
+      <td class="num price">${escapeHtml(priceDisplay(entry))}</td>
+      <td class="num">${escapeHtml(gstDisplay(entry))}</td>
+      <td>${escapeHtml(entry['Unit']||'')}</td>
       <td><button class="btn-sm btn" onclick="addProformaItemFromSearch(${i})">Add</button></td>
     </tr>`;
   });
@@ -1248,7 +1362,7 @@ function addProformaItemFromSearch(i){
     qty: 1, unit: entry['Unit']||'Pcs', unitPrice: entry['_price']||0, gst: entry['_gst']||0
   });
   renderProformaItems();
-  showToast('Item added to proforma');
+  showToast('Item added');
 }
 
 function isExportShipment(){
@@ -1287,10 +1401,10 @@ function renderProformaItems(){
     proformaItems.forEach((item,i)=>{
       const c = calcLine(item);
       html += `<tr>
-        <td><input value="${item.hsn}" style="width:80px" onchange="updateProformaField(${i},'hsn',this.value)"/></td>
-        <td><input value="${item.desc}" style="min-width:200px" onchange="updateProformaField(${i},'desc',this.value)"/></td>
+        <td><input value="${escapeHtml(item.hsn)}" style="width:80px" onchange="updateProformaField(${i},'hsn',this.value)"/></td>
+        <td><input value="${escapeHtml(item.desc)}" style="min-width:200px" onchange="updateProformaField(${i},'desc',this.value)"/></td>
         <td><input type="number" min="0" value="${item.qty}" style="width:65px" onchange="updateProformaField(${i},'qty',this.value)"/></td>
-        <td><input value="${item.unit}" style="width:55px" onchange="updateProformaField(${i},'unit',this.value)"/></td>
+        <td><input value="${escapeHtml(item.unit)}" style="width:55px" onchange="updateProformaField(${i},'unit',this.value)"/></td>
         <td><input type="number" min="0" step="0.01" value="${item.unitPrice}" style="width:90px" onchange="updateProformaField(${i},'unitPrice',this.value)"/></td>
         <td><input type="number" min="0" step="0.01" value="${item.gst}" style="width:60px" onchange="updateProformaField(${i},'gst',this.value)"/></td>
         <td class="num price">${formatINR(c.taxable)}</td>
@@ -1305,6 +1419,7 @@ function renderProformaItems(){
     wrap.innerHTML = html;
   }
   renderProformaTotals();
+  updateDocTypeUI();
 }
 function proformaTotals(){
   return proformaItems.reduce((acc,item)=>{
@@ -1331,9 +1446,9 @@ function renderProformaTotals(){
   document.getElementById(id).addEventListener('change', renderProformaItems);
 });
 
-function resetProformaForm(){
-  if(!confirm('Reset the proforma form?')) return;
-  document.querySelectorAll('#proforma input').forEach(i=>{ if(i.type!=='date') i.value=''; });
+function resetProformaForm(keepDocType){
+  if(!confirm('Reset the form?')) return;
+  document.querySelectorAll('#documents input').forEach(i=>{ if(i.type!=='date') i.value=''; });
   document.getElementById('pf-country-dispatch').value='INDIA';
   document.getElementById('pf-country-dest').value='INDIA';
   document.getElementById('pf-currency').value='INR';
@@ -1341,7 +1456,111 @@ function resetProformaForm(){
   document.getElementById('pf-iec').value=INVOICE_CO.iec;
   document.getElementById('pf-date').valueAsDate=new Date();
   proformaItems=[];
+  loadedDocNo = null;
   renderProformaItems();
+}
+
+/* ---- Save the current document to the backend Proforma/Invoice sheet ---- */
+function collectDocFields(){
+  return {
+    DocNo: document.getElementById('pf-no').value.trim(),
+    Date: document.getElementById('pf-date').value,
+    IEC: document.getElementById('pf-iec').value,
+    OrderNo: document.getElementById('pf-order-no').value,
+    OrderDate: document.getElementById('pf-order-date').value,
+    Notify: document.getElementById('pf-notify').value,
+    BuyerName: document.getElementById('pf-buyer-name').value,
+    BuyerGST: document.getElementById('pf-buyer-gst').value,
+    BuyerAddress: document.getElementById('pf-buyer-address').value,
+    BuyerState: document.getElementById('pf-buyer-state').value,
+    BuyerPAN: document.getElementById('pf-buyer-pan').value,
+    BuyerEXIM: document.getElementById('pf-buyer-exim').value,
+    BuyerPhone: document.getElementById('pf-buyer-phone').value,
+    CountryDispatch: document.getElementById('pf-country-dispatch').value,
+    CountryDest: document.getElementById('pf-country-dest').value,
+    Incoterm: document.getElementById('pf-incoterm').value,
+    Mode: document.getElementById('pf-mode').value,
+    Currency: document.getElementById('pf-currency').value,
+    PaymentTerms: document.getElementById('pf-payment-terms').value,
+    ShipmentGoods: document.getElementById('pf-shipment-goods').value,
+    Brand: document.getElementById('pf-brand').value,
+    PreCarriage: document.getElementById('pf-pre-carriage').value,
+    PlaceReceipt: document.getElementById('pf-place-receipt').value,
+    Vessel: document.getElementById('pf-vessel').value,
+    PortLoading: document.getElementById('pf-port-loading').value,
+    PortDischarge: document.getElementById('pf-port-discharge').value,
+    Destination: document.getElementById('pf-destination').value,
+    Transport: document.getElementById('pf-transport').value,
+    TransportId: document.getElementById('pf-transport-id').value,
+    Package: document.getElementById('pf-package').value,
+    Weight: document.getElementById('pf-weight').value,
+    LineItemsJSON: JSON.stringify(proformaItems)
+  };
+}
+function populateDocFields(doc){
+  document.getElementById('pf-no').value = doc.DocNo||'';
+  if(doc.Date){ try{ document.getElementById('pf-date').value = String(doc.Date).slice(0,10); }catch(e){} }
+  document.getElementById('pf-iec').value = doc.IEC||'';
+  document.getElementById('pf-order-no').value = doc.OrderNo||'';
+  if(doc.OrderDate){ try{ document.getElementById('pf-order-date').value = String(doc.OrderDate).slice(0,10); }catch(e){} }
+  document.getElementById('pf-notify').value = doc.Notify||'';
+  document.getElementById('pf-buyer-name').value = doc.BuyerName||'';
+  document.getElementById('pf-buyer-gst').value = doc.BuyerGST||'';
+  document.getElementById('pf-buyer-address').value = doc.BuyerAddress||'';
+  document.getElementById('pf-buyer-state').value = doc.BuyerState||'';
+  document.getElementById('pf-buyer-pan').value = doc.BuyerPAN||'';
+  document.getElementById('pf-buyer-exim').value = doc.BuyerEXIM||'';
+  document.getElementById('pf-buyer-phone').value = doc.BuyerPhone||'';
+  document.getElementById('pf-country-dispatch').value = doc.CountryDispatch||'INDIA';
+  document.getElementById('pf-country-dest').value = doc.CountryDest||'INDIA';
+  document.getElementById('pf-incoterm').value = doc.Incoterm||'';
+  document.getElementById('pf-mode').value = doc.Mode||'ROAD';
+  document.getElementById('pf-currency').value = doc.Currency||'INR';
+  document.getElementById('pf-payment-terms').value = doc.PaymentTerms||'';
+  document.getElementById('pf-shipment-goods').value = doc.ShipmentGoods||'';
+  document.getElementById('pf-brand').value = doc.Brand||'';
+  document.getElementById('pf-pre-carriage').value = doc.PreCarriage||'';
+  document.getElementById('pf-place-receipt').value = doc.PlaceReceipt||'';
+  document.getElementById('pf-vessel').value = doc.Vessel||'';
+  document.getElementById('pf-port-loading').value = doc.PortLoading||'';
+  document.getElementById('pf-port-discharge').value = doc.PortDischarge||'';
+  document.getElementById('pf-destination').value = doc.Destination||'';
+  document.getElementById('pf-transport').value = doc.Transport||'';
+  document.getElementById('pf-transport-id').value = doc.TransportId||'';
+  document.getElementById('pf-package').value = doc.Package||'';
+  document.getElementById('pf-weight').value = doc.Weight||'';
+  proformaItems = Array.isArray(doc.LineItems) ? doc.LineItems : [];
+  renderProformaItems();
+}
+
+async function saveDocumentToSheet(){
+  if(proformaItems.length===0){ showToast('Add at least one line item first', true); return; }
+  const fields = collectDocFields();
+  if(!fields.DocNo){ showToast('Enter a Document No. before saving', true); return; }
+  const t = proformaTotals();
+  fields.TotalTaxable = t.taxable; fields.TotalCGST = t.cgst; fields.TotalSGST = t.sgst; fields.TotalIGST = t.igst; fields.GrandTotal = t.total;
+
+  let mode='new', originalDocNo='';
+  if(loadedDocNo){
+    const updateInPlace = confirm('This record was loaded from "'+loadedDocNo+'".\n\nOK = update that existing row.\nCancel = save these values as a brand-new row instead.');
+    mode = updateInPlace ? 'update' : 'new';
+    originalDocNo = updateInPlace ? loadedDocNo : '';
+  }
+  const permKey = currentDocType==='invoice'
+    ? (mode==='update' ? 'canEditInvoice' : 'canMakeInvoice')
+    : (mode==='update' ? 'canEditProforma' : 'canMakeProforma');
+  if(!hasPerm(permKey)){ showToast('You do not have permission for this action', true); return; }
+
+  try{
+    const data = await callAuthAPI({ action:'save_document', token:adminToken, docType:currentDocType, mode, originalDocNo, fields });
+    if(data && data.success){
+      showToast(mode==='update' ? 'Record updated' : 'Saved as a new record');
+      loadedDocNo = fields.DocNo;
+      updateDocTypeUI();
+    } else {
+      showToast((data && data.message) || 'Could not save this record', true);
+    }
+  }catch(e){ showToast('Could not reach the backend', true); console.error(e); }
 }
 
 /* ---- Amount in words (Indian numbering) ---- */
@@ -1364,15 +1583,6 @@ function amountInWords(num){
   return 'Rupees '+parts.join(' ')+' Only';
 }
 
-/* ---- Page-break helper for the manually-drawn parts of the Proforma PDF ----
-   jspdf-autotable paginates the line-items table by itself, but everything
-   drawn with doc.rect()/doc.text() after it (totals bar, amount-in-words,
-   transport row, signatures) is placed at fixed coordinates and was
-   previously able to run off the bottom of the page. This checks the
-   remaining space first and starts a fresh page when there isn't enough.
-   PDF_TOP_GAP reserves room at the top of any newly-created page so that the
-   "PAGE n of N" header stamped in later never overlaps the first line of
-   content on that page. */
 const PDF_TOP_GAP = 16;
 function ensureSpace(doc, y, neededHeight, margin){
   margin = margin==null ? 8 : margin;
@@ -1384,9 +1594,10 @@ function ensureSpace(doc, y, neededHeight, margin){
   return y;
 }
 
-/* ---- PDF generation matching the supplied PI layout ---- */
+/* ---- PDF generation (shared layout for Proforma and Invoice) ---- */
 function generateProformaPDF(){
-  if(proformaItems.length===0){ alert('Add at least one line item before generating the invoice.'); return; }
+  if(proformaItems.length===0){ alert('Add at least one line item before generating the document.'); return; }
+  const isInvoice = currentDocType==='invoice';
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const M=8, PW=210, CW=PW-2*M;
@@ -1394,13 +1605,8 @@ function generateProformaPDF(){
 
   doc.setDrawColor(90,113,132); doc.setLineWidth(0.15);
 
-  // Title bar
   doc.setFontSize(13); doc.setFont(undefined,'bold');
-  doc.text('PROFORMA INVOICE', PW/2, y+5, {align:'center'});
-  // The page number ("PAGE n of N") is stamped once at the very end of PDF
-  // generation, after the real page count is known — a placeholder used to
-  // be drawn here too, which sat directly underneath (and visually
-  // overlapped) that later, correct stamp. Removed rather than duplicated.
+  doc.text(isInvoice ? 'TAX INVOICE' : 'PROFORMA INVOICE', PW/2, y+5, {align:'center'});
   y+=8; doc.line(M,y,PW-M,y); y+=2;
 
   const leftW = 95, rightX = M+leftW+2, rightW = CW-leftW-2;
@@ -1413,44 +1619,54 @@ function generateProformaPDF(){
     doc.text(String(value||''),x+1.5,y+7,{maxWidth:w-3});
     doc.setFont(undefined,'normal');
   }
-
-  // ---- Row: Consignor | Invoice info ----
-  const topH=42;
+  function rowField(x,w,label,value,rowY,fs=8){
+    doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.setFont(undefined,'normal');
+    doc.text(label,x+1.5,rowY+3);
+    doc.setFontSize(fs); doc.setTextColor(22,35,46); doc.setFont(undefined,'bold');
+    doc.text(String(value||''),x+1.5,rowY+7,{maxWidth:w-3});
+    doc.setFont(undefined,'normal');
+  }
+  function compactField(x,w,label,value,rowY,subH=5){
+    const cy = rowY + subH/2 + 1.4;
+    doc.setFontSize(6.3); doc.setTextColor(90,113,132); doc.setFont(undefined,'normal');
+    const lbl = label+':';
+    doc.text(lbl, x+1.5, cy);
+    const lw = doc.getTextWidth(lbl);
+    doc.setFontSize(7.6); doc.setTextColor(22,35,46); doc.setFont(undefined,'bold');
+    doc.text(String(value||''), x+1.5+lw+1.5, cy, {maxWidth:w-3-lw-1.5});
+    doc.setFont(undefined,'normal');
+  }
+  const topH=36;
   box(M,leftW,topH);
   doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('CONSIGNOR',M+1.5,y+4);
   doc.setFontSize(9); doc.setTextColor(22,35,46); doc.setFont(undefined,'bold');
   doc.text(INVOICE_CO.name, M+1.5, y+9, {maxWidth:leftW-3});
   doc.setFont(undefined,'normal'); doc.setFontSize(7.8);
-  doc.text([INVOICE_CO.addr1, INVOICE_CO.addr2, INVOICE_CO.addr3, 'Mobile: '+INVOICE_CO.mobile, INVOICE_CO.website, INVOICE_CO.email, 'GST NO - '+INVOICE_CO.gst], M+1.5, y+14, {lineHeightFactor:1.35});
+  doc.text([INVOICE_CO.addr1, INVOICE_CO.addr2, INVOICE_CO.addr3, 'Mobile: '+INVOICE_CO.mobile, INVOICE_CO.website, INVOICE_CO.email, 'GST NO - '+INVOICE_CO.gst], M+1.5, y+13, {lineHeightFactor:1.2});
 
   box(rightX,rightW,topH);
   const c1=rightX, c1w=rightW*0.42, c2=rightX+c1w, c2w=rightW*0.28, c3=rightX+c1w+c2w, c3w=rightW-c1w-c2w;
-  doc.line(c2,y,c2,y+16); doc.line(c3,y,c3,y+16);
-  field(c1,c1w,'PROFORMA INVOICE NO.', document.getElementById('pf-no').value);
+  doc.line(c2,y,c2,y+10); doc.line(c3,y,c3,y+10);
+  field(c1,c1w, isInvoice?'INVOICE NO.':'PROFORMA INVOICE NO.', document.getElementById('pf-no').value);
   field(c2,c2w,'DATE', fmtDate(document.getElementById('pf-date').value));
   field(c3,c3w,'IEC', document.getElementById('pf-iec').value);
-  doc.line(rightX,y+16,rightX+rightW,y+16);
+  doc.line(rightX,y+10,rightX+rightW,y+10);
   const orderVal = [document.getElementById('pf-order-no').value, document.getElementById('pf-order-date').value?('DT. '+fmtDate(document.getElementById('pf-order-date').value)):''].filter(Boolean).join(' ');
-  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text("BUYER'S ORDER NO. & DATE",rightX+1.5,y+19.5);
-  doc.setFontSize(8); doc.setTextColor(22,35,46); doc.text(orderVal, rightX+1.5, y+23,{maxWidth:rightW-3});
-  doc.line(rightX,y+25,rightX+rightW,y+25);
-  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('BANK DETAIL',rightX+1.5,y+28.5);
+  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text("BUYER'S ORDER NO. & DATE",rightX+1.5,y+13.5);
+  doc.setFontSize(8); doc.setTextColor(22,35,46); doc.text(orderVal, rightX+1.5, y+17.5,{maxWidth:rightW-3});
+  doc.line(rightX,y+19,rightX+rightW,y+19);
+  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('BANK DETAIL',rightX+1.5,y+22.5);
   doc.setFontSize(7); doc.setTextColor(22,35,46);
-  doc.text('Name of Bank: '+BANK.bank+'      Branch: '+BANK.branch, rightX+1.5, y+32);
-  doc.text('A/c Holder: '+BANK.holder, rightX+1.5, y+35.5,{maxWidth:rightW-3});
-  doc.text('A/c No: '+BANK.account+'   IFSC: '+BANK.ifsc+(BANK.swift?'   SWIFT: '+BANK.swift:''), rightX+1.5, y+39);
+  doc.text('Name of Bank: '+BANK.bank+'      Branch: '+BANK.branch, rightX+1.5, y+26);
+  doc.text('A/c Holder: '+BANK.holder, rightX+1.5, y+29.5,{maxWidth:rightW-3});
+  doc.text('A/c No: '+BANK.account+'   IFSC: '+BANK.ifsc+(BANK.swift?'   SWIFT: '+BANK.swift:''), rightX+1.5, y+33);
   y+=topH;
 
-  // ---- Row: Consignee | Country of Dispatch/Destination + Notify Party ----
-  // Both the consignee block and the notify-party block wrap their text to
-  // fit the column width (preserving any manual line breaks the user typed),
-  // and the row height grows to fit whichever block needs more room, so
-  // nothing overflows its box border.
-  const consLineH = 7.8*0.3528*1.3; // mm per line, matches font 7.8pt / factor 1.3 used below
+  const consLineH = 7.8*0.3528*1.35;
   doc.setFont(undefined,'normal'); doc.setFontSize(7.8);
   const stSel = document.getElementById('pf-buyer-state');
   const stName = stSel.value==='__OUTSIDE_INDIA__' ? 'Outside India' : stSel.value;
-  const addressLines = doc.splitTextToSize(document.getElementById('pf-buyer-address').value||'', leftW-3);
+  const addressLines = doc.splitTextToSize(document.getElementById('pf-buyer-address').value||'', leftW-3).slice(0,3);
   const consigneeLines = [
     ...addressLines,
     stName||'',
@@ -1458,68 +1674,87 @@ function generateProformaPDF(){
     'Phone: '+(document.getElementById('pf-buyer-phone').value||''),
     'GST No: '+(document.getElementById('pf-buyer-gst').value||'')
   ];
-  const consigneeH = 13 + consigneeLines.length*consLineH + 3;
+  const consigneeH = 13 + consigneeLines.length*consLineH + 1.2;
 
   const halfW=rightW/2;
-  doc.setFont(undefined,'bold'); doc.setFontSize(7.8);
-  const notifyLines = doc.splitTextToSize(document.getElementById('pf-notify').value||'', rightW-3);
-  doc.setFont(undefined,'normal');
-  const notifyH = 10 + 8 + notifyLines.length*consLineH + 3;
+  const notifyLineH = 7.8*0.3528*1.15;
+  const notifyLines = doc.splitTextToSize(document.getElementById('pf-notify').value||'', rightW-3).slice(0,4);
+  const notifyBlockH = 4 + 4*notifyLineH + 2;
+  const countryRowH = 10;
+  const notifyH = notifyBlockH + countryRowH;
 
-  const cH = Math.max(30, consigneeH, notifyH);
+  const leftBoxH = Math.max(26, consigneeH);
+  const rightBoxH = Math.max(26, notifyH);
+  const rowTopY = y;
 
-  box(M,leftW,cH);
-  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('CONSIGNEE',M+1.5,y+4);
+  box(M,leftW,leftBoxH);
+  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('BILL TO',M+1.5,y+4);
   doc.setFontSize(9); doc.setTextColor(22,35,46); doc.setFont(undefined,'bold');
   doc.text(document.getElementById('pf-buyer-name').value||'', M+1.5, y+9,{maxWidth:leftW-3});
   doc.setFont(undefined,'normal'); doc.setFontSize(7.8);
-  doc.text(consigneeLines, M+1.5, y+13,{lineHeightFactor:1.3});
+  doc.text(consigneeLines, M+1.5, y+13,{lineHeightFactor:1.35});
 
-  box(rightX,rightW,cH);
-  doc.line(rightX+halfW,y,rightX+halfW,y+10);
-  field(rightX,halfW,'COUNTRY OF DISPATCH', document.getElementById('pf-country-dispatch').value);
-  field(rightX+halfW,halfW,'COUNTRY OF FINAL DESTINATION', document.getElementById('pf-country-dest').value);
-  // Remaining space in this box (below Country of Dispatch/Destination) is used for Notify Party
-  const npY = y+10;
-  doc.line(rightX, npY, rightX+rightW, npY);
-  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('NOTIFY PARTY', rightX+1.5, npY+4);
+  doc.rect(rightX,rowTopY,rightW,rightBoxH);
+  doc.setFontSize(6.5); doc.setTextColor(90,113,132); doc.text('NOTIFY PARTY', rightX+1.5, rowTopY+4);
   doc.setFontSize(7.8); doc.setTextColor(22,35,46); doc.setFont(undefined,'bold');
-  doc.text(notifyLines, rightX+1.5, npY+8, {lineHeightFactor:1.3});
+  doc.text(notifyLines, rightX+1.5, rowTopY+7, {lineHeightFactor:1.15});
   doc.setFont(undefined,'normal');
-  y+=cH;
+  const countryY = rowTopY + notifyBlockH;
+  doc.line(rightX, countryY, rightX+rightW, countryY);
+  doc.line(rightX+halfW, countryY, rightX+halfW, countryY+countryRowH);
+  rowField(rightX,halfW,'COUNTRY OF DISPATCH', document.getElementById('pf-country-dispatch').value, countryY);
+  rowField(rightX+halfW,halfW,'COUNTRY OF FINAL DESTINATION', document.getElementById('pf-country-dest').value, countryY);
 
-  // ---- Row: Pre Carriage / Place of Receipt / Incoterm ----
-  y = fieldRow3(doc,M,CW,y,10,
-    ['PRE CARRIAGE BY','PLACE OF RECEIPT BY PRE CARRIER','FOB / C&F / CIF / CFR'],
-    [document.getElementById('pf-pre-carriage').value, document.getElementById('pf-place-receipt').value, document.getElementById('pf-incoterm').value]);
+  const gRowHNarrow = 10;
+  const leftColumnGridTotal = 3*gRowHNarrow;
+  const gRowHWide = Math.max(9, (leftBoxH + leftColumnGridTotal - rightBoxH)/3);
+  function leftGridRow(rowY,h,labelA,valA,labelB,valB){
+    const halfL = leftW/2;
+    doc.rect(M,rowY,halfL,h);
+    doc.rect(M+halfL,rowY,halfL,h);
+    rowField(M,halfL,labelA,valA,rowY);
+    rowField(M+halfL,halfL,labelB,valB,rowY);
+    return rowY+h;
+  }
+  function rightGridRow(rowY,h,labelC1,valC1,labelC2,valC2){
+    doc.rect(rightX,rowY,rightW,h);
+    const subH = h/2;
+    compactField(rightX,rightW,labelC1,valC1,rowY,subH);
+    doc.line(rightX,rowY+subH,rightX+rightW,rowY+subH);
+    compactField(rightX,rightW,labelC2,valC2,rowY+subH,subH);
+    return rowY+h;
+  }
 
-  // ---- Row: Vessel / Port of Loading / Currency / Payment terms ----
-  y = fieldRow(doc,M,CW,y,10,
-    [['VESSEL / FLIGHT NO.',document.getElementById('pf-vessel').value],
-     ['PORT OF LOADING',document.getElementById('pf-port-loading').value],
-     ['CURRENCY OF INVOICE',document.getElementById('pf-currency').value],
-     ['PAYMENT TERMS',document.getElementById('pf-payment-terms').value]]);
+  let ly = rowTopY + leftBoxH;
+  ly = leftGridRow(ly,gRowHNarrow,
+    'PRE CARRIAGE BY',document.getElementById('pf-pre-carriage').value,
+    'PLACE OF RECEIPT BY PRE CARRIER',document.getElementById('pf-place-receipt').value);
+  ly = leftGridRow(ly,gRowHNarrow,
+    'VESSEL / FLIGHT NO.',document.getElementById('pf-vessel').value,
+    'PORT OF LOADING',document.getElementById('pf-port-loading').value);
+  ly = leftGridRow(ly,gRowHNarrow,
+    'PORT OF DISCHARGE',document.getElementById('pf-port-discharge').value,
+    'DESTINATION',document.getElementById('pf-destination').value);
 
-  // ---- Row: Port of Discharge / Destination / Shipment of Goods / Brand ----
-  y = fieldRow(doc,M,CW,y,10,
-    [['PORT OF DISCHARGE',document.getElementById('pf-port-discharge').value],
-     ['DESTINATION',document.getElementById('pf-destination').value],
-     ['SHIPMENT OF GOODS',document.getElementById('pf-shipment-goods').value],
-     ['BRAND NAME',document.getElementById('pf-brand').value]]);
+  let ry = rowTopY + rightBoxH;
+  ry = rightGridRow(ry,gRowHWide,
+    'FOB / C&F / CIF / CFR',document.getElementById('pf-incoterm').value,
+    'SEA / AIR / ROAD',document.getElementById('pf-mode').value);
+  ry = rightGridRow(ry,gRowHWide,
+    'CURRENCY OF INVOICE',document.getElementById('pf-currency').value,
+    'PAYMENT TERMS',document.getElementById('pf-payment-terms').value);
+  ry = rightGridRow(ry,gRowHWide,
+    'SHIPMENT OF GOODS',document.getElementById('pf-shipment-goods').value,
+    'BRAND NAME',document.getElementById('pf-brand').value);
 
-  y+=3;
+  y = Math.max(ly, ry) + 3;
 
-  // ---- Line items table ----
   const t = proformaTotals();
   const body = proformaItems.map((item,i)=>{
     const c = calcLine(item);
     return [i+1, item.hsn, item.desc, `${item.qty} ${item.unit}`, formatINRPdf(item.unitPrice),
       formatINRPdf(c.taxable), formatPct(c.cgstPct, c.cgstApplicable), formatPct(c.sgstPct, c.sgstApplicable), formatPct(c.igstPct, c.igstApplicable), formatINRPdf(c.total)];
   });
-  // Sr./HSN/Unit Price widened so short numeric/currency values ("10",
-  // "82041110", "Rs. 36.00") no longer wrap onto multiple lines within
-  // their own column. The extra width is taken from the auto-sized
-  // description column rather than from the other money columns.
   const PF_COL_STYLES = {0:{cellWidth:9,halign:'center'},1:{cellWidth:17},2:{cellWidth:'auto'},3:{cellWidth:14,halign:'center'},4:{cellWidth:19,halign:'right'},5:{cellWidth:22,halign:'right'},6:{cellWidth:11,halign:'center'},7:{cellWidth:11,halign:'center'},8:{cellWidth:11,halign:'center'},9:{cellWidth:24,halign:'right'}};
   const itemTableStartPage = doc.internal.getNumberOfPages();
   doc.autoTable({
@@ -1530,17 +1765,9 @@ function generateProformaPDF(){
     styles:{ fontSize:7, cellPadding:2, lineColor:[90,113,132], lineWidth:0.1, overflow:'linebreak' },
     headStyles:{ fillColor:[231,236,240], textColor:[11,42,69], fontStyle:'bold', fontSize:7 },
     columnStyles: PF_COL_STYLES
-    // NOTE: deliberately no `foot` here. jspdf-autotable repeats a `foot`
-    // block on every page the table spans, which is why the Total
-    // Taxable/CGST/SGST/IGST amounts used to show up — identically — on
-    // every intermediate page. Those figures are only meaningful once, after
-    // the very last line item, so they're now drawn manually below instead.
   });
   y = doc.lastAutoTable.finalY+2;
 
-  // Stamp every page the item table spilled onto — except the one it
-  // actually finished on — with a "Continued on next page..." note, since
-  // the real subtotal is shown only once, right after the last line item.
   const itemTableEndPage = doc.internal.getNumberOfPages();
   for(let p=itemTableStartPage; p<itemTableEndPage; p++){
     doc.setPage(p);
@@ -1551,9 +1778,6 @@ function generateProformaPDF(){
   }
   doc.setPage(itemTableEndPage);
 
-  // ---- Grand totals (Taxable / CGST / SGST / IGST) — shown once, directly
-  // under the last row of the item table, using the sum across ALL items
-  // regardless of how many pages the table above spanned. ----
   y = ensureSpace(doc, y, 26);
   doc.autoTable({
     startY:y, margin:{left:M,right:M,top:PDF_TOP_GAP,bottom:16},
@@ -1573,9 +1797,6 @@ function generateProformaPDF(){
   });
   y = doc.lastAutoTable.finalY+2;
 
-  // Everything below here is drawn manually (not by autoTable) so it needs its
-  // own page-break checks — otherwise a long item list pushes this content
-  // past the bottom edge of the page and it gets cut off.
   const rounded = Math.round(t.total);
   y = ensureSpace(doc, y, 10);
   doc.setFillColor(217,143,30); doc.rect(M,y,CW,7,'F');
@@ -1596,7 +1817,6 @@ function generateProformaPDF(){
   doc.text('We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.', M+1, y);
   y+=5;
 
-  // ---- Transport row ----
   y = ensureSpace(doc, y, 10);
   y = fieldRow(doc,M,CW,y,10,
     [['TRANSPORT',document.getElementById('pf-transport').value],
@@ -1616,7 +1836,6 @@ function generateProformaPDF(){
   doc.text('Signature with Date and Stamp', M+1, y+22);
   doc.text('Authorised Signatory', M+sigW+1, y+22);
 
-  // Stamp the correct "PAGE n of N" on every page now that final count is known.
   const pageCount = doc.internal.getNumberOfPages();
   for(let p=1; p<=pageCount; p++){
     doc.setPage(p);
@@ -1624,7 +1843,7 @@ function generateProformaPDF(){
     doc.text('PAGE '+p+' of '+pageCount, PW-M, M+4, {align:'right'});
   }
 
-  const fname = 'Proforma_Invoice_'+(document.getElementById('pf-no').value||'draft')+'.pdf';
+  const fname = (isInvoice?'Tax_Invoice_':'Proforma_Invoice_')+(document.getElementById('pf-no').value||'draft')+'.pdf';
   doc.save(fname);
 }
 function fmtDate(iso){ if(!iso) return ''; const [yr,mo,da]=iso.split('-'); return da+'/'+mo+'/'+yr; }
@@ -1641,8 +1860,130 @@ function fieldRow(doc,x0,w,y,h,fields){
   });
   return y+h;
 }
-function fieldRow3(doc,x0,w,y,h,labels,values){
-  return fieldRow(doc,x0,w,y,h, labels.map((l,i)=>[l,values[i]]));
+
+/* ================= SEARCH RECORDS ================= */
+function setSearchType(type){ searchDocType = type; updateSearchTypeUI(); }
+function updateSearchTypeUI(){
+  document.getElementById('search-type-btn-proforma').classList.toggle('active', searchDocType==='proforma');
+  document.getElementById('search-type-btn-invoice').classList.toggle('active', searchDocType==='invoice');
+}
+function clearDocSearch(){
+  ['ds-docno','ds-name','ds-from','ds-to'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('ds-results').innerHTML='';
+}
+async function runDocSearch(){
+  const filters = {
+    docNo: document.getElementById('ds-docno').value.trim(),
+    customerName: document.getElementById('ds-name').value.trim(),
+    dateFrom: document.getElementById('ds-from').value,
+    dateTo: document.getElementById('ds-to').value
+  };
+  const resultsEl = document.getElementById('ds-results');
+  resultsEl.innerHTML = '<p>Searching…</p>';
+  try{
+    const data = await callAuthAPI({ action:'search_documents', token:adminToken, docType:searchDocType, filters });
+    if(!data || !data.success){ resultsEl.innerHTML = '<p style="color:var(--danger)">'+escapeHtml((data&&data.message)||'Search failed')+'</p>'; return; }
+    if(data.results.length===0){ resultsEl.innerHTML = '<p>No matching records.</p>'; return; }
+    let html = `<table class="data-table"><tr><th>Doc No.</th><th>Date</th><th>Customer</th><th>Grand Total</th><th>Last Updated</th><th></th></tr>`;
+    data.results.forEach(r=>{
+      html += `<tr>
+        <td>${escapeHtml(r.DocNo)}</td>
+        <td>${escapeHtml(r.Date||'')}</td>
+        <td>${escapeHtml(r.BuyerName||'')}</td>
+        <td class="num price">${formatINR(r.GrandTotal||0)}</td>
+        <td>${escapeHtml((r.UpdatedAt||r.CreatedAt||'').toString().slice(0,16).replace('T',' '))}</td>
+        <td><button class="btn-sm btn" onclick="loadDocumentForEdit('${escapeHtml(String(r.DocNo)).replace(/'/g,"\\'")}')">Open</button></td>
+      </tr>`;
+    });
+    html += '</table>';
+    resultsEl.innerHTML = html;
+  }catch(e){ resultsEl.innerHTML = '<p style="color:var(--danger)">Could not reach the backend.</p>'; console.error(e); }
+}
+async function loadDocumentForEdit(docNo){
+  try{
+    const data = await callAuthAPI({ action:'get_document', token:adminToken, docType:searchDocType, docNo });
+    if(!data || !data.success){ showToast((data&&data.message)||'Could not load record', true); return; }
+    currentDocType = searchDocType;
+    populateDocFields(data.document);
+    loadedDocNo = data.document.DocNo;
+    showSection('documents');
+  }catch(e){ showToast('Could not reach the backend', true); console.error(e); }
+}
+
+/* ================= PROFILES (canManageProfiles only) ================= */
+function buildPermCheckboxes(containerId, prefix, checkedMap){
+  const grid = document.getElementById(containerId);
+  grid.innerHTML = Object.keys(PERMISSION_LABELS).map(key=>{
+    const checked = checkedMap && checkedMap[key] ? 'checked' : '';
+    return `<label><input type="checkbox" id="${prefix}-${key}" ${checked}/> ${escapeHtml(PERMISSION_LABELS[key])}</label>`;
+  }).join('');
+}
+buildPermCheckboxes('np-perm-grid','np',{});
+
+async function createNewProfile(){
+  const username = document.getElementById('np-username').value.trim();
+  const errEl = document.getElementById('np-err');
+  if(!username){ errEl.innerText='Enter a username.'; return; }
+  const permissions = {};
+  Object.keys(PERMISSION_LABELS).forEach(key=>{ permissions[key] = document.getElementById('np-'+key).checked; });
+  errEl.style.color=''; errEl.innerText='Creating…';
+  try{
+    const data = await callAuthAPI({ action:'create_profile', token:adminToken, username, permissions });
+    if(data && data.success){
+      errEl.innerText='';
+      document.getElementById('np-username').value='';
+      buildPermCheckboxes('np-perm-grid','np',{});
+      showToast('Profile created — password emailed to export@srineelkanth.com');
+      loadProfilesList();
+    } else { errEl.innerText = (data && data.message) || 'Could not create profile.'; }
+  }catch(e){ errEl.innerText='Could not reach the backend.'; console.error(e); }
+}
+
+async function loadProfilesList(){
+  const wrap = document.getElementById('profiles-list');
+  wrap.innerHTML = '<p>Loading profiles…</p>';
+  try{
+    const data = await callAuthAPI({ action:'list_profiles', token:adminToken });
+    if(!data || !data.success){ wrap.innerHTML = '<p style="color:var(--danger)">'+escapeHtml((data&&data.message)||'Could not load profiles')+'</p>'; return; }
+    let html = '';
+    data.profiles.forEach(p=>{
+      const prefix = 'ep-'+p.username;
+      html += `<div class="form-card wide" style="margin-bottom:14px">
+        <div class="actions" style="margin-top:0;justify-content:space-between;align-items:center">
+          <div>
+            <strong>${escapeHtml(p.username)}</strong>
+            ${p.isSuperAdmin?'<span class="status-pill status-active">SUPER ADMIN</span>':''}
+            <span class="status-pill ${p.active?'status-active':'status-inactive'}">${p.active?'ACTIVE':'INACTIVE'}</span>
+            ${p.mustChangePassword?'<span class="status-pill status-inactive">PASSWORD NOT SET</span>':''}
+          </div>
+          ${p.isSuperAdmin?'' : `<button class="btn-sm ${p.active?'btn-danger':'btn'}" onclick="toggleProfileActive('${escapeHtml(p.username).replace(/'/g,"\\'")}',${!p.active})">${p.active?'Deactivate':'Activate'}</button>`}
+        </div>
+        <div class="perm-grid" id="${prefix}-grid"></div>
+        ${p.isSuperAdmin?'<p style="font-size:.8rem;color:var(--steel)">The super-admin profile always has every permission.</p>' : `<div class="actions" style="margin-top:8px"><button class="btn-sm btn" onclick="saveProfilePermissions('${escapeHtml(p.username).replace(/'/g,"\\'")}')">Save Permissions</button></div>`}
+      </div>`;
+    });
+    wrap.innerHTML = html;
+    data.profiles.forEach(p=>{
+      if(!p.isSuperAdmin) buildPermCheckboxes('ep-'+p.username+'-grid','ep-'+p.username,p.permissions);
+      else document.getElementById('ep-'+p.username+'-grid').innerHTML='';
+    });
+  }catch(e){ wrap.innerHTML = '<p style="color:var(--danger)">Could not reach the backend.</p>'; console.error(e); }
+}
+async function saveProfilePermissions(username){
+  const permissions = {};
+  Object.keys(PERMISSION_LABELS).forEach(key=>{ permissions[key] = document.getElementById('ep-'+username+'-'+key).checked; });
+  try{
+    const data = await callAuthAPI({ action:'update_profile_permissions', token:adminToken, username, permissions });
+    if(data && data.success){ showToast('Permissions updated for '+username); if(username===adminUsername){ adminPermissions=permissions; sessionStorage.setItem('sni_admin_perms', JSON.stringify(adminPermissions)); applyRoleUI(); } }
+    else { showToast((data && data.message) || 'Could not update permissions', true); }
+  }catch(e){ showToast('Could not reach the backend', true); console.error(e); }
+}
+async function toggleProfileActive(username, makeActive){
+  try{
+    const data = await callAuthAPI({ action:'set_profile_active', token:adminToken, username, active:makeActive });
+    if(data && data.success){ showToast(makeActive?'Profile activated':'Profile deactivated'); loadProfilesList(); }
+    else { showToast((data && data.message) || 'Could not update profile', true); }
+  }catch(e){ showToast('Could not reach the backend', true); console.error(e); }
 }
 </script>
 </body>
