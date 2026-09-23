@@ -533,7 +533,21 @@ legend{font-family:'Barlow Condensed';font-weight:600;color:var(--navy);padding:
     </div>
   </div>
 </div>
-
+  
+<!-- Rename profile modal -->
+<div id="rename-profile-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>Rename Profile</h3>
+    <p style="font-size:.85rem;color:var(--steel);margin-top:0">Current username: <strong id="rp-old-username"></strong></p>
+    <div class="col" style="margin-bottom:4px"><label>New Username</label><input id="rp-new-username" onkeydown="if(event.key==='Enter')submitRenameProfile()"/></div>
+    <div class="err" id="rp-err"></div>
+    <div class="actions" style="justify-content:flex-end">
+      <button class="btn-ghost btn-sm" onclick="closeRenameProfile()">Cancel</button>
+      <button class="btn btn-sm" onclick="submitRenameProfile()">Rename</button>
+    </div>
+  </div>
+</div>
+  
 <!-- Customer cart enquiry modal -->
 <div id="cart-modal" class="modal-overlay">
   <div class="modal-box">
@@ -1963,7 +1977,12 @@ async function loadProfilesList(){
             <span class="status-pill ${p.active?'status-active':'status-inactive'}">${p.active?'ACTIVE':'INACTIVE'}</span>
             ${p.mustChangePassword?'<span class="status-pill status-inactive">PASSWORD NOT SET</span>':''}
           </div>
-          ${p.isSuperAdmin?'' : `<button class="btn-sm ${p.active?'btn-danger':'btn'}" onclick="toggleProfileActive('${escapeHtml(p.username).replace(/'/g,"\\'")}',${!p.active})">${p.active?'Deactivate':'Activate'}</button>`}
+          ${p.isSuperAdmin?'' : `
+            <div style="display:flex;gap:6px">
+              <button class="btn-sm btn-ghost" onclick="openRenameProfile('${escapeHtml(p.username).replace(/'/g,"\\'")}')">Rename</button>
+              <button class="btn-sm ${p.active?'btn-danger':'btn'}" onclick="toggleProfileActive('${escapeHtml(p.username).replace(/'/g,"\\'")}',${!p.active})">${p.active?'Deactivate':'Activate'}</button>
+              <button class="btn-sm btn-danger" onclick="deleteProfile('${escapeHtml(p.username).replace(/'/g,"\\'")}')">Delete</button>
+            </div>`}
         </div>
         <div class="perm-grid" id="${prefix}-grid"></div>
         ${p.isSuperAdmin?'<p style="font-size:.8rem;color:var(--steel)">The super-admin profile always has every permission.</p>' : `<div class="actions" style="margin-top:8px"><button class="btn-sm btn" onclick="saveProfilePermissions('${escapeHtml(p.username).replace(/'/g,"\\'")}')">Save Permissions</button></div>`}
@@ -1992,6 +2011,50 @@ async function toggleProfileActive(username, makeActive){
     else { showToast((data && data.message) || 'Could not update profile', true); }
   }catch(e){ showToast('Could not reach the backend', true); console.error(e); }
 }
+let renamingUsername = null;
+function openRenameProfile(username){
+  renamingUsername = username;
+  document.getElementById('rp-old-username').innerText = username;
+  document.getElementById('rp-new-username').value = username;
+  document.getElementById('rp-err').innerText = '';
+  document.getElementById('rename-profile-modal').style.display = 'flex';
+  setTimeout(()=>document.getElementById('rp-new-username').select(), 50);
+}
+function closeRenameProfile(){ document.getElementById('rename-profile-modal').style.display='none'; renamingUsername=null; }
+async function submitRenameProfile(){
+  const newUsername = document.getElementById('rp-new-username').value.trim();
+  const errEl = document.getElementById('rp-err');
+  if(!newUsername){ errEl.innerText='Enter a new username.'; return; }
+  if(newUsername===renamingUsername){ errEl.innerText='That is already the current username.'; return; }
+  errEl.style.color=''; errEl.innerText='Renaming…';
+  try{
+    const data = await callAuthAPI({ action:'rename_profile', token:adminToken, username:renamingUsername, newUsername });
+    if(data && data.success){
+      closeRenameProfile();
+      showToast('Profile renamed to '+newUsername);
+      // If the admin renamed their own account, update the local session so
+      // the badge/logout still work without forcing a re-login.
+      if(renamingUsername===adminUsername){
+        adminUsername = newUsername;
+        sessionStorage.setItem('sni_admin_user', newUsername);
+        applyRoleUI();
+      }
+      loadProfilesList();
+    } else {
+      errEl.innerText = (data && data.message) || 'Could not rename profile.';
+    }
+  }catch(e){ errEl.innerText='Could not reach the backend.'; console.error(e); }
+}
+
+async function deleteProfile(username){
+  if(!confirm('Permanently delete the profile "'+username+'"? This cannot be undone.')) return;
+  try{
+    const data = await callAuthAPI({ action:'delete_profile', token:adminToken, username });
+    if(data && data.success){ showToast('Profile deleted'); loadProfilesList(); }
+    else { showToast((data && data.message) || 'Could not delete profile', true); }
+  }catch(e){ showToast('Could not reach the backend', true); console.error(e); }
+}
+  
 </script>
 </body>
 </html>
